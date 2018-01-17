@@ -4,25 +4,36 @@ import * as ripple from '@material/ripple/index'
 
 class MaterialButton extends GluonElement {
 
-
-
-  get style() {
-    return html`<style>${style}</style>`;
+  constructor(){
+    super();
+    this.isText = true
   }
 
   get template() {
-    return html`${this.style}<button class="mdc-button">Button</button>`;
+    if(!this.isText){
+      return html`<style>${style}</style><slot></slot>`;
+    }
+    return html`<style>${style}</style><button class="mdc-button"><slot></slot></button>`;
   }
 
   get icon(){
     return "left"
   }
+
   connectedCallback() {
     super.connectedCallback()
-
-    const button = this.shadowRoot.querySelector('.mdc-button')
-    new ripple.MDCRipple(button)
-
+    const slot = this.shadowRoot.querySelector( 'slot' );
+    if(slot != null  && slot.assignedNodes().length > 1){
+      console.log('assignedNodese', slot.assignedNodes())
+      this.isText = false
+      const button = this.querySelector( 'button, a' );
+      button.classList.add('mdc-button');
+      new ripple.MDCRipple(button)
+    }else{
+      const button = this.shadowRoot.querySelector('.mdc-button')
+      new ripple.MDCRipple(button)
+    }
+    this.render()
   }
 
 }
