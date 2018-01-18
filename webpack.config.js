@@ -1,23 +1,29 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const Uglify = require("uglifyjs-webpack-plugin");
+
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    "MaterialButton": "./src/components/MaterialButton.js",
+  },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: "[name].js"
   },
   module: {
     loaders: [
-
       {
         test: /\.scss$/,
         use: [{
-          loader: "to-string-loader" // creates style nodes from JS strings
+          loader: "to-string-loader"
         }, {
-          loader: "css-loader" // translates CSS into CommonJS
+          loader: "css-loader?-minimize",
+          options: {
+            minimize: true
+          }
         }, {
-          loader: "sass-loader", // compiles Sass to CSS
+          loader: "sass-loader",
           options: {
             includePaths: [path.join(__dirname, 'node_modules')]
           }
@@ -34,5 +40,14 @@ module.exports = {
     },
     extensions: [".js", ".scss"]
   },
-  devtool: 'source-map'
+  // devtool: 'source-map',
+  // plugins: [
+  //   new Uglify({
+  //     uglifyOptions:{
+  //       output: {
+  //         comments: false, // remove comments
+  //       }
+  //     },
+  //   })
+  // ]
 };
