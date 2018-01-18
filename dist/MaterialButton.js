@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -777,6 +777,151 @@ const removeNodes = (container, startNode, endNode = null) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__ = __webpack_require__(0);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["a"]; });
+const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if(window.ShadyCSS){const e=t.constructor;void 0===e[o]&&(e[o]=document.createElement("template"),e[o].innerHTML=t.shadowRoot.innerHTML,ShadyCSS.prepareTemplate(e[o],e.is)),ShadyCSS.styleElement(t)}},a=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),n=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class GluonElement extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=a(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),n(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["b" /* render */])(this.template,this.shadowRoot),i(this))}}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GluonElement;
+;
+//# sourceMappingURL=gluon.js.map
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+const regex = /\@?[\#\.\w\-\,\s\n\r\t:\(\)]+(?=\s*\{)/g
+
+module.exports = function (style) {
+
+  const res = style.replace(regex, (selectorList) => {
+    const res = selectorList.split(',')
+      .map(x => {
+
+        if (x.trim() === 'to') {
+          return x;
+        }
+
+        if (x.indexOf('@keyframes ') !== -1) {
+          return x;
+        }
+
+        x = `::slotted(${x})`;
+
+        if (x.indexOf(':before') !== -1) {
+          x = x.replace(':before', '') + ':before'
+        }
+
+        if (x.indexOf(':after') !== -1) {
+          x = x.replace(':after', '') + ':after'
+        }
+
+        if (x.indexOf('@keyframes ') !== -1) {
+          x = '@keyframes ' + x.replace('@keyframes ', '')
+        }
+
+        if (x.indexOf('@') !== -1) {
+          x = '@' + x.replace('@', '')
+        }
+
+        return x
+      })
+      .join(',')
+
+    //console.log(res)
+
+    return res
+  });
+
+  return res
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /**
  * @license
  * Copyright 2016 Google Inc.
@@ -848,7 +993,7 @@ class MDCFoundation {
 
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -962,7 +1107,7 @@ class MDCRippleAdapter {
 
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1114,16 +1259,16 @@ function getNormalizedEventCoords(ev, pageOffset, clientRect) {
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil__);
 
 
@@ -1146,7 +1291,7 @@ class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonE
   }
 
   get slotStyle() {
-    return __WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil__(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a)
+    return extra +__WEBPACK_IMPORTED_MODULE_3__utils_SlotedCssUtil__(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a)
   }
 
   get template() {
@@ -1191,8 +1336,6 @@ class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonE
     super.connectedCallback()
     const slot = this.shadowRoot.querySelector('slot');
 
-
-
     if (slot != null && slot.assignedNodes().length == 1) {
       this.button = this.shadowRoot.querySelector('.mdc-button')
       new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.button)
@@ -1221,24 +1364,11 @@ class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonE
 customElements.define(MaterialButton.is, MaterialButton);
 
 /***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__ = __webpack_require__(0);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["a"]; });
-const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if(window.ShadyCSS){const e=t.constructor;void 0===e[o]&&(e[o]=document.createElement("template"),e[o].innerHTML=t.shadowRoot.innerHTML,ShadyCSS.prepareTemplate(e[o],e.is)),ShadyCSS.styleElement(t)}},a=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),n=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class GluonElement extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=a(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),n(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["b" /* render */])(this.template,this.shadowRoot),i(this))}}
-/* harmony export (immutable) */ __webpack_exports__["a"] = GluonElement;
-;
-//# sourceMappingURL=gluon.js.map
-
-
-/***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-        var result = __webpack_require__(8);
+        var result = __webpack_require__(10);
 
         if (typeof result === "string") {
             module.exports = result;
@@ -1248,10 +1378,10 @@ const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if
     
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -1262,98 +1392,16 @@ exports.push([module.i, "@keyframes mdc-ripple-fg-radius-in{0%{animation-timing-
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MDCRipple; });
 /* unused harmony export RippleCapableSurface */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(7);
 /* unused harmony reexport MDCRippleFoundation */
 /* unused harmony reexport util */
 /**
@@ -1507,11 +1555,11 @@ RippleCapableSurface.prototype.disabled;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__(5);
 /**
  * @license
  * Copyright 2016 Google Inc.
@@ -1640,14 +1688,14 @@ class MDCComponent {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(7);
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -2188,7 +2236,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2241,47 +2289,6 @@ const numbers = {
 
 
 
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-const regex = /\@?[\#\.\w\-\,\s\n\r\t:\(\)]+(?=\s*\{)/g
-
-module.exports = function (style) {
-
-  const res = style.replace(regex, (selectorList) => {
-    const res = selectorList.split(',')
-      .filter(x => x !== 'to')
-      .filter(x => x !== ' ')
-      .map(x => `::slotted(${x})`)
-      .map(x => {
-
-        if(x.indexOf(':before') !== -1){
-          x = x.replace(':before', '') + ':before'
-        }
-
-        if(x.indexOf(':after') !== -1){
-          x = x.replace(':after', '') + ':after'
-        }
-
-        if(x.indexOf('@keyframes ') !== -1){
-          x = '@keyframes ' + x.replace('@keyframes ', '')
-        }
-
-        if(x.indexOf('@') !== -1){
-          x = '@' + x.replace('@', '')
-        }
-
-        return x
-      })
-      .join(',')
-
-    return res
-  });
-
-  return res
-}
 
 /***/ })
 /******/ ]);

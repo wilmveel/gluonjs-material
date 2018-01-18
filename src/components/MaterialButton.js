@@ -19,7 +19,7 @@ class MaterialButton extends GluonElement {
   }
 
   get slotStyle() {
-    return slotedCssUtil(style)
+    return extra +slotedCssUtil(style)
   }
 
   get template() {
@@ -63,8 +63,6 @@ class MaterialButton extends GluonElement {
   connectedCallback() {
     super.connectedCallback()
     const slot = this.shadowRoot.querySelector('slot');
-
-
 
     if (slot != null && slot.assignedNodes().length == 1) {
       this.button = this.shadowRoot.querySelector('.mdc-button')

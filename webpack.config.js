@@ -6,6 +6,7 @@ const Uglify = require("uglifyjs-webpack-plugin");
 module.exports = {
   entry: {
     "MaterialButton": "./src/components/MaterialButton.js",
+    "MaterialCard": "./src/components/MaterialCard.js",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

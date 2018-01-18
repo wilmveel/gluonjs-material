@@ -1,0 +1,132 @@
+<script type="module" src="../dist/MaterialCard.js"></script>
+
+<script type="module" src="../dist/MaterialButton.js"></script>
+
+<style>
+
+  material-card {
+    width: 320px;
+    margin: 24px;
+    display: block;
+  }
+
+  .demo-card__16-9-media {
+    background-image: url(images/16-9.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 12.313rem;
+  }
+
+  .demo-card--with-avatar .demo-card__avatar {
+    position: absolute;
+    background: #bdbdbd;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+  }
+
+  .demo-card--with-avatar .mdc-card__title,
+  .demo-card--with-avatar .mdc-card__subtitle {
+    margin-left: 56px;
+  }
+
+  .demo-card--bg-demo {
+    height: 21.875rem;
+    background-image: url(images/1-1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .demo-card--bg-demo .mdc-card__primary,
+  .demo-card--bg-demo .mdc-card__actions {
+    background: rgba(0, 0, 0, .4);
+  }
+</style>
+
+<div>
+  <material-card>
+    <material-card-media class="demo-card__16-9-media"></material-card-media>
+    <material-card-primary>
+      <h1 class="mdc-card__title mdc-card__title--large">Title goes here</h1>
+      <h2 class="mdc-card__subtitle">Subtitle here</h2>
+    </material-card-primary>
+    <material-card-actions>
+      <material-button>Action 1</material-button>
+      <material-button>Action 2</material-button>
+    </material-card-actions>
+  </material-card>
+</div>
+
+<div>
+  <material-card>
+    <material-card-media class="demo-card__16-9-media"></material-card-media>
+    <material-card-supporting-text>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
+    </material-card-supporting-text>
+  </material-card>
+</div>
+
+<div>
+  <material-card class="demo-card--with-avatar">
+    <material-card-primary>
+      <div class="demo-card__avatar"></div>
+      <h1 class="mdc-card__title">Title</h1>
+      <h2 class="mdc-card__subtitle">Subhead</h2>
+    </material-card-primary>
+    <material-card-media class="demo-card__16-9-media"></material-card-media>
+    <material-card-supporting-text>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
+    </material-card-supporting-text>
+    <material-card-actions>
+      <material-button>Action 1</material-button>
+      <material-button>Action 2</material-button>
+    </material-card-actions>
+  </material-card>
+</div>
+
+<div>
+  <material-card class="demo-card--with-avatar">
+    <material-card-primary>
+      <div class="demo-card__avatar"></div>
+      <h1 class="mdc-card__title">Title</h1>
+      <h2 class="mdc-card__subtitle">Subhead</h2>
+    </material-card-primary>
+    <material-card-media class="demo-card__16-9-media"></material-card-media>
+    <material-card-supporting-text>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
+    </material-card-supporting-text>
+    <material-card-actions vertical>
+      <material-button>Action 1</material-button>
+      <material-button>Action 2</material-button>
+    </material-card-actions>
+  </material-card>
+</div>
+
+<div>
+  <material-card>
+    <material-card-media class="demo-card__16-9-media"></material-card-media>
+    <material-card-primary>
+      <div class="demo-card__avatar"></div>
+      <h1 class="mdc-card__title">Title</h1>
+      <h2 class="mdc-card__subtitle">Subhead</h2>
+    </material-card-primary>
+    <material-card-actions>
+      <material-button>Action 1</material-button>
+      <material-button>Action 2</material-button>
+    </material-card-actions>
+  </material-card>
+</div>
+
+<div>
+  <material-card class="demo-card--bg-demo">
+    <material-card-primary>
+      <div class="demo-card__avatar"></div>
+      <h1 class="mdc-card__title">Title</h1>
+      <h2 class="mdc-card__subtitle">Subhead</h2>
+    </material-card-primary>
+    <material-card-actions vertical>
+      <material-button>Action 1</material-button>
+      <material-button>Action 2</material-button>
+    </material-card-actions>
+  </material-card>
+</div>

@@ -4,30 +4,39 @@ module.exports = function (style) {
 
   const res = style.replace(regex, (selectorList) => {
     const res = selectorList.split(',')
-      .filter(x => x !== 'to')
-      .filter(x => x !== ' ')
-      .map(x => `::slotted(${x})`)
       .map(x => {
 
-        if(x.indexOf(':before') !== -1){
+        if (x.trim() === 'to') {
+          return x;
+        }
+
+        if (x.indexOf('@keyframes ') !== -1) {
+          return x;
+        }
+
+        x = `::slotted(${x})`;
+
+        if (x.indexOf(':before') !== -1) {
           x = x.replace(':before', '') + ':before'
         }
 
-        if(x.indexOf(':after') !== -1){
+        if (x.indexOf(':after') !== -1) {
           x = x.replace(':after', '') + ':after'
         }
 
-        if(x.indexOf('@keyframes ') !== -1){
+        if (x.indexOf('@keyframes ') !== -1) {
           x = '@keyframes ' + x.replace('@keyframes ', '')
         }
 
-        if(x.indexOf('@') !== -1){
+        if (x.indexOf('@') !== -1) {
           x = '@' + x.replace('@', '')
         }
 
         return x
       })
       .join(',')
+
+    //console.log(res)
 
     return res
   });
