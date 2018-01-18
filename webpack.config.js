@@ -50,4 +50,8 @@ module.exports = {
   //     },
   //   })
   // ]
+  devServer: {
+    compress: true,
+    publicPath: '/dist/'
+  }
 };
