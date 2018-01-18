@@ -67,17 +67,19 @@ class MaterialButton extends GluonElement {
 
 
     if (slot != null && slot.assignedNodes().length == 1) {
-      console.log('-', slot.assignedNodes() )
       this.button = this.shadowRoot.querySelector('.mdc-button')
       new ripple.MDCRipple(this.button)
     }
 
     else if (slot != null && slot.assignedNodes().length == 3) {
-      console.log('---', slot.assignedNodes() )
       this.isText = false;
       this.button = this.querySelector('button, a, input');
       this.button.classList.add('mdc-button');
       new ripple.MDCRipple(this.button)
+    }
+
+    else if (slot != null && slot.assignedNodes().length > 3) {
+      throw new Error('Cannot reflext complex light dom')
     }
 
     MaterialButton.observedAttributes.forEach(attr => {

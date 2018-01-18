@@ -2,8 +2,8 @@ const regex = /[\#\.\w\-\,\s\n\r\t:\(\)]+(?=\s*\{)/g
 
 module.exports = function (style) {
 
-  const res = style.replace(regex, (selector) => {
-    const res = selector.split(',')
+  const res = style.replace(regex, (selectorList) => {
+    const res = selectorList.split(',')
       .filter(x => x !== 'to')
       .map(x => `::slotted(${x})`)
       .map(x => {
@@ -28,7 +28,6 @@ module.exports = function (style) {
       })
       .join(',')
 
-    //console.log(res)
     return res
   });
 
