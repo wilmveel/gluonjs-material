@@ -1,0 +1,6 @@
+{
+  "source": "@material/button/mdc-button",
+  "mappings":{
+    ".mdc-button" : "::slotted(.mdc-button)"
+  }
+}

@@ -24,13 +24,6 @@ module.exports = function (style) {
           x = x.replace(':after', '') + ':after'
         }
 
-        if (x.indexOf('@keyframes ') !== -1) {
-          x = '@keyframes ' + x.replace('@keyframes ', '')
-        }
-
-        if (x.indexOf('@') !== -1) {
-          x = '@' + x.replace('@', '')
-        }
 
         return x
       })
