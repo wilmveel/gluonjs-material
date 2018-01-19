@@ -21,8 +21,12 @@ class MaterialCardMedia extends GluonElement {
 
 class MaterialCardPrimary extends GluonElement {
 
+
   get template() {
-    return html`<style>${slotStyle}</style><slot></slot>`;
+    const extra = `::slotted(.mdc-card ~ .mdc-card__primary ~ .mdc-card__title--large) {
+    padding-top: 8px;
+    }`;
+    return html`<style>${slotStyle}${extra}</style><slot></slot>`;
   }
 
   connectedCallback() {

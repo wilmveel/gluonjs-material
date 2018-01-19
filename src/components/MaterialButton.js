@@ -19,7 +19,7 @@ class MaterialButton extends GluonElement {
   }
 
   get slotStyle() {
-    return extra +slotedCssUtil(style)
+    return slotedCssUtil(style)
   }
 
   get template() {

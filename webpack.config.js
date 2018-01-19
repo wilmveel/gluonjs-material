@@ -7,6 +7,8 @@ module.exports = {
   entry: {
     "MaterialButton": "./src/components/MaterialButton.js",
     "MaterialCard": "./src/components/MaterialCard.js",
+    "MaterialList": "./src/components/MaterialList.js",
+    "MaterialIcon": "./src/components/MaterialIcon.js",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

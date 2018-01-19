@@ -9,7 +9,8 @@
     "@material/button": "^0.28.0",
     "cssbeautify": "^0.3.1",
     "gluonjs": "^2.1.0",
-    "material-components-web": "^0.28.0"
+    "material-components-web": "^0.28.0",
+    "material-design-icons": "^3.0.1"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",
