@@ -1,10 +1,6 @@
 import {GluonElement, html} from "gluonjs";
 import style from "@material/list/mdc-list";
 
-import * as slotedCssUtil from "../utils/SlotedCssUtil";
-
-const slotStyle = slotedCssUtil(style)
-
 class MaterialList extends GluonElement {
 
   get template() {

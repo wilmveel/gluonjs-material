@@ -1,13 +1,12 @@
 import {GluonElement, html} from "gluonjs";
 import style from "@material/card/mdc-card";
-import * as slotedCssUtil from "../utils/SlotedCssUtil";
 
-const slotStyle = slotedCssUtil(style)
+const block = `:host {display:block}`
 
 class MaterialCard extends GluonElement {
 
   get template() {
-    return html`<style>${style}${slotStyle}</style><div class="mdc-card"><slot></slot></div>`;
+    return html`<style>${style.card}</style><div class="mdc-card"><slot></slot></div>`;
   }
 
 }
@@ -21,17 +20,44 @@ class MaterialCardMedia extends GluonElement {
 
 class MaterialCardPrimary extends GluonElement {
 
+  get template() {
+    return html`<style>${block}${style.primary}${style.primary_slotted}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add('mdc-card__primary');
+  }
+
+}
+
+class MaterialCardTitle extends GluonElement {
+
+  static get observedAttributes() {
+    return ['large'];
+  }
 
   get template() {
-    const extra = `::slotted(.mdc-card ~ .mdc-card__primary ~ .mdc-card__title--large) {
-    padding-top: 8px;
-    }`;
-    return html`<style>${slotStyle}${extra}</style><slot></slot>`;
+    return html`<style>${block}${style.title}</style><slot></slot>`;
   }
 
   connectedCallback() {
     super.connectedCallback()
-    this.classList.add('mdc-card__primary');
+    this.classList.add('mdc-card__title');
+    this.classList.add('mdc-card__title--large');
+  }
+
+}
+
+class MaterialCardSubtitle extends GluonElement {
+
+  get template() {
+    return html`<style>${block}${style.subtitle}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classList.add('mdc-card__subtitle');
   }
 
 }
@@ -39,7 +65,7 @@ class MaterialCardPrimary extends GluonElement {
 class MaterialCardSupportingText extends GluonElement {
 
   get template() {
-    return html`<style>${style}</style><section class="mdc-card__supporting-text"><slot></slot></section>`;
+    return html`<section class="mdc-card__supporting-text"><slot></slot></section>`;
   }
 
 }
@@ -51,7 +77,7 @@ class MaterialCardActions extends GluonElement {
   }
 
   get template() {
-    return html`<style>${style}${slotStyle}</style><slot></slot>`;
+    return html`<slot></slot>`;
   }
 
   set vertical(val) {
@@ -89,5 +115,7 @@ class MaterialCardActions extends GluonElement {
 customElements.define(MaterialCard.is, MaterialCard);
 customElements.define(MaterialCardMedia.is, MaterialCardMedia);
 customElements.define(MaterialCardPrimary.is, MaterialCardPrimary);
+customElements.define(MaterialCardTitle.is, MaterialCardTitle);
+customElements.define(MaterialCardSubtitle.is, MaterialCardSubtitle);
 customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText);
 customElements.define(MaterialCardActions.is, MaterialCardActions);

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -786,138 +786,8 @@ const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-const regex = /\@?[\#\.\w\-\,\s\n\r\t:\(\)]+(?=\s*\{)/g
-
-module.exports = function (style) {
-
-  const res = style.replace(regex, (selectorList) => {
-    const res = selectorList.split(',')
-      .map(x => {
-
-        if (x.trim() === 'to') {
-          return x;
-        }
-
-        if (x.indexOf('@keyframes ') !== -1) {
-          return x;
-        }
-
-        x = `::slotted(${x})`;
-
-        if (x.indexOf(':before') !== -1) {
-          x = x.replace(':before', '') + ':before'
-        }
-
-        if (x.indexOf(':after') !== -1) {
-          x = x.replace(':after', '') + ':after'
-        }
-
-        if (x.indexOf('@keyframes ') !== -1) {
-          x = '@keyframes ' + x.replace('@keyframes ', '')
-        }
-
-        if (x.indexOf('@') !== -1) {
-          x = '@' + x.replace('@', '')
-        }
-
-        return x
-      })
-      .join(',')
-
-    //console.log(res)
-
-    return res
-  });
-
-  return res
-}
-
-/***/ }),
+/* 3 */,
+/* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
@@ -925,24 +795,18 @@ module.exports = function (style) {
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_SlotedCssUtil__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_SlotedCssUtil___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utils_SlotedCssUtil__);
 
 
 
-
-const slotStyle = __WEBPACK_IMPORTED_MODULE_2__utils_SlotedCssUtil__(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a)
+const slotStyle = slotedCssUtil(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a)
 
 class MaterialCard extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
 
@@ -961,8 +825,12 @@ class MaterialCardMedia extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* Glu
 
 class MaterialCardPrimary extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
 
+
   get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${slotStyle}</style><slot></slot>`;
+    const extra = `::slotted(.mdc-card ~ .mdc-card__primary ~ .mdc-card__title--large) {
+    padding-top: 8px;
+    }`;
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${slotStyle}${extra}</style><slot></slot>`;
   }
 
   connectedCallback() {
@@ -1029,31 +897,9 @@ customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText)
 customElements.define(MaterialCardActions.is, MaterialCardActions);
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 13 */
+/***/ (function(module, exports) {
 
-
-        var result = __webpack_require__(17);
-
-        if (typeof result === "string") {
-            module.exports = result;
-        } else {
-            module.exports = result.toString();
-        }
-    
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".mdc-card{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);display:flex;flex-direction:column;justify-content:flex-end;box-sizing:border-box;padding:0;border-radius:2px;overflow:hidden}.mdc-card__primary{padding:16px}.mdc-card__primary .mdc-card__title--large{padding-top:8px}.mdc-card__primary:last-child{padding-bottom:24px}.mdc-card__supporting-text{font-family:Roboto,sans-serif;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-size:.875rem;line-height:1.25rem;font-weight:400;letter-spacing:.04em;text-decoration:inherit;text-transform:inherit;color:rgba(0,0,0,.87);color:var(--mdc-theme-text-primary-on-light,rgba(0,0,0,.87));box-sizing:border-box;padding:8px 16px}.mdc-card--theme-dark .mdc-card__supporting-text,.mdc-theme--dark .mdc-card__supporting-text{color:#fff;color:var(--mdc-theme-text-primary-on-dark,#fff)}.mdc-card__primary+.mdc-card__supporting-text{margin-top:-8px;padding-top:0}.mdc-card__supporting-text:last-child{padding-bottom:24px}.mdc-card__actions{display:flex;box-sizing:border-box;padding:8px}.mdc-card--theme-dark .mdc-card__actions,.mdc-theme--dark .mdc-card__actions{color:#fff;color:var(--mdc-theme-text-primary-on-dark,#fff)}.mdc-card__actions .mdc-card__action{margin:0 8px 0 0}.mdc-card__actions .mdc-card__action[dir=rtl],[dir=rtl] .mdc-card__actions .mdc-card__action{margin:0 0 0 8px}.mdc-card__actions .mdc-card__action:last-child,.mdc-card__actions .mdc-card__action:last-child[dir=rtl],[dir=rtl] .mdc-card__actions .mdc-card__action:last-child{margin-left:0;margin-right:0}.mdc-card__actions--vertical{flex-flow:column;align-items:flex-start}.mdc-card__actions--vertical .mdc-card__action{margin:0 0 4px}.mdc-card__actions--vertical .mdc-card__action:last-child{margin-bottom:0}.mdc-card__media{display:flex;flex-direction:column;justify-content:flex-end;box-sizing:border-box;padding:16px}.mdc-card__media-item{display:inline-block;width:auto;height:80px;margin:16px 0 0;padding:0}.mdc-card__media-item--1dot5x{width:auto;height:120px}.mdc-card__media-item--2x{width:auto;height:160px}.mdc-card__media-item--3x{width:auto;height:240px}.mdc-card__title{font-family:Roboto,sans-serif;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-size:.875rem;line-height:1.5rem;font-weight:500;letter-spacing:.04em;text-decoration:inherit;text-transform:inherit;color:rgba(0,0,0,.87);color:var(--mdc-theme-text-primary-on-light,rgba(0,0,0,.87));margin:-.063rem 0}.mdc-card--theme-dark .mdc-card__title,.mdc-theme--dark .mdc-card__title{color:#fff;color:var(--mdc-theme-text-primary-on-dark,#fff)}.mdc-card__title--large{font-size:1.5rem;line-height:2rem;letter-spacing:normal;margin:0}.mdc-card__subtitle,.mdc-card__title--large{font-family:Roboto,sans-serif;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-weight:400;text-decoration:inherit;text-transform:inherit}.mdc-card__subtitle{font-size:.875rem;line-height:1.25rem;letter-spacing:.04em;color:rgba(0,0,0,.87);color:var(--mdc-theme-text-primary-on-light,rgba(0,0,0,.87));margin:-.063rem 0}.mdc-card--theme-dark .mdc-card__subtitle,.mdc-theme--dark .mdc-card__subtitle{color:#fff;color:var(--mdc-theme-text-primary-on-dark,#fff)}.mdc-card__horizontal-block{padding-left:0;padding-right:16px;display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between;box-sizing:border-box}.mdc-card__horizontal-block[dir=rtl],[dir=rtl] .mdc-card__horizontal-block{padding-left:16px;padding-right:0}.mdc-card__horizontal-block .mdc-card__actions--vertical{margin:16px}.mdc-card__horizontal-block .mdc-card__media-item{margin-left:16px;margin-right:0}.mdc-card__horizontal-block .mdc-card__media-item[dir=rtl],[dir=rtl] .mdc-card__horizontal-block .mdc-card__media-item{margin-left:0;margin-right:16px}.mdc-card__horizontal-block .mdc-card__media-item--3x{margin-bottom:16px}", ""]);
-
-// exports
 
 
 /***/ })

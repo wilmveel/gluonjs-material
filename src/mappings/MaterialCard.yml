@@ -1,0 +1,42 @@
+source: '@material/card/mdc-card'
+mappings:
+
+  all:
+    type: rule
+    regex: ^(.*)$
+    replace: $1
+
+  card:
+    type: rule
+    regex: ^(\.mdc-card(?:\s.*)?)$
+    replace: $1
+
+  supporting-text:
+    type: rule
+    regex: ^(\.mdc-card__supporting-text.*)$
+    replace: $1
+
+  primary:
+    type: rule
+    regex: ^(\.mdc-card__primary)$
+    replace: :host($1)
+
+  primary_slotted:
+    type: rule
+    regex: ^(\.mdc-card__primary)\s(.*)$
+    replace: :host($1) ::slotted($2)
+
+  title:
+    type: rule
+    regex: ^(\.mdc-card__title.*)$
+    replace: :host($1)
+
+  subtitle:
+    type: rule
+    regex: ^(\.mdc-card__subtitle.*)$
+    replace: :host($1)
+
+  actions:
+    type: rule
+    regex: ^(\.mdc-card__actions.*)$
+    replace: $1

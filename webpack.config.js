@@ -1,7 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 const Uglify = require("uglifyjs-webpack-plugin");
+const WatchFile = require("watchfile-webpack-plugin");
+
+const FileWatcherPlugin = require("file-watcher-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -18,19 +21,17 @@ module.exports = {
     loaders: [
       {
         test: /\.scss$/,
-        use: [{
-          loader: "to-string-loader"
-        }, {
-          loader: "css-loader?-minimize",
-          options: {
-            minimize: true
+        use: [
+          {
+            loader: 'ProcessCssMappings'
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              includePaths: [path.resolve(__dirname, 'node_modules')]
+            }
           }
-        }, {
-          loader: "sass-loader",
-          options: {
-            includePaths: [path.join(__dirname, 'node_modules')]
-          }
-        }]
+        ]
       }
     ]
   },
@@ -41,7 +42,10 @@ module.exports = {
     alias: {
       "@material$": '/node_modules/@material'
     },
-    extensions: [".js", ".scss"]
+    extensions: [".js", ".scss", ".css"]
+  },
+  resolveLoader: {
+    modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   // devtool: 'source-map',
   // plugins: [
@@ -53,6 +57,13 @@ module.exports = {
   //     },
   //   })
   // ]
+
+  plugins: [
+    new FileWatcherPlugin({
+      root: path.resolve(__dirname, 'src/mappings'),
+      files: ['*.yml']
+    })
+  ],
   devServer: {
     compress: true,
     publicPath: '/dist/'

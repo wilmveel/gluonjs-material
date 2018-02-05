@@ -1,19 +1,17 @@
+const path = require('path');
+
 const css = require('css');
 const fs = require('fs');
 const sass = require('node-sass');
 
-const sourceCSS = sass.renderSync({ file: 'node_modules/@material/button/mdc-button.scss', includePaths: ['node_modules'] });
+const processCssMappings = require('./src/utils/ProcessCssMappings')
 
-const parsedCSS = css.parse(sourceCSS.css.toString());
+const mappingsDir = path.resolve(__dirname, './src/mappings');
 
-parsedCSS.stylesheet.rules.filter(r => r.type === 'rule').forEach(e => {
-  e.selectors = e.selectors.map(s => `::slotted(${s})`);
-});
+    const file = "@material/button/mdc-button";
 
-const transformedCSS = css.stringify(parsedCSS);
-
-fs.writeFile('src/components/MaterialButton.css', transformedCSS, function(err) {
-  if (err) {
-    return console.log(err);
-  }
-});
+    processCssMappings(file)
+      .then(res => {
+        console.log(res)
+        fs.writeFileSync('src/components/MaterialButton.css', css.stringify(res));
+      });

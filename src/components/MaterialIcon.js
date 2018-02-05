@@ -1,7 +1,4 @@
 import {GluonElement, html} from "gluonjs";
-import * as slotedCssUtil from "../utils/SlotedCssUtil";
-
-const slotStyle = slotedCssUtil(style)
 
 class MaterialIcon extends GluonElement {
 

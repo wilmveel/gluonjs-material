@@ -1,7 +1,18 @@
 import {GluonElement, html} from "gluonjs";
-import style from "@material/button/mdc-button";
+import {keyframes, style, slotted} from "@material/button/mdc-button.scss";
 import * as ripple from "@material/ripple/index";
-import * as slotedCssUtil from "../utils/SlotedCssUtil";
+
+(function () {
+
+  const head = document.head;
+  const style = document.createElement('style');
+
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(keyframes));
+
+  head.appendChild(style);
+
+})();
 
 class MaterialButton extends GluonElement {
 
@@ -18,15 +29,11 @@ class MaterialButton extends GluonElement {
     return ['disabled', 'raised'];
   }
 
-  get slotStyle() {
-    return slotedCssUtil(style)
-  }
-
   get template() {
     if (!this.isText) {
-      return html`<style>${this.slotStyle}</style><slot></slot>`;
+      return html`<style>${keyframes}${slotted}</style><slot></slot>`;
     }
-    return html`<style>${style}</style><button class="mdc-button" disabled="${this.disabled}"><slot></slot></button>`;
+    return html`<style>${keyframes}${style}</style><button class="mdc-button" disabled="${this.disabled}"><slot></slot></button>`;
   }
 
   get disabled() {

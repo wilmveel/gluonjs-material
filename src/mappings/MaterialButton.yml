@@ -1,0 +1,16 @@
+source: '@material/button/mdc-button'
+mappings:
+
+  keyframes:
+    type: keyframes
+
+  style:
+    type: rule
+    regex: ^(.*)$
+    replace: $1
+
+  slotted:
+    type: rule
+    regex: ^(\.mdc-button.*?)((?:\:\:).*)?$
+    replace: ::slotted($1)$2
+
