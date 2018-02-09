@@ -9,12 +9,12 @@ mappings:
   card:
     type: rule
     regex: ^(\.mdc-card(?:\s.*)?)$
-    replace: $1
+    replace: :host($1)
 
-  supporting-text:
+  supporting_text:
     type: rule
     regex: ^(\.mdc-card__supporting-text.*)$
-    replace: $1
+    replace: :host($1)
 
   primary:
     type: rule

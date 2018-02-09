@@ -1,40 +1,36 @@
+const fs = require('fs');
 const path = require('path');
 const yaml = require('yamljs');
 
 const css = require('css');
-const fs = require('fs');
 const sass = require('node-sass');
 
 const mappingsDir = path.resolve(__dirname, '../src/mappings');
-
-function loadMappings() {
-  const files = fs.readdirSync(mappingsDir)
-  return files.map(file => {
-    return yaml.load(path.join(mappingsDir, file));
-  });
-}
 
 function processMappings(source) {
 
   const filename = path.basename(this.resource, '.scss');
 
-  const mappings = loadMappings();
+  const files = fs.readdirSync(mappingsDir);
+
+  files.forEach(file => {
+    this.addDependency(path.join(mappingsDir, file));
+  });
+
+  const mappings = files.map(file => {
+    return yaml.load(path.join(mappingsDir, file));
+  });
+
   const definition = mappings.find(x => this.resource.includes(x.source));
 
-  if(!definition)
+  if (!definition)
     return "module.exports = " + JSON.stringify({style: source});
 
   const res = Object.keys(definition.mappings)
 
     .map(key => {
-
-      console.log("Mapping name", key)
-
       const mapping = definition.mappings[key];
-
       const parsedCss = css.parse(source)
-      console.log(parsedCss.stylesheet.rules[0])
-
       const rules = parsedCss.stylesheet.rules
         .filter(rule => mapping.type === rule.type)
         .filter(rule => rule.selectors)
@@ -60,7 +56,7 @@ function processMappings(source) {
 
       return {
         key: key,
-        value:value
+        value: value
       }
 
     })
