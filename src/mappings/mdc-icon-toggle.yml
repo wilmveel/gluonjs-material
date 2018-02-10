@@ -1,0 +1,12 @@
+source: '@material/icon-toggle/mdc-icon-toggle'
+mappings:
+
+  all:
+    type: rule
+    regex: ^(.*)$
+    replace: $1
+
+  icon:
+    type: rule
+    regex: ^(\.mdc-icon-toggle.*?)((?:\:\:).*)?$
+    replace: :host($1)$2

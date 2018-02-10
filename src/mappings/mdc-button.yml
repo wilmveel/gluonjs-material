@@ -4,10 +4,10 @@ mappings:
   keyframes:
     type: keyframes
 
-  style:
+  host:
     type: rule
-    regex: ^(.*)$
-    replace: $1
+    regex: ^(\.mdc-button.*?)((?:\:\:).*)?$
+    replace: :host($1)$2
 
   slotted:
     type: rule

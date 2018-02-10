@@ -11,6 +11,8 @@ function processMappings(source) {
 
   const filename = path.basename(this.resource, '.scss');
 
+  fs.writeFileSync(`${__dirname}/../tmp/${filename}.css`, source);
+
   const files = fs.readdirSync(mappingsDir);
 
   files.forEach(file => {
@@ -33,8 +35,10 @@ function processMappings(source) {
       const parsedCss = css.parse(source)
       const rules = parsedCss.stylesheet.rules
         .filter(rule => mapping.type === rule.type)
-        .filter(rule => rule.selectors)
         .map(rule => {
+
+          if(!rule.selectors) return rule;
+
           rule.selectors = rule.selectors
             .filter(selector => selector.match(mapping.regex) != null)
             .map(selector => selector.replace(new RegExp(mapping.regex), mapping.replace));

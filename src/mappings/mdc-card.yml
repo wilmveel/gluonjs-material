@@ -21,6 +21,11 @@ mappings:
     regex: ^(\.mdc-card__primary)$
     replace: :host($1)
 
+  secondary:
+    type: rule
+    regex: ^(\.demo-card__secondary)$
+    replace: :host($1)
+
   primary_slotted:
     type: rule
     regex: ^(\.mdc-card__primary)\s(.*)$

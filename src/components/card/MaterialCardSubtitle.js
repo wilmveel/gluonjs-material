@@ -12,6 +12,7 @@ class MaterialCardSubtitle extends GluonElement {
   connectedCallback() {
     super.connectedCallback()
     this.classList.add('mdc-card__subtitle');
+    this.classList.add('mdc-typography--subheading1');
   }
 
 }

@@ -1,26 +1,27 @@
-import {GluonElement, html} from "gluonjs";
+import {MaterialElement, html} from "../MaterialElement";
 import style from "@material/card/mdc-card";
 
 const block = `:host {display:block}`
 
-class MaterialCardActions extends GluonElement {
+class MaterialCardActions extends MaterialElement {
 
-  static get observedAttributes() {
+  static get configurationAttributes() {
     return ['vertical'];
   }
 
   get template() {
-    return html`<slot></slot>`;
+    return html`<style>${this.blockStyle}${style.actions}</style><slot></slot>`;
   }
 
   set vertical(val) {
 
     if (val != null) {
+      console.log('vertical', val)
       this.classList.add('mdc-card__actions--vertical')
     } else {
+
       this.classList.remove('mdc-card__actions--vertical')
     }
-    this.render();
   }
 
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -41,7 +42,7 @@ class MaterialCardActions extends GluonElement {
       this.attributeChangedCallback(attr, null, this.getAttribute(attr));
     });
 
-    this.render()
+    this.render();
   }
 }
 
