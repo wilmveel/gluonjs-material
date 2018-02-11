@@ -46,6 +46,9 @@ module.exports = {
   resolveLoader: {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
+  plugins: [
+    new Uglify()
+  ],
   devServer: {
     compress: true,
     publicPath: '/dist/'
