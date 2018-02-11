@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const yaml = require('yamljs');
 
+const yaml = require('yamljs');
 const css = require('css');
-const sass = require('node-sass');
 
 const mappingsDir = path.resolve(__dirname, '../src/mappings');
 

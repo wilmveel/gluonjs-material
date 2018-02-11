@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,13 +68,12 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d"]; });
+/* unused harmony export defaultTemplateFactory */
+/* harmony export (immutable) */ __webpack_exports__["h"] = render;
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD cardStyle license found at
+ * This code may only be used under the BSD style license found at
  * http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at
  * http://polymer.github.io/AUTHORS.txt
@@ -84,182 +83,130 @@
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-
-
-/**
- *
- * @param result Renders a `TemplateResult` to a container using the
- * `extendedPartCallback` PartCallback, which allows templates to set
- * properties and declarative event handlers.
- *
- * Properties are set by default, instead of attributes. Attribute names in
- * lit-html templates preserve case, so properties are case sensitive. If an
- * expression takes up an entire attribute value, then the property is set to
- * that value. If an expression is interpolated with a string or other
- * expressions then the property is set to the string result of the
- * interpolation.
- *
- * To set an attribute instead of a property, append a `$` suffix to the
- * attribute name.
- *
- * Example:
- *
- *     html`<button class$="primary">Buy Now</button>`
- *
- * To set an event handler, prefix the attribute name with `on-`:
- *
- * Example:
- *
- *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
- *
- */
-function render(result, container) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* render */])(result, container, extendedPartCallback);
-}
-const extendedPartCallback = (instance, templatePart, node) => {
-    if (templatePart.type === 'attribute') {
-        if (templatePart.rawName.startsWith('on-')) {
-            const eventName = templatePart.rawName.slice(3);
-            return new EventPart(instance, node, eventName);
-        }
-        if (templatePart.name.endsWith('$')) {
-            const name = templatePart.name.slice(0, -1);
-            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
-        }
-        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
-    }
-    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* defaultPartCallback */])(instance, templatePart, node);
-};
-/* unused harmony export extendedPartCallback */
-
-class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
-    setValue(values, startIndex) {
-        const s = this.strings;
-        let value;
-        if (s.length === 2 && s[0] === '' && s[1] === '') {
-            // An expression that occupies the whole attribute value will leave
-            // leading and trailing empty strings.
-            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* getValue */])(this, values[startIndex]);
-        }
-        else {
-            // Interpolation, so interpolate
-            value = this._interpolate(values, startIndex);
-        }
-        this.element[this.name] = value;
-    }
-}
-/* unused harmony export PropertyPart */
-
-class EventPart {
-    constructor(instance, element, eventName) {
-        this.instance = instance;
-        this.element = element;
-        this.eventName = eventName;
-    }
-    setValue(value) {
-        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* getValue */])(this, value);
-        const previous = this._listener;
-        if (listener === previous) {
-            return;
-        }
-        this._listener = listener;
-        if (previous != null) {
-            this.element.removeEventListener(this.eventName, previous);
-        }
-        if (listener != null) {
-            this.element.addEventListener(this.eventName, listener);
-        }
-    }
-}
-/* unused harmony export EventPart */
-
-//# sourceMappingURL=lit-extended.js.map
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = render;
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD cardStyle license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-/**
- * TypeScript has a problem with precompiling templates literals
- * https://github.com/Microsoft/TypeScript/issues/17956
- *
- * TODO(justinfagnani): Run tests compiled to ES5 with both Babel and
- * TypeScript to verify correctness.
- */
-const envCachesTemplates = ((t) => t() === t())(() => ((s) => s) ``);
 // The first argument to JS template tags retain identity across multiple
 // calls to a tag for the same literal, so we can cache work done per literal
 // in a Map.
-const templates = new Map();
-const svgTemplates = new Map();
+const templateCaches = new Map();
+/* harmony export (immutable) */ __webpack_exports__["i"] = templateCaches;
+
 /**
  * Interprets a template literal as an HTML template that can efficiently
  * render to and update a container.
  */
-const html = (strings, ...values) => litTag(strings, values, templates, false);
-/* harmony export (immutable) */ __webpack_exports__["d"] = html;
+const html = (strings, ...values) => new TemplateResult(strings, values, 'html');
+/* unused harmony export html */
 
 /**
  * Interprets a template literal as an SVG template that can efficiently
  * render to and update a container.
  */
-const svg = (strings, ...values) => litTag(strings, values, svgTemplates, true);
+const svg = (strings, ...values) => new SVGTemplateResult(strings, values, 'svg');
 /* unused harmony export svg */
 
-function litTag(strings, values, templates, isSvg) {
-    const key = envCachesTemplates ?
-        strings :
-        strings.join('{{--uniqueness-workaround--}}');
-    let template = templates.get(key);
-    if (template === undefined) {
-        template = new Template(strings, isSvg);
-        templates.set(key, template);
-    }
-    return new TemplateResult(template, values);
-}
 /**
  * The return type of `html`, which holds a Template and the values from
  * interpolated expressions.
  */
 class TemplateResult {
-    constructor(template, values) {
-        this.template = template;
+    constructor(strings, values, type, partCallback = defaultPartCallback) {
+        this.strings = strings;
         this.values = values;
+        this.type = type;
+        this.partCallback = partCallback;
+    }
+    /**
+     * Returns a string of HTML used to create a <template> element.
+     */
+    getHTML() {
+        const l = this.strings.length - 1;
+        let html = '';
+        let isTextBinding = true;
+        for (let i = 0; i < l; i++) {
+            const s = this.strings[i];
+            html += s;
+            // We're in a text position if the previous string closed its tags.
+            // If it doesn't have any tags, then we use the previous text position
+            // state.
+            const closing = findTagClose(s);
+            isTextBinding = closing > -1 ? closing < s.length : isTextBinding;
+            html += isTextBinding ? nodeMarker : marker;
+        }
+        html += this.strings[l];
+        return html;
+    }
+    getTemplateElement() {
+        const template = document.createElement('template');
+        template.innerHTML = this.getHTML();
+        return template;
     }
 }
-/* unused harmony export TemplateResult */
+/* harmony export (immutable) */ __webpack_exports__["d"] = TemplateResult;
 
+/**
+ * A TemplateResult for SVG fragments.
+ *
+ * This class wraps HTMl in an <svg> tag in order to parse its contents in the
+ * SVG namespace, then modifies the template to remove the <svg> tag so that
+ * clones only container the original fragment.
+ */
+class SVGTemplateResult extends TemplateResult {
+    getHTML() {
+        return `<svg>${super.getHTML()}</svg>`;
+    }
+    getTemplateElement() {
+        const template = super.getTemplateElement();
+        const content = template.content;
+        const svgElement = content.firstChild;
+        content.removeChild(svgElement);
+        reparentNodes(content, svgElement.firstChild);
+        return template;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = SVGTemplateResult;
+
+/**
+ * The default TemplateFactory which caches Templates keyed on
+ * result.type and result.strings.
+ */
+function defaultTemplateFactory(result) {
+    let templateCache = templateCaches.get(result.type);
+    if (templateCache === undefined) {
+        templateCache = new Map();
+        templateCaches.set(result.type, templateCache);
+    }
+    let template = templateCache.get(result.strings);
+    if (template === undefined) {
+        template = new Template(result, result.getTemplateElement());
+        templateCache.set(result.strings, template);
+    }
+    return template;
+}
 /**
  * Renders a template to a container.
  *
  * To update a container with new values, reevaluate the template literal and
  * call `render` with the new result.
+ *
+ * @param result a TemplateResult created by evaluating a template tag like
+ *     `html` or `svg.
+ * @param container A DOM parent to render to. The entire contents are either
+ *     replaced, or efficiently updated if the same result type was previous
+ *     rendered there.
+ * @param templateFactory a function to create a Template or retreive one from
+ *     cache.
  */
-function render(result, container, partCallback = defaultPartCallback) {
+function render(result, container, templateFactory = defaultTemplateFactory) {
+    const template = templateFactory(result);
     let instance = container.__templateInstance;
     // Repeat render, just call update()
-    if (instance !== undefined && instance.template === result.template &&
-        instance._partCallback === partCallback) {
+    if (instance !== undefined && instance.template === template &&
+        instance._partCallback === result.partCallback) {
         instance.update(result.values);
         return;
     }
     // First render, create a new TemplateInstance and append it
-    instance = new TemplateInstance(result.template, partCallback);
+    instance =
+        new TemplateInstance(template, result.partCallback, templateFactory);
     container.__templateInstance = instance;
     const fragment = instance._clone();
     instance.update(result.values);
@@ -267,10 +214,14 @@ function render(result, container, partCallback = defaultPartCallback) {
     container.appendChild(fragment);
 }
 /**
- * An expression marker with embedded unique key to avoid
- * https://github.com/PolymerLabs/lit-html/issues/62
+ * An expression marker with embedded unique key to avoid collision with
+ * possible text in templates.
  */
 const marker = `{{lit-${String(Math.random()).slice(2)}}}`;
+/**
+ * An expression marker used text-posisitions, not attribute positions,
+ * in template.
+ */
 const nodeMarker = `<!--${marker}-->`;
 const markerRegex = new RegExp(`${marker}|${nodeMarker}`);
 /**
@@ -338,17 +289,14 @@ class TemplatePart {
 }
 /* unused harmony export TemplatePart */
 
+/**
+ * An updateable Template that tracks the location of dynamic parts.
+ */
 class Template {
-    constructor(strings, svg = false) {
+    constructor(result, element) {
         this.parts = [];
-        const element = this.element = document.createElement('template');
-        element.innerHTML = this._getHtml(strings, svg);
-        const content = element.content;
-        if (svg) {
-            const svgElement = content.firstChild;
-            content.removeChild(svgElement);
-            reparentNodes(content, svgElement.firstChild);
-        }
+        this.element = element;
+        const content = this.element.content;
         // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be null
         const walker = document.createTreeWalker(content, 133 /* NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT |
                NodeFilter.SHOW_TEXT */, null, false);
@@ -382,7 +330,7 @@ class Template {
                 while (count-- > 0) {
                     // Get the template literal section leading up to the first
                     // expression in this attribute attribute
-                    const stringForPart = strings[partIndex];
+                    const stringForPart = result.strings[partIndex];
                     // Find the attribute name
                     const attributeNameInPart = lastAttributeNameRegex.exec(stringForPart)[1];
                     // Find the corresponding attribute
@@ -455,28 +403,8 @@ class Template {
             n.parentNode.removeChild(n);
         }
     }
-    /**
-     * Returns a string of HTML used to create a <template> element.
-     */
-    _getHtml(strings, svg) {
-        const l = strings.length - 1;
-        let html = '';
-        let isTextBinding = true;
-        for (let i = 0; i < l; i++) {
-            const s = strings[i];
-            html += s;
-            // We're in a text position if the previous string closed its tags.
-            // If it doesn't have any tags, then we use the previous text position
-            // state.
-            const closing = findTagClose(s);
-            isTextBinding = closing > -1 ? closing < s.length : isTextBinding;
-            html += isTextBinding ? nodeMarker : marker;
-        }
-        html += strings[l];
-        return svg ? `<svg>${html}</svg>` : html;
-    }
 }
-/* unused harmony export Template */
+/* harmony export (immutable) */ __webpack_exports__["c"] = Template;
 
 /**
  * Returns a value ready to be inserted into a Part from a user-provided value.
@@ -494,7 +422,7 @@ const getValue = (part, value) => {
     }
     return value === null ? undefined : value;
 };
-/* harmony export (immutable) */ __webpack_exports__["c"] = getValue;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getValue;
 
 const directive = (f) => {
     f.__litDirective = true;
@@ -503,7 +431,15 @@ const directive = (f) => {
 /* unused harmony export directive */
 
 const isDirective = (o) => typeof o === 'function' && o.__litDirective === true;
+/**
+ * A sentinel value that signals that a value was handled by a directive and
+ * should not be written to the DOM.
+ */
 const directiveValue = {};
+/* harmony export (immutable) */ __webpack_exports__["f"] = directiveValue;
+
+const isPrimitiveValue = (value) => value === null ||
+    !(typeof value === 'object' || typeof value === 'function');
 class AttributePart {
     constructor(instance, element, name, strings) {
         this.instance = instance;
@@ -511,6 +447,7 @@ class AttributePart {
         this.name = name;
         this.strings = strings;
         this.size = strings.length - 1;
+        this._previousValues = [];
     }
     _interpolate(values, startIndex) {
         const strings = this.strings;
@@ -532,9 +469,36 @@ class AttributePart {
         }
         return text + strings[l];
     }
+    _equalToPreviousValues(values, startIndex) {
+        for (let i = startIndex; i < startIndex + this.size; i++) {
+            if (this._previousValues[i] !== values[i] ||
+                !isPrimitiveValue(values[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
     setValue(values, startIndex) {
-        const text = this._interpolate(values, startIndex);
-        this.element.setAttribute(this.name, text);
+        if (this._equalToPreviousValues(values, startIndex)) {
+            return;
+        }
+        const s = this.strings;
+        let value;
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            // An expression that occupies the whole attribute value will leave
+            // leading and trailing empty strings.
+            value = getValue(this, values[startIndex]);
+            if (Array.isArray(value)) {
+                value = value.join('');
+            }
+        }
+        else {
+            value = this._interpolate(values, startIndex);
+        }
+        if (value !== directiveValue) {
+            this.element.setAttribute(this.name, value);
+        }
+        this._previousValues = values;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = AttributePart;
@@ -551,8 +515,7 @@ class NodePart {
         if (value === directiveValue) {
             return;
         }
-        if (value === null ||
-            !(typeof value === 'object' || typeof value === 'function')) {
+        if (isPrimitiveValue(value)) {
             // Handle primitive values
             // If the value didn't change, do nothing
             if (value === this._previousValue) {
@@ -605,14 +568,13 @@ class NodePart {
         this._previousValue = value;
     }
     _setTemplateResult(value) {
+        const template = this.instance._getTemplate(value);
         let instance;
-        if (this._previousValue &&
-            this._previousValue.template === value.template) {
+        if (this._previousValue && this._previousValue.template === template) {
             instance = this._previousValue;
         }
         else {
-            instance =
-                new TemplateInstance(value.template, this.instance._partCallback);
+            instance = new TemplateInstance(template, this.instance._partCallback, this.instance._getTemplate);
             this._setNode(instance._clone());
             this._previousValue = instance;
         }
@@ -692,17 +654,18 @@ const defaultPartCallback = (instance, templatePart, node) => {
     }
     throw new Error(`Unknown part type ${templatePart.type}`);
 };
-/* harmony export (immutable) */ __webpack_exports__["b"] = defaultPartCallback;
+/* harmony export (immutable) */ __webpack_exports__["e"] = defaultPartCallback;
 
 /**
  * An instance of a `Template` that can be attached to the DOM and updated
  * with new values.
  */
 class TemplateInstance {
-    constructor(template, partCallback = defaultPartCallback) {
+    constructor(template, partCallback, getTemplate) {
         this._parts = [];
         this.template = template;
         this._partCallback = partCallback;
+        this._getTemplate = getTemplate;
     }
     update(values) {
         let valueIndex = 0;
@@ -773,20 +736,293 @@ const removeNodes = (container, startNode, endNode = null) => {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
+
+
+class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  static globalStyle(val) {
+
+    const head = document.head;
+    const style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(val));
+
+    head.appendChild(style);
+  }
+
+  static get configurationAttributes() {
+    return [];
+  }
+
+  static get observedAttributes() {
+    return this.configurationAttributes;
+  }
+
+  get styles() {
+    return [];
+  }
+
+  get classes() {
+    return [];
+  }
+
+  get content() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
+  }
+
+  get template(){
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if(this.shadowRoot){
+      this[attr] = newValue;
+    }
+    this.render()
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classes.forEach(c => this.classList.add(c));
+    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
+  }
+
+}
+
+
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__ = __webpack_require__(0);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["a"]; });
-const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if(window.ShadyCSS){const e=t.constructor;void 0===e[o]&&(e[o]=document.createElement("template"),e[o].innerHTML=t.shadowRoot.innerHTML,ShadyCSS.prepareTemplate(e[o],e.is)),ShadyCSS.styleElement(t)}},a=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),n=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class GluonElement extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=a(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),n(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["b" /* render */])(this.template,this.shadowRoot),i(this))}}
-/* harmony export (immutable) */ __webpack_exports__["a"] = GluonElement;
-;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(6);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
+const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
 //# sourceMappingURL=gluon.js.map
 
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */,
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = render;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* unused harmony reexport html */
+/* unused harmony reexport svg */
+/* unused harmony reexport TemplateResult */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+const shadyTemplateFactory = (scopeName) => (result) => {
+    const cacheKey = `${result.type}--${scopeName}`;
+    let templateCache = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].get(cacheKey);
+    if (templateCache === undefined) {
+        templateCache = new Map();
+        __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].set(cacheKey, templateCache);
+    }
+    let template = templateCache.get(result.strings);
+    if (template === undefined) {
+        const element = result.getTemplateElement();
+        if (typeof window.ShadyCSS === 'object') {
+            window.ShadyCSS.prepareTemplate(element, scopeName);
+        }
+        template = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* Template */](result, element);
+        templateCache.set(result.strings, template);
+    }
+    return template;
+};
+function render(result, container, scopeName) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* render */])(result, container, shadyTemplateFactory(scopeName));
+}
+//# sourceMappingURL=shady-render.js.map
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* unused harmony reexport render */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+/**
+ * Interprets a template literal as a lit-extended HTML template.
+ */
+const html = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
+/* harmony export (immutable) */ __webpack_exports__["a"] = html;
+
+/**
+ * Interprets a template literal as a lit-extended SVG template.
+ */
+const svg = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* SVGTemplateResult */](strings, values, 'svg', extendedPartCallback);
+/* unused harmony export svg */
+
+/**
+ * A PartCallback which allows templates to set properties and declarative
+ * event handlers.
+ *
+ * Properties are set by default, instead of attributes. Attribute names in
+ * lit-html templates preserve case, so properties are case sensitive. If an
+ * expression takes up an entire attribute value, then the property is set to
+ * that value. If an expression is interpolated with a string or other
+ * expressions then the property is set to the string result of the
+ * interpolation.
+ *
+ * To set an attribute instead of a property, append a `$` suffix to the
+ * attribute name.
+ *
+ * Example:
+ *
+ *     html`<button class$="primary">Buy Now</button>`
+ *
+ * To set an event handler, prefix the attribute name with `on-`:
+ *
+ * Example:
+ *
+ *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
+ *
+ */
+const extendedPartCallback = (instance, templatePart, node) => {
+    if (templatePart.type === 'attribute') {
+        if (templatePart.rawName.startsWith('on-')) {
+            const eventName = templatePart.rawName.slice(3);
+            return new EventPart(instance, node, eventName);
+        }
+        if (templatePart.name.endsWith('$')) {
+            const name = templatePart.name.slice(0, -1);
+            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
+        }
+        if (templatePart.name.endsWith('?')) {
+            const name = templatePart.name.slice(0, -1);
+            return new BooleanAttributePart(instance, node, name, templatePart.strings);
+        }
+        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
+    }
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* defaultPartCallback */])(instance, templatePart, node);
+};
+/* unused harmony export extendedPartCallback */
+
+/**
+ * Implements a boolean attribute, roughly as defined in the HTML
+ * specification.
+ *
+ * If the value is truthy, then the attribute is present with a value of
+ * ''. If the value is falsey, the attribute is removed.
+ */
+class BooleanAttributePart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            const value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+            if (value === __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+                return;
+            }
+            if (value) {
+                this.element.setAttribute(this.name, '');
+            }
+            else {
+                this.element.removeAttribute(this.name);
+            }
+        }
+        else {
+            throw new Error('boolean attributes can only contain a single expression');
+        }
+    }
+}
+/* unused harmony export BooleanAttributePart */
+
+class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        let value;
+        if (this._equalToPreviousValues(values, startIndex)) {
+            return;
+        }
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            // An expression that occupies the whole attribute value will leave
+            // leading and trailing empty strings.
+            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+        }
+        else {
+            // Interpolation, so interpolate
+            value = this._interpolate(values, startIndex);
+        }
+        if (value !== __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+            this.element[this.name] = value;
+        }
+        this._previousValues = values;
+    }
+}
+/* unused harmony export PropertyPart */
+
+class EventPart {
+    constructor(instance, element, eventName) {
+        this.instance = instance;
+        this.element = element;
+        this.eventName = eventName;
+    }
+    setValue(value) {
+        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, value);
+        const previous = this._listener;
+        if (listener === previous) {
+            return;
+        }
+        this._listener = listener;
+        if (previous != null) {
+            this.element.removeEventListener(this.eventName, previous);
+        }
+        if (listener != null) {
+            this.element.addEventListener(this.eventName, listener);
+        }
+    }
+}
+/* unused harmony export EventPart */
+
+//# sourceMappingURL=lit-extended.js.map
+
+/***/ }),
+/* 7 */,
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -861,7 +1097,7 @@ class MDCFoundation {
 
 
 /***/ }),
-/* 4 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -924,6 +1160,9 @@ class MDCRippleAdapter {
   /** @param {string} className */
   removeClass(className) {}
 
+  /** @param {!EventTarget} target */
+  containsEventTarget(target) {}
+
   /**
    * @param {string} evtType
    * @param {!Function} handler
@@ -975,7 +1214,7 @@ class MDCRippleAdapter {
 
 
 /***/ }),
-/* 5 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1024,7 +1263,7 @@ function detectEdgePseudoVarBug(windowObj) {
   node.className = 'mdc-ripple-surface--test-edge-var-bug';
   document.body.appendChild(node);
 
-  // The bug exists if ::before cardStyle ends up propagating to the parent element.
+  // The bug exists if ::before style ends up propagating to the parent element.
   // Additionally, getComputedStyle returns null in iframes with display: "none" in Firefox,
   // but Firefox is known to support CSS custom properties correctly.
   // See: https://bugzilla.mozilla.org/show_bug.cgi?id=548397
@@ -1127,278 +1366,11 @@ function getNormalizedEventCoords(ev, pageOffset, clientRect) {
 
 
 /***/ }),
-/* 6 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button_scss__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(8);
-
-
-
-
-class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
-
-  constructor() {
-    super();
-    this.isText = true;
-    this.props = {
-      disabled: false,
-      raised: false
-    }
-  }
-
-  static get observedAttributes() {
-    return ['disabled', 'raised'];
-  }
-
-  get template() {
-    if (!this.isText) {
-      return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button_scss___default.a}</style><slot></slot>`;
-    }
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button_scss___default.a}</style><button class="mdc-button" disabled="${this.disabled}"><slot></slot></button>`;
-  }
-
-  get disabled() {
-    return this.props.disabled;
-  }
-
-  set disabled(val) {
-    this.props.disabled = (val != null);
-    this.render();
-  }
-
-  get raised() {
-    return this.props.raised ? 'mdc-button--raised' : '';
-  }
-
-  set raised(val) {
-    if (val != null && this.button) {
-      this.button.classList.add('mdc-button--raised')
-    } else {
-      this.button.classList.remove('mdc-button--raised')
-    }
-    this.render();
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if (attr == 'disabled') {
-      this.disabled = newValue;
-    }
-    if (this.shadowRoot != null && attr == 'raised') {
-      this.raised = newValue;
-    }
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-    const slot = this.shadowRoot.querySelector('slot');
-
-    if (slot != null && slot.assignedNodes().length == 1) {
-      this.button = this.shadowRoot.querySelector('.mdc-button')
-      new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.button)
-    }
-
-    else if (slot != null && slot.assignedNodes().length == 3) {
-      this.isText = false;
-      this.button = this.querySelector('button, a, input');
-      this.button.classList.add('mdc-button');
-      new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.button)
-    }
-
-    else if (slot != null && slot.assignedNodes().length > 3) {
-      throw new Error('Cannot reflext complex light dom')
-    }
-
-    MaterialButton.observedAttributes.forEach(attr => {
-      this.attributeChangedCallback(attr, null, this.getAttribute(attr));
-    });
-
-    this.render();
-  }
-
-}
-
-customElements.define(MaterialButton.is, MaterialButton);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = {"keyframes":"@keyframes mdc-ripple-fg-radius-in {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n  }\n\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    animation-timing-function: linear;\n    opacity: 0;\n  }\n\n  to {\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    animation-timing-function: linear;\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n\n  to {\n    opacity: 0;\n  }\n}","style":".mdc-ripple-surface--test-edge-var-bug {\n  --mdc-ripple-surface-test-edge-var: 1px solid #000;\n  visibility: hidden;\n}\n\n.mdc-ripple-surface--test-edge-var-bug::before {\n  border: var(--mdc-ripple-surface-test-edge-var);\n}\n\n.mdc-button {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n.mdc-button::before,\n.mdc-button::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n.mdc-button::before {\n  transition: opacity 15ms linear;\n}\n\n.mdc-button.mdc-ripple-upgraded::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-activation::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n.mdc-button.mdc-ripple-upgraded--foreground-deactivation::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n.mdc-button::before,\n.mdc-button::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n.mdc-button.mdc-ripple-upgraded::before {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-ripple-upgraded--unbounded::before {\n  top: var(--mdc-ripple-top, calc(50% - 50%));\n  left: var(--mdc-ripple-left, calc(50% - 50%));\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n  transform: scale(var(--mdc-ripple-fg-scale, 0));\n}\n\n.mdc-button.mdc-ripple-upgraded::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n.mdc-button:active {\n  outline: none;\n}\n\n.mdc-button:hover {\n  cursor: pointer;\n}\n\n.mdc-button::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n.mdc-button:disabled {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n.mdc-button--theme-dark .mdc-button:disabled,\n.mdc-theme--dark .mdc-button:disabled {\n  /* @alternate */\n  color: rgba(255, 255, 255, 0.5);\n  color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-button:not(:disabled) {\n  background-color: transparent;\n}\n\n.mdc-button:not(:disabled) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n.mdc-button::before,\n.mdc-button::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n.mdc-button:hover::before {\n  opacity: 0.04;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded):focus::before,\n.mdc-button.mdc-ripple-upgraded--background-focused::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded)::after {\n  transition: opacity 150ms linear;\n}\n\n.mdc-button:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n.mdc-button.mdc-ripple-upgraded {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n.mdc-button--raised:disabled,\n.mdc-button--unelevated:disabled {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-button--theme-dark .mdc-button--raised:disabled,\n.mdc-theme--dark .mdc-button--raised:disabled {\n  background-color: rgba(255, 255, 255, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-button--raised:not(:disabled),\n.mdc-button--unelevated:not(:disabled) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n.mdc-button--raised:not(:disabled),\n.mdc-button--unelevated:not(:disabled) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n.mdc-button--raised::before,\n.mdc-button--raised::after,\n.mdc-button--unelevated::before,\n.mdc-button--unelevated::after {\n  /* @alternate */\n  background-color: white;\n}\n\n.mdc-button--raised:hover::before,\n.mdc-button--unelevated:hover::before {\n  opacity: 0.08;\n}\n\n.mdc-button--raised:not(.mdc-ripple-upgraded):focus::before,\n.mdc-button--raised.mdc-ripple-upgraded--background-focused::before,\n.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus::before,\n.mdc-button--unelevated.mdc-ripple-upgraded--background-focused::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n.mdc-button--raised:not(.mdc-ripple-upgraded)::after,\n.mdc-button--unelevated:not(.mdc-ripple-upgraded)::after {\n  transition: opacity 150ms linear;\n}\n\n.mdc-button--raised:not(.mdc-ripple-upgraded):active::after,\n.mdc-button--unelevated:not(.mdc-ripple-upgraded):active::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n.mdc-button--raised.mdc-ripple-upgraded,\n.mdc-button--unelevated.mdc-ripple-upgraded {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n.mdc-button--raised {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.mdc-button--raised:hover,\n.mdc-button--raised:focus {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-button--raised:active {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-button--raised:disabled {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n.mdc-button--stroked {\n  border-cardStyle: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n.mdc-button--stroked:disabled {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n.mdc-button--theme-dark .mdc-button--stroked:disabled,\n.mdc-theme--dark .mdc-button--stroked:disabled {\n  /* @alternate */\n  border-color: rgba(255, 255, 255, 0.5);\n  border-color: var(--mdc-theme-text-disabled-on-dark, rgba(255, 255, 255, 0.5));\n}\n\n.mdc-button--stroked.mdc-button--dense {\n  line-height: 27px;\n}\n\n.mdc-button--stroked.mdc-button--compact {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n.mdc-button--stroked:not(:disabled) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n.mdc-button--compact {\n  padding: 0 8px;\n}\n\n.mdc-button--dense {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n.mdc-button__icon {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}","slotted":"::slotted(.mdc-button--stroked) {\n  border-cardStyle: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}"}
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MDCRipple; });
-/* unused harmony export RippleCapableSurface */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(5);
-/* unused harmony reexport MDCRippleFoundation */
-/* unused harmony reexport util */
-/**
- * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-
-
-
-
-/**
- * @extends MDCComponent<!MDCRippleFoundation>
- */
-class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["a" /* default */] {
-  /** @param {...?} args */
-  constructor(...args) {
-    super(...args);
-
-    /** @type {boolean} */
-    this.disabled = false;
-
-    /** @private {boolean} */
-    this.unbounded_;
-  }
-
-  /**
-   * @param {!Element} root
-   * @param {{isUnbounded: (boolean|undefined)}=} options
-   * @return {!MDCRipple}
-   */
-  static attachTo(root, {isUnbounded = undefined} = {}) {
-    const ripple = new MDCRipple(root);
-    // Only override unbounded behavior if option is explicitly specified
-    if (isUnbounded !== undefined) {
-      ripple.unbounded = /** @type {boolean} */ (isUnbounded);
-    }
-    return ripple;
-  }
-
-  /**
-   * @param {!RippleCapableSurface} instance
-   * @return {!MDCRippleAdapter}
-   */
-  static createAdapter(instance) {
-    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util__["b" /* getMatchesProperty */](HTMLElement.prototype);
-
-    return {
-      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util__["d" /* supportsCssVariables */](window),
-      isUnbounded: () => instance.unbounded,
-      isSurfaceActive: () => instance.root_[MATCHES](':active'),
-      isSurfaceDisabled: () => instance.disabled,
-      addClass: (className) => instance.root_.classList.add(className),
-      removeClass: (className) => instance.root_.classList.remove(className),
-      registerInteractionHandler: (evtType, handler) =>
-        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
-      deregisterInteractionHandler: (evtType, handler) =>
-        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
-      registerDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
-      deregisterDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
-      registerResizeHandler: (handler) => window.addEventListener('resize', handler),
-      deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
-      updateCssVariable: (varName, value) => instance.root_.style.setProperty(varName, value),
-      computeBoundingRect: () => instance.root_.getBoundingClientRect(),
-      getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
-    };
-  }
-
-  /** @return {boolean} */
-  get unbounded() {
-    return this.unbounded_;
-  }
-
-  /** @param {boolean} unbounded */
-  set unbounded(unbounded) {
-    this.unbounded_ = Boolean(unbounded);
-    this.setUnbounded_();
-  }
-
-  /**
-   * Closure Compiler throws an access control error when directly accessing a
-   * protected or private property inside a getter/setter, like unbounded above.
-   * By accessing the protected property inside a method, we solve that problem.
-   * That's why this function exists.
-   * @private
-   */
-  setUnbounded_() {
-    this.foundation_.setUnbounded(this.unbounded_);
-  }
-
-  activate() {
-    this.foundation_.activate();
-  }
-
-  deactivate() {
-    this.foundation_.deactivate();
-  }
-
-  layout() {
-    this.foundation_.layout();
-  }
-
-  /** @return {!MDCRippleFoundation} */
-  getDefaultFoundation() {
-    return new __WEBPACK_IMPORTED_MODULE_2__foundation__["a" /* default */](MDCRipple.createAdapter(this));
-  }
-
-  initialSyncWithDOM() {
-    this.unbounded = 'mdcRippleIsUnbounded' in this.root_.dataset;
-  }
-}
-
-/**
- * See Material Design spec for more details on when to use ripples.
- * https://material.io/guidelines/motion/choreography.html#choreography-creation
- * @record
- */
-class RippleCapableSurface {}
-
-/** @protected {!Element} */
-RippleCapableSurface.prototype.root_;
-
-/**
- * Whether or not the ripple bleeds out of the bounds of the element.
- * @type {boolean|undefined}
- */
-RippleCapableSurface.prototype.unbounded;
-
-/**
- * Whether or not the ripple is attached to a disabled component.
- * @type {boolean|undefined}
- */
-RippleCapableSurface.prototype.disabled;
-
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__(8);
 /**
  * @license
  * Copyright 2016 Google Inc.
@@ -1527,14 +1499,180 @@ class MDCComponent {
 
 
 /***/ }),
-/* 10 */
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(5);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MDCRipple; });
+/* unused harmony export RippleCapableSurface */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(10);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__foundation__["a"]; });
+/* unused harmony reexport util */
+/**
+ * @license
+ * Copyright 2016 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+
+/**
+ * @extends MDCComponent<!MDCRippleFoundation>
+ */
+class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["a" /* default */] {
+  /** @param {...?} args */
+  constructor(...args) {
+    super(...args);
+
+    /** @type {boolean} */
+    this.disabled = false;
+
+    /** @private {boolean} */
+    this.unbounded_;
+  }
+
+  /**
+   * @param {!Element} root
+   * @param {{isUnbounded: (boolean|undefined)}=} options
+   * @return {!MDCRipple}
+   */
+  static attachTo(root, {isUnbounded = undefined} = {}) {
+    const ripple = new MDCRipple(root);
+    // Only override unbounded behavior if option is explicitly specified
+    if (isUnbounded !== undefined) {
+      ripple.unbounded = /** @type {boolean} */ (isUnbounded);
+    }
+    return ripple;
+  }
+
+  /**
+   * @param {!RippleCapableSurface} instance
+   * @return {!MDCRippleAdapter}
+   */
+  static createAdapter(instance) {
+    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util__["b" /* getMatchesProperty */](HTMLElement.prototype);
+
+    return {
+      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util__["d" /* supportsCssVariables */](window),
+      isUnbounded: () => instance.unbounded,
+      isSurfaceActive: () => instance.root_[MATCHES](':active'),
+      isSurfaceDisabled: () => instance.disabled,
+      addClass: (className) => instance.root_.classList.add(className),
+      removeClass: (className) => instance.root_.classList.remove(className),
+      containsEventTarget: (target) => instance.root_.contains(target),
+      registerInteractionHandler: (evtType, handler) =>
+        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+      deregisterInteractionHandler: (evtType, handler) =>
+        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+      registerDocumentInteractionHandler: (evtType, handler) =>
+        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+      deregisterDocumentInteractionHandler: (evtType, handler) =>
+        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+      registerResizeHandler: (handler) => window.addEventListener('resize', handler),
+      deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
+      updateCssVariable: (varName, value) => instance.root_.style.setProperty(varName, value),
+      computeBoundingRect: () => instance.root_.getBoundingClientRect(),
+      getWindowPageOffset: () => ({x: window.pageXOffset, y: window.pageYOffset}),
+    };
+  }
+
+  /** @return {boolean} */
+  get unbounded() {
+    return this.unbounded_;
+  }
+
+  /** @param {boolean} unbounded */
+  set unbounded(unbounded) {
+    this.unbounded_ = Boolean(unbounded);
+    this.setUnbounded_();
+  }
+
+  /**
+   * Closure Compiler throws an access control error when directly accessing a
+   * protected or private property inside a getter/setter, like unbounded above.
+   * By accessing the protected property inside a method, we solve that problem.
+   * That's why this function exists.
+   * @private
+   */
+  setUnbounded_() {
+    this.foundation_.setUnbounded(this.unbounded_);
+  }
+
+  activate() {
+    this.foundation_.activate();
+  }
+
+  deactivate() {
+    this.foundation_.deactivate();
+  }
+
+  layout() {
+    this.foundation_.layout();
+  }
+
+  /** @return {!MDCRippleFoundation} */
+  getDefaultFoundation() {
+    return new __WEBPACK_IMPORTED_MODULE_2__foundation__["a" /* default */](MDCRipple.createAdapter(this));
+  }
+
+  initialSyncWithDOM() {
+    this.unbounded = 'mdcRippleIsUnbounded' in this.root_.dataset;
+  }
+}
+
+/**
+ * See Material Design spec for more details on when to use ripples.
+ * https://material.io/guidelines/motion/choreography.html#choreography-creation
+ * @record
+ */
+class RippleCapableSurface {}
+
+/** @protected {!Element} */
+RippleCapableSurface.prototype.root_;
+
+/**
+ * Whether or not the ripple bleeds out of the bounds of the element.
+ * @type {boolean|undefined}
+ */
+RippleCapableSurface.prototype.unbounded;
+
+/**
+ * Whether or not the ripple is attached to a disabled component.
+ * @type {boolean|undefined}
+ */
+RippleCapableSurface.prototype.disabled;
+
+
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(10);
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1603,6 +1741,10 @@ const ACTIVATION_EVENT_TYPES = ['touchstart', 'pointerdown', 'mousedown', 'keydo
 // Deactivation events registered on documentElement when a pointer-related down event occurs
 const POINTER_DEACTIVATION_EVENT_TYPES = ['touchend', 'pointerup', 'mouseup'];
 
+// Tracks activations that have occurred on the current frame, to avoid simultaneous nested activations
+/** @type {!Array<!EventTarget>} */
+let activatedTargets = [];
+
 /**
  * @extends {MDCFoundation<!MDCRippleAdapter>}
  */
@@ -1627,6 +1769,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
       isSurfaceDisabled: () => /* boolean */ {},
       addClass: (/* className: string */) => {},
       removeClass: (/* className: string */) => {},
+      containsEventTarget: (/* target: !EventTarget */) => {},
       registerInteractionHandler: (/* evtType: string, handler: EventListener */) => {},
       deregisterInteractionHandler: (/* evtType: string, handler: EventListener */) => {},
       registerDocumentInteractionHandler: (/* evtType: string, handler: EventListener */) => {},
@@ -1650,9 +1793,6 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
     /** @private {!ActivationStateType} */
     this.activationState_ = this.defaultActivationState_();
-
-    /** @private {number} */
-    this.xfDuration_ = 0;
 
     /** @private {number} */
     this.initialSize_ = 0;
@@ -1825,15 +1965,14 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
       return;
     }
 
-    const {activationState_: activationState} = this;
+    const activationState = this.activationState_;
     if (activationState.isActivated) {
       return;
     }
 
     // Avoid reacting to follow-on events fired by touch device after an already-processed user interaction
     const previousActivationEvent = this.previousActivationEvent_;
-    const isSameInteraction = previousActivationEvent && e && previousActivationEvent.type !== e.type &&
-      previousActivationEvent.clientX === e.clientX && previousActivationEvent.clientY === e.clientY;
+    const isSameInteraction = previousActivationEvent && e && previousActivationEvent.type !== e.type;
     if (isSameInteraction) {
       return;
     }
@@ -1845,7 +1984,16 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
       e.type === 'mousedown' || e.type === 'touchstart' || e.type === 'pointerdown'
     );
 
+    const hasActivatedChild =
+      e && activatedTargets.length > 0 && activatedTargets.some((target) => this.adapter_.containsEventTarget(target));
+    if (hasActivatedChild) {
+      // Immediately reset activation state, while preserving logic that prevents touch follow-on events
+      this.resetActivationState_();
+      return;
+    }
+
     if (e) {
+      activatedTargets.push(/** @type {!EventTarget} */ (e.target));
       this.registerDeactivationHandlers_(e);
     }
 
@@ -1862,6 +2010,9 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
         // Reset activation state immediately if element was not made active.
         this.activationState_ = this.defaultActivationState_();
       }
+
+      // Reset array on next frame after the current event has had a chance to bubble to prevent ancestor ripples
+      activatedTargets = [];
     });
   }
 
@@ -1906,8 +2057,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
    * @return {{startPoint: PointType, endPoint: PointType}}
    */
   getFgTranslationCoordinates_() {
-    const {activationState_: activationState} = this;
-    const {activationEvent, wasActivatedByPointer} = activationState;
+    const {activationEvent, wasActivatedByPointer} = this.activationState_;
 
     let startPoint;
     if (wasActivatedByPointer) {
@@ -1965,7 +2115,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
     this.activationState_ = this.defaultActivationState_();
     // Touch devices may fire additional events for the same interaction within a short time.
     // Store the previous event until it's safe to assume that subsequent events are for new interactions.
-    setTimeout(() => this.previousActivationEvent_ = null, 100);
+    setTimeout(() => this.previousActivationEvent_ = null, MDCRippleFoundation.numbers.TAP_DELAY_MS);
   }
 
   /**
@@ -2026,17 +2176,25 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
   /** @private */
   layoutInternal_() {
     this.frame_ = this.adapter_.computeBoundingRect();
-
     const maxDim = Math.max(this.frame_.height, this.frame_.width);
-    const surfaceDiameter = Math.sqrt(Math.pow(this.frame_.width, 2) + Math.pow(this.frame_.height, 2));
 
-    // 60% of the largest dimension of the surface
+    // Surface diameter is treated differently for unbounded vs. bounded ripples.
+    // Unbounded ripple diameter is calculated smaller since the surface is expected to already be padded appropriately
+    // to extend the hitbox, and the ripple is expected to meet the edges of the padded hitbox (which is typically
+    // square). Bounded ripples, on the other hand, are fully expected to expand beyond the surface's longest diameter
+    // (calculated based on the diagonal plus a constant padding), and are clipped at the surface's border via
+    // `overflow: hidden`.
+    const getBoundedRadius = () => {
+      const hypotenuse = Math.sqrt(Math.pow(this.frame_.width, 2) + Math.pow(this.frame_.height, 2));
+      return hypotenuse + MDCRippleFoundation.numbers.PADDING;
+    };
+
+    this.maxRadius_ = this.adapter_.isUnbounded() ? maxDim : getBoundedRadius();
+
+    // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
     this.initialSize_ = maxDim * MDCRippleFoundation.numbers.INITIAL_ORIGIN_SCALE;
-
-    // Diameter of the surface + 10px
-    this.maxRadius_ = surfaceDiameter + MDCRippleFoundation.numbers.PADDING;
     this.fgScale_ = this.maxRadius_ / this.initialSize_;
-    this.xfDuration_ = 1000 * Math.sqrt(this.maxRadius_ / 1024);
+
     this.updateLayoutCssVars_();
   }
 
@@ -2075,7 +2233,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
 
 /***/ }),
-/* 11 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2124,10 +2282,122 @@ const numbers = {
   INITIAL_ORIGIN_SCALE: 0.6,
   DEACTIVATION_TIMEOUT_MS: 225, // Corresponds to $mdc-ripple-translate-duration (i.e. activation animation duration)
   FG_DEACTIVATION_MS: 150, // Corresponds to $mdc-ripple-fade-out-duration (i.e. deactivation animation duration)
+  TAP_DELAY_MS: 300, // Delay between touch and simulated mouse events on touch devices
 };
 
 
 
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Button__ = __webpack_require__(22);
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(14);
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */].globalStyle(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes)
+
+class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+
+  get hasSlotted() {
+    const slot = this.shadowRoot.querySelector('slot');
+    return slot != null && slot.assignedNodes().length > 1;
+  }
+
+  get element() {
+    if (!this.hasSlotted) {
+      return this;
+    } else {
+      return this.querySelector('button, a, input');
+    }
+  }
+
+  get styles() {
+    if (this.hasSlotted) {
+      return [
+        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
+        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.slotted
+      ]
+    } else {
+      return [
+        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
+        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.host
+      ]
+    }
+  }
+
+  get classes() {
+    if (this.hasSlotted) {
+      return []
+    } else {
+      return [
+        'mdc-button'
+      ]
+    }
+  }
+
+  static get configurationAttributes() {
+    return ['disabled', 'raised'];
+  }
+
+  set disabled(val) {
+    if (val != null) {
+      if(!this.element.hasAttribute("disabled")) {
+        this.element.setAttribute('disabled', "")
+      }
+    } else {
+      this.element.removeAttribute('disabled')
+    }
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
+  }
+
+  set raised(val) {
+    if (val != null) {
+      this.element.classList.add('mdc-button--raised');
+    } else {
+      this.element.classList.remove('mdc-button--raised');
+    }
+  }
+
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.element.classList.add('mdc-button');
+    new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.element);
+    this.render();
+  }
+
+}
+
+customElements.define(MaterialButton.is, MaterialButton);
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {"keyframes":"@keyframes mdc-ripple-fg-radius-in {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n  }\n\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    animation-timing-function: linear;\n    opacity: 0;\n  }\n\n  to {\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    animation-timing-function: linear;\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n\n  to {\n    opacity: 0;\n  }\n}","host":":host(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n:host(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n:host(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n:host(.mdc-button:active) {\n  outline: none;\n}\n\n:host(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n:host(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n:host(.mdc-button--raised:disabled),\n:host(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n:host(.mdc-button--raised)::before,\n:host(.mdc-button--raised)::after,\n:host(.mdc-button--unelevated)::before,\n:host(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n:host(.mdc-button--raised:hover)::before,\n:host(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n:host(.mdc-button--raised.mdc-ripple-upgraded),\n:host(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n:host(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n:host(.mdc-button--raised:hover),\n:host(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n:host(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n:host(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n:host(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n:host(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n:host(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}","slotted":"::slotted(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n::slotted(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n::slotted(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n::slotted(.mdc-button:active) {\n  outline: none;\n}\n\n::slotted(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n::slotted(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n::slotted(.mdc-button--raised:disabled),\n::slotted(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n::slotted(.mdc-button--raised)::before,\n::slotted(.mdc-button--raised)::after,\n::slotted(.mdc-button--unelevated)::before,\n::slotted(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n::slotted(.mdc-button--raised:hover)::before,\n::slotted(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised.mdc-ripple-upgraded),\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n::slotted(.mdc-button--raised:hover),\n::slotted(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n::slotted(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n::slotted(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n::slotted(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}"}
 
 /***/ })
 /******/ ]);

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,13 +68,12 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d"]; });
+/* unused harmony export defaultTemplateFactory */
+/* harmony export (immutable) */ __webpack_exports__["h"] = render;
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD cardStyle license found at
+ * This code may only be used under the BSD style license found at
  * http://polymer.github.io/LICENSE.txt
  * The complete set of authors may be found at
  * http://polymer.github.io/AUTHORS.txt
@@ -84,182 +83,130 @@
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-
-
-/**
- *
- * @param result Renders a `TemplateResult` to a container using the
- * `extendedPartCallback` PartCallback, which allows templates to set
- * properties and declarative event handlers.
- *
- * Properties are set by default, instead of attributes. Attribute names in
- * lit-html templates preserve case, so properties are case sensitive. If an
- * expression takes up an entire attribute value, then the property is set to
- * that value. If an expression is interpolated with a string or other
- * expressions then the property is set to the string result of the
- * interpolation.
- *
- * To set an attribute instead of a property, append a `$` suffix to the
- * attribute name.
- *
- * Example:
- *
- *     html`<button class$="primary">Buy Now</button>`
- *
- * To set an event handler, prefix the attribute name with `on-`:
- *
- * Example:
- *
- *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
- *
- */
-function render(result, container) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* render */])(result, container, extendedPartCallback);
-}
-const extendedPartCallback = (instance, templatePart, node) => {
-    if (templatePart.type === 'attribute') {
-        if (templatePart.rawName.startsWith('on-')) {
-            const eventName = templatePart.rawName.slice(3);
-            return new EventPart(instance, node, eventName);
-        }
-        if (templatePart.name.endsWith('$')) {
-            const name = templatePart.name.slice(0, -1);
-            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
-        }
-        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
-    }
-    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* defaultPartCallback */])(instance, templatePart, node);
-};
-/* unused harmony export extendedPartCallback */
-
-class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
-    setValue(values, startIndex) {
-        const s = this.strings;
-        let value;
-        if (s.length === 2 && s[0] === '' && s[1] === '') {
-            // An expression that occupies the whole attribute value will leave
-            // leading and trailing empty strings.
-            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* getValue */])(this, values[startIndex]);
-        }
-        else {
-            // Interpolation, so interpolate
-            value = this._interpolate(values, startIndex);
-        }
-        this.element[this.name] = value;
-    }
-}
-/* unused harmony export PropertyPart */
-
-class EventPart {
-    constructor(instance, element, eventName) {
-        this.instance = instance;
-        this.element = element;
-        this.eventName = eventName;
-    }
-    setValue(value) {
-        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* getValue */])(this, value);
-        const previous = this._listener;
-        if (listener === previous) {
-            return;
-        }
-        this._listener = listener;
-        if (previous != null) {
-            this.element.removeEventListener(this.eventName, previous);
-        }
-        if (listener != null) {
-            this.element.addEventListener(this.eventName, listener);
-        }
-    }
-}
-/* unused harmony export EventPart */
-
-//# sourceMappingURL=lit-extended.js.map
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = render;
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD cardStyle license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-/**
- * TypeScript has a problem with precompiling templates literals
- * https://github.com/Microsoft/TypeScript/issues/17956
- *
- * TODO(justinfagnani): Run tests compiled to ES5 with both Babel and
- * TypeScript to verify correctness.
- */
-const envCachesTemplates = ((t) => t() === t())(() => ((s) => s) ``);
 // The first argument to JS template tags retain identity across multiple
 // calls to a tag for the same literal, so we can cache work done per literal
 // in a Map.
-const templates = new Map();
-const svgTemplates = new Map();
+const templateCaches = new Map();
+/* harmony export (immutable) */ __webpack_exports__["i"] = templateCaches;
+
 /**
  * Interprets a template literal as an HTML template that can efficiently
  * render to and update a container.
  */
-const html = (strings, ...values) => litTag(strings, values, templates, false);
-/* harmony export (immutable) */ __webpack_exports__["d"] = html;
+const html = (strings, ...values) => new TemplateResult(strings, values, 'html');
+/* unused harmony export html */
 
 /**
  * Interprets a template literal as an SVG template that can efficiently
  * render to and update a container.
  */
-const svg = (strings, ...values) => litTag(strings, values, svgTemplates, true);
+const svg = (strings, ...values) => new SVGTemplateResult(strings, values, 'svg');
 /* unused harmony export svg */
 
-function litTag(strings, values, templates, isSvg) {
-    const key = envCachesTemplates ?
-        strings :
-        strings.join('{{--uniqueness-workaround--}}');
-    let template = templates.get(key);
-    if (template === undefined) {
-        template = new Template(strings, isSvg);
-        templates.set(key, template);
-    }
-    return new TemplateResult(template, values);
-}
 /**
  * The return type of `html`, which holds a Template and the values from
  * interpolated expressions.
  */
 class TemplateResult {
-    constructor(template, values) {
-        this.template = template;
+    constructor(strings, values, type, partCallback = defaultPartCallback) {
+        this.strings = strings;
         this.values = values;
+        this.type = type;
+        this.partCallback = partCallback;
+    }
+    /**
+     * Returns a string of HTML used to create a <template> element.
+     */
+    getHTML() {
+        const l = this.strings.length - 1;
+        let html = '';
+        let isTextBinding = true;
+        for (let i = 0; i < l; i++) {
+            const s = this.strings[i];
+            html += s;
+            // We're in a text position if the previous string closed its tags.
+            // If it doesn't have any tags, then we use the previous text position
+            // state.
+            const closing = findTagClose(s);
+            isTextBinding = closing > -1 ? closing < s.length : isTextBinding;
+            html += isTextBinding ? nodeMarker : marker;
+        }
+        html += this.strings[l];
+        return html;
+    }
+    getTemplateElement() {
+        const template = document.createElement('template');
+        template.innerHTML = this.getHTML();
+        return template;
     }
 }
-/* unused harmony export TemplateResult */
+/* harmony export (immutable) */ __webpack_exports__["d"] = TemplateResult;
 
+/**
+ * A TemplateResult for SVG fragments.
+ *
+ * This class wraps HTMl in an <svg> tag in order to parse its contents in the
+ * SVG namespace, then modifies the template to remove the <svg> tag so that
+ * clones only container the original fragment.
+ */
+class SVGTemplateResult extends TemplateResult {
+    getHTML() {
+        return `<svg>${super.getHTML()}</svg>`;
+    }
+    getTemplateElement() {
+        const template = super.getTemplateElement();
+        const content = template.content;
+        const svgElement = content.firstChild;
+        content.removeChild(svgElement);
+        reparentNodes(content, svgElement.firstChild);
+        return template;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = SVGTemplateResult;
+
+/**
+ * The default TemplateFactory which caches Templates keyed on
+ * result.type and result.strings.
+ */
+function defaultTemplateFactory(result) {
+    let templateCache = templateCaches.get(result.type);
+    if (templateCache === undefined) {
+        templateCache = new Map();
+        templateCaches.set(result.type, templateCache);
+    }
+    let template = templateCache.get(result.strings);
+    if (template === undefined) {
+        template = new Template(result, result.getTemplateElement());
+        templateCache.set(result.strings, template);
+    }
+    return template;
+}
 /**
  * Renders a template to a container.
  *
  * To update a container with new values, reevaluate the template literal and
  * call `render` with the new result.
+ *
+ * @param result a TemplateResult created by evaluating a template tag like
+ *     `html` or `svg.
+ * @param container A DOM parent to render to. The entire contents are either
+ *     replaced, or efficiently updated if the same result type was previous
+ *     rendered there.
+ * @param templateFactory a function to create a Template or retreive one from
+ *     cache.
  */
-function render(result, container, partCallback = defaultPartCallback) {
+function render(result, container, templateFactory = defaultTemplateFactory) {
+    const template = templateFactory(result);
     let instance = container.__templateInstance;
     // Repeat render, just call update()
-    if (instance !== undefined && instance.template === result.template &&
-        instance._partCallback === partCallback) {
+    if (instance !== undefined && instance.template === template &&
+        instance._partCallback === result.partCallback) {
         instance.update(result.values);
         return;
     }
     // First render, create a new TemplateInstance and append it
-    instance = new TemplateInstance(result.template, partCallback);
+    instance =
+        new TemplateInstance(template, result.partCallback, templateFactory);
     container.__templateInstance = instance;
     const fragment = instance._clone();
     instance.update(result.values);
@@ -267,10 +214,14 @@ function render(result, container, partCallback = defaultPartCallback) {
     container.appendChild(fragment);
 }
 /**
- * An expression marker with embedded unique key to avoid
- * https://github.com/PolymerLabs/lit-html/issues/62
+ * An expression marker with embedded unique key to avoid collision with
+ * possible text in templates.
  */
 const marker = `{{lit-${String(Math.random()).slice(2)}}}`;
+/**
+ * An expression marker used text-posisitions, not attribute positions,
+ * in template.
+ */
 const nodeMarker = `<!--${marker}-->`;
 const markerRegex = new RegExp(`${marker}|${nodeMarker}`);
 /**
@@ -338,17 +289,14 @@ class TemplatePart {
 }
 /* unused harmony export TemplatePart */
 
+/**
+ * An updateable Template that tracks the location of dynamic parts.
+ */
 class Template {
-    constructor(strings, svg = false) {
+    constructor(result, element) {
         this.parts = [];
-        const element = this.element = document.createElement('template');
-        element.innerHTML = this._getHtml(strings, svg);
-        const content = element.content;
-        if (svg) {
-            const svgElement = content.firstChild;
-            content.removeChild(svgElement);
-            reparentNodes(content, svgElement.firstChild);
-        }
+        this.element = element;
+        const content = this.element.content;
         // Edge needs all 4 parameters present; IE11 needs 3rd parameter to be null
         const walker = document.createTreeWalker(content, 133 /* NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT |
                NodeFilter.SHOW_TEXT */, null, false);
@@ -382,7 +330,7 @@ class Template {
                 while (count-- > 0) {
                     // Get the template literal section leading up to the first
                     // expression in this attribute attribute
-                    const stringForPart = strings[partIndex];
+                    const stringForPart = result.strings[partIndex];
                     // Find the attribute name
                     const attributeNameInPart = lastAttributeNameRegex.exec(stringForPart)[1];
                     // Find the corresponding attribute
@@ -455,28 +403,8 @@ class Template {
             n.parentNode.removeChild(n);
         }
     }
-    /**
-     * Returns a string of HTML used to create a <template> element.
-     */
-    _getHtml(strings, svg) {
-        const l = strings.length - 1;
-        let html = '';
-        let isTextBinding = true;
-        for (let i = 0; i < l; i++) {
-            const s = strings[i];
-            html += s;
-            // We're in a text position if the previous string closed its tags.
-            // If it doesn't have any tags, then we use the previous text position
-            // state.
-            const closing = findTagClose(s);
-            isTextBinding = closing > -1 ? closing < s.length : isTextBinding;
-            html += isTextBinding ? nodeMarker : marker;
-        }
-        html += strings[l];
-        return svg ? `<svg>${html}</svg>` : html;
-    }
 }
-/* unused harmony export Template */
+/* harmony export (immutable) */ __webpack_exports__["c"] = Template;
 
 /**
  * Returns a value ready to be inserted into a Part from a user-provided value.
@@ -494,7 +422,7 @@ const getValue = (part, value) => {
     }
     return value === null ? undefined : value;
 };
-/* harmony export (immutable) */ __webpack_exports__["c"] = getValue;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getValue;
 
 const directive = (f) => {
     f.__litDirective = true;
@@ -503,7 +431,15 @@ const directive = (f) => {
 /* unused harmony export directive */
 
 const isDirective = (o) => typeof o === 'function' && o.__litDirective === true;
+/**
+ * A sentinel value that signals that a value was handled by a directive and
+ * should not be written to the DOM.
+ */
 const directiveValue = {};
+/* harmony export (immutable) */ __webpack_exports__["f"] = directiveValue;
+
+const isPrimitiveValue = (value) => value === null ||
+    !(typeof value === 'object' || typeof value === 'function');
 class AttributePart {
     constructor(instance, element, name, strings) {
         this.instance = instance;
@@ -511,6 +447,7 @@ class AttributePart {
         this.name = name;
         this.strings = strings;
         this.size = strings.length - 1;
+        this._previousValues = [];
     }
     _interpolate(values, startIndex) {
         const strings = this.strings;
@@ -532,9 +469,36 @@ class AttributePart {
         }
         return text + strings[l];
     }
+    _equalToPreviousValues(values, startIndex) {
+        for (let i = startIndex; i < startIndex + this.size; i++) {
+            if (this._previousValues[i] !== values[i] ||
+                !isPrimitiveValue(values[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
     setValue(values, startIndex) {
-        const text = this._interpolate(values, startIndex);
-        this.element.setAttribute(this.name, text);
+        if (this._equalToPreviousValues(values, startIndex)) {
+            return;
+        }
+        const s = this.strings;
+        let value;
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            // An expression that occupies the whole attribute value will leave
+            // leading and trailing empty strings.
+            value = getValue(this, values[startIndex]);
+            if (Array.isArray(value)) {
+                value = value.join('');
+            }
+        }
+        else {
+            value = this._interpolate(values, startIndex);
+        }
+        if (value !== directiveValue) {
+            this.element.setAttribute(this.name, value);
+        }
+        this._previousValues = values;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = AttributePart;
@@ -551,8 +515,7 @@ class NodePart {
         if (value === directiveValue) {
             return;
         }
-        if (value === null ||
-            !(typeof value === 'object' || typeof value === 'function')) {
+        if (isPrimitiveValue(value)) {
             // Handle primitive values
             // If the value didn't change, do nothing
             if (value === this._previousValue) {
@@ -605,14 +568,13 @@ class NodePart {
         this._previousValue = value;
     }
     _setTemplateResult(value) {
+        const template = this.instance._getTemplate(value);
         let instance;
-        if (this._previousValue &&
-            this._previousValue.template === value.template) {
+        if (this._previousValue && this._previousValue.template === template) {
             instance = this._previousValue;
         }
         else {
-            instance =
-                new TemplateInstance(value.template, this.instance._partCallback);
+            instance = new TemplateInstance(template, this.instance._partCallback, this.instance._getTemplate);
             this._setNode(instance._clone());
             this._previousValue = instance;
         }
@@ -692,17 +654,18 @@ const defaultPartCallback = (instance, templatePart, node) => {
     }
     throw new Error(`Unknown part type ${templatePart.type}`);
 };
-/* harmony export (immutable) */ __webpack_exports__["b"] = defaultPartCallback;
+/* harmony export (immutable) */ __webpack_exports__["e"] = defaultPartCallback;
 
 /**
  * An instance of a `Template` that can be attached to the DOM and updated
  * with new values.
  */
 class TemplateInstance {
-    constructor(template, partCallback = defaultPartCallback) {
+    constructor(template, partCallback, getTemplate) {
         this._parts = [];
         this.template = template;
         this._partCallback = partCallback;
+        this._getTemplate = getTemplate;
     }
     update(values) {
         let valueIndex = 0;
@@ -773,134 +736,687 @@ const removeNodes = (container, startNode, endNode = null) => {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__ = __webpack_require__(0);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["a"]; });
-const e=Symbol("tag"),s=Symbol("needsRender"),o=Symbol("shadyTemplate"),i=t=>{if(window.ShadyCSS){const e=t.constructor;void 0===e[o]&&(e[o]=document.createElement("template"),e[o].innerHTML=t.shadowRoot.innerHTML,ShadyCSS.prepareTemplate(e[o],e.is)),ShadyCSS.styleElement(t)}},a=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),n=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class GluonElement extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=a(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),n(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_lit_extended_js__["b" /* render */])(this.template,this.shadowRoot),i(this))}}
-/* harmony export (immutable) */ __webpack_exports__["a"] = GluonElement;
-;
-//# sourceMappingURL=gluon.js.map
-
-
-/***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
 
 
+class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
 
-const slotStyle = slotedCssUtil(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a)
+  static globalStyle(val) {
 
-class MaterialCard extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+    const head = document.head;
+    const style = document.createElement('style');
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a}${slotStyle}</style><div class="mdc-card"><slot></slot></div>`;
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(val));
+
+    head.appendChild(style);
+  }
+
+  static get configurationAttributes() {
+    return [];
+  }
+
+  static get observedAttributes() {
+    return this.configurationAttributes;
+  }
+
+  get styles() {
+    return [];
+  }
+
+  get classes() {
+    return [];
+  }
+
+  get content() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
+  }
+
+  get template(){
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if(this.shadowRoot){
+      this[attr] = newValue;
+    }
+    this.render()
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classes.forEach(c => this.classList.add(c));
+    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
   }
 
 }
 
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(6);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
+const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
+//# sourceMappingURL=gluon.js.map
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialStyle; });
+const MaterialStyle = {
+  block: ':host {display:block}'
+};
+
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = {"host":":host(.mdc-typography--display4) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 7rem;\n  line-height: 7rem;\n  font-weight: 300;\n  letter-spacing: -0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--display4) {\n  margin: -1rem 0 3.5rem -0.085em;\n}\n\n:host(.mdc-typography--display3) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 3.5rem;\n  line-height: 3.5rem;\n  font-weight: 400;\n  letter-spacing: -0.02em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--display3) {\n  margin: -8px 0 64px -0.07em;\n}\n\n:host(.mdc-typography--display2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.8125rem;\n  line-height: 3rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--display2) {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n:host(.mdc-typography--display1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.125rem;\n  line-height: 2.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--display1) {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n:host(.mdc-typography--headline) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  line-height: 2rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--headline) {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n:host(.mdc-typography--title) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  line-height: 2rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--title) {\n  margin: -0.5rem 0 1rem -0.05em;\n}\n\n:host(.mdc-typography--subheading2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  line-height: 1.75rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--subheading2) {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n:host(.mdc-typography--subheading1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.938rem;\n  line-height: 1.5rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--subheading1) {\n  margin: -0.313rem 0 0.813rem -0.06em;\n}\n\n:host(.mdc-typography--body2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 1.5rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--body2) {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n:host(.mdc-typography--body1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--body1) {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n:host(.mdc-typography--caption) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.75rem;\n  line-height: 1.25rem;\n  font-weight: 400;\n  letter-spacing: 0.08em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--caption) {\n  margin: -0.5rem 0 1rem -0.04em;\n}\n\n:host(.mdc-typography--button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n\n:host(.mdc-typography--adjust-margin.mdc-typography--button) {\n  margin: inherit;\n}","slotted":"::slotted(.mdc-typography--display4) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 7rem;\n  line-height: 7rem;\n  font-weight: 300;\n  letter-spacing: -0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--display4) {\n  margin: -1rem 0 3.5rem -0.085em;\n}\n\n::slotted(.mdc-typography--display3) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 3.5rem;\n  line-height: 3.5rem;\n  font-weight: 400;\n  letter-spacing: -0.02em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--display3) {\n  margin: -8px 0 64px -0.07em;\n}\n\n::slotted(.mdc-typography--display2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.8125rem;\n  line-height: 3rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--display2) {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n::slotted(.mdc-typography--display1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 2.125rem;\n  line-height: 2.5rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--display1) {\n  margin: -0.5rem 0 4rem -0.07em;\n}\n\n::slotted(.mdc-typography--headline) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.5rem;\n  line-height: 2rem;\n  font-weight: 400;\n  letter-spacing: normal;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--headline) {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n::slotted(.mdc-typography--title) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1.25rem;\n  line-height: 2rem;\n  font-weight: 500;\n  letter-spacing: 0.02em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--title) {\n  margin: -0.5rem 0 1rem -0.05em;\n}\n\n::slotted(.mdc-typography--subheading2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 1rem;\n  line-height: 1.75rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--subheading2) {\n  margin: -0.5rem 0 1rem -0.06em;\n}\n\n::slotted(.mdc-typography--subheading1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.938rem;\n  line-height: 1.5rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--subheading1) {\n  margin: -0.313rem 0 0.813rem -0.06em;\n}\n\n::slotted(.mdc-typography--body2) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 1.5rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--body2) {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n::slotted(.mdc-typography--body1) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 1.25rem;\n  font-weight: 400;\n  letter-spacing: 0.04em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--body1) {\n  margin: -0.25rem 0 0.75rem 0;\n}\n\n::slotted(.mdc-typography--caption) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.75rem;\n  line-height: 1.25rem;\n  font-weight: 400;\n  letter-spacing: 0.08em;\n  text-decoration: inherit;\n  text-transform: inherit;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--caption) {\n  margin: -0.5rem 0 1rem -0.04em;\n}\n\n::slotted(.mdc-typography--button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n\n::slotted(.mdc-typography--adjust-margin.mdc-typography--button) {\n  margin: inherit;\n}"}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = render;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* unused harmony reexport html */
+/* unused harmony reexport svg */
+/* unused harmony reexport TemplateResult */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+const shadyTemplateFactory = (scopeName) => (result) => {
+    const cacheKey = `${result.type}--${scopeName}`;
+    let templateCache = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].get(cacheKey);
+    if (templateCache === undefined) {
+        templateCache = new Map();
+        __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].set(cacheKey, templateCache);
+    }
+    let template = templateCache.get(result.strings);
+    if (template === undefined) {
+        const element = result.getTemplateElement();
+        if (typeof window.ShadyCSS === 'object') {
+            window.ShadyCSS.prepareTemplate(element, scopeName);
+        }
+        template = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* Template */](result, element);
+        templateCache.set(result.strings, template);
+    }
+    return template;
+};
+function render(result, container, scopeName) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* render */])(result, container, shadyTemplateFactory(scopeName));
+}
+//# sourceMappingURL=shady-render.js.map
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* unused harmony reexport render */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+/**
+ * Interprets a template literal as a lit-extended HTML template.
+ */
+const html = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
+/* harmony export (immutable) */ __webpack_exports__["a"] = html;
+
+/**
+ * Interprets a template literal as a lit-extended SVG template.
+ */
+const svg = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* SVGTemplateResult */](strings, values, 'svg', extendedPartCallback);
+/* unused harmony export svg */
+
+/**
+ * A PartCallback which allows templates to set properties and declarative
+ * event handlers.
+ *
+ * Properties are set by default, instead of attributes. Attribute names in
+ * lit-html templates preserve case, so properties are case sensitive. If an
+ * expression takes up an entire attribute value, then the property is set to
+ * that value. If an expression is interpolated with a string or other
+ * expressions then the property is set to the string result of the
+ * interpolation.
+ *
+ * To set an attribute instead of a property, append a `$` suffix to the
+ * attribute name.
+ *
+ * Example:
+ *
+ *     html`<button class$="primary">Buy Now</button>`
+ *
+ * To set an event handler, prefix the attribute name with `on-`:
+ *
+ * Example:
+ *
+ *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
+ *
+ */
+const extendedPartCallback = (instance, templatePart, node) => {
+    if (templatePart.type === 'attribute') {
+        if (templatePart.rawName.startsWith('on-')) {
+            const eventName = templatePart.rawName.slice(3);
+            return new EventPart(instance, node, eventName);
+        }
+        if (templatePart.name.endsWith('$')) {
+            const name = templatePart.name.slice(0, -1);
+            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
+        }
+        if (templatePart.name.endsWith('?')) {
+            const name = templatePart.name.slice(0, -1);
+            return new BooleanAttributePart(instance, node, name, templatePart.strings);
+        }
+        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
+    }
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* defaultPartCallback */])(instance, templatePart, node);
+};
+/* unused harmony export extendedPartCallback */
+
+/**
+ * Implements a boolean attribute, roughly as defined in the HTML
+ * specification.
+ *
+ * If the value is truthy, then the attribute is present with a value of
+ * ''. If the value is falsey, the attribute is removed.
+ */
+class BooleanAttributePart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            const value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+            if (value === __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+                return;
+            }
+            if (value) {
+                this.element.setAttribute(this.name, '');
+            }
+            else {
+                this.element.removeAttribute(this.name);
+            }
+        }
+        else {
+            throw new Error('boolean attributes can only contain a single expression');
+        }
+    }
+}
+/* unused harmony export BooleanAttributePart */
+
+class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        let value;
+        if (this._equalToPreviousValues(values, startIndex)) {
+            return;
+        }
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            // An expression that occupies the whole attribute value will leave
+            // leading and trailing empty strings.
+            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+        }
+        else {
+            // Interpolation, so interpolate
+            value = this._interpolate(values, startIndex);
+        }
+        if (value !== __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+            this.element[this.name] = value;
+        }
+        this._previousValues = values;
+    }
+}
+/* unused harmony export PropertyPart */
+
+class EventPart {
+    constructor(instance, element, eventName) {
+        this.instance = instance;
+        this.element = element;
+        this.eventName = eventName;
+    }
+    setValue(value) {
+        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, value);
+        const previous = this._listener;
+        if (listener === previous) {
+            return;
+        }
+        this._listener = listener;
+        if (previous != null) {
+            this.element.removeEventListener(this.eventName, previous);
+        }
+        if (listener != null) {
+            this.element.addEventListener(this.eventName, listener);
+        }
+    }
+}
+/* unused harmony export EventPart */
+
+//# sourceMappingURL=lit-extended.js.map
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = {"all":".mdc-card {\n  /* @alternate */\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  border-radius: 2px;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  box-sizing: border-box;\n}\n\n.mdc-card--stroked {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n  border: 1px solid #dbdbdb;\n}\n\n.mdc-card__media {\n  position: relative;\n  box-sizing: border-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n\n.mdc-card__media::before {\n  display: block;\n  content: \"\";\n}\n\n.mdc-card__media:first-child {\n  border-top-left-radius: inherit;\n  border-top-right-radius: inherit;\n}\n\n.mdc-card__media:last-child {\n  border-bottom-left-radius: inherit;\n  border-bottom-right-radius: inherit;\n}\n\n.mdc-card__media--square::before {\n  margin-top: 100%;\n}\n\n.mdc-card__media--16-9::before {\n  margin-top: 56.25%;\n}\n\n.mdc-card__media-content {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  box-sizing: border-box;\n}\n\n.mdc-card__actions {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-height: 52px;\n  padding: 8px;\n}\n\n.mdc-card__actions--full-bleed {\n  padding: 0;\n}\n\n.mdc-card__action-buttons,\n.mdc-card__action-icons {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n.mdc-card__action-icons {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n  flex-grow: 1;\n  justify-content: flex-end;\n}\n\n.mdc-card__action-buttons + .mdc-card__action-icons {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__action-buttons + .mdc-card__action-icons,\n.mdc-card__action-buttons + .mdc-card__action-icons[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 16px;\n}\n\n.mdc-card__action {\n  display: inline-flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-width: auto;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-card__action:focus {\n  outline: none;\n}\n\n.mdc-card__action--button {\n  margin-left: 0;\n  margin-right: 8px;\n  padding: 0 8px;\n}\n\n[dir=\"rtl\"] .mdc-card__action--button,\n.mdc-card__action--button[dir=\"rtl\"] {\n  margin-left: 8px;\n  margin-right: 0;\n}\n\n.mdc-card__action--button:last-child {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__action--button:last-child,\n.mdc-card__action--button:last-child[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n.mdc-card__actions--full-bleed .mdc-card__action--button {\n  justify-content: space-between;\n  width: 100%;\n  height: auto;\n  max-height: none;\n  margin: 0;\n  padding: 8px 16px;\n  text-align: left;\n}\n\n[dir=\"rtl\"] .mdc-card__actions--full-bleed .mdc-card__action--button,\n.mdc-card__actions--full-bleed .mdc-card__action--button[dir=\"rtl\"] {\n  text-align: right;\n}\n\n.mdc-card__action--icon {\n  margin: -6px 0;\n  padding: 12px;\n}\n\n.mdc-card__action--icon:not(:disabled) {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n}","card":":host(.mdc-card) {\n  /* @alternate */\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  border-radius: 2px;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  box-sizing: border-box;\n}","actions":":host(.mdc-card__actions) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-height: 52px;\n  padding: 8px;\n}\n\n:host(.mdc-card__actions--full-bleed) {\n  padding: 0;\n}\n\n:host(.mdc-card__actions--full-bleed .mdc-card__action--button) {\n  justify-content: space-between;\n  width: 100%;\n  height: auto;\n  max-height: none;\n  margin: 0;\n  padding: 8px 16px;\n  text-align: left;\n}\n\n:host(.mdc-card__actions--full-bleed .mdc-card__action--button[dir=\"rtl\"]) {\n  text-align: right;\n}","action_buttons":":host(.mdc-card__action-buttons) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n:host(.mdc-card__action-buttons + .mdc-card__action-icons) {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n:host(.mdc-card__action-buttons + .mdc-card__action-icons[dir=\"rtl\"]) {\n  margin-left: 0;\n  margin-right: 16px;\n}","action_icons":":host(.mdc-card__action-icons) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n:host(.mdc-card__action-icons) {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n  flex-grow: 1;\n  justify-content: flex-end;\n}"}
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(3);
+
+
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardActions extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+
+  get styles() {
+    return [
+      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
+      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.actions
+    ]
+  }
+
+  get classes() {
+    return [
+      'mdc-card__actions'
+    ]
+  }
+
+}
+
+customElements.define(MaterialCardActions.is, MaterialCardActions);
+
+/***/ }),
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialCard__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MaterialCardMedia__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialCardPrimary__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MaterialCardSecondary__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MaterialCardTitle__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MaterialCardSubtitle__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MaterialCardSupportingText__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__MaterialCardActions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__MaterialCardActionButtons__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__MaterialCardActionIcons__ = __webpack_require__(33);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCard extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  get template() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.card}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classList.add('mdc-card');
+  }
+
+}
+
+
+
+
+
+
+
+
+
+customElements.define(MaterialCard.is, MaterialCard);
+
+
+
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+
+
+
+const block = `:host {display:block}`
+
 class MaterialCardMedia extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  get template() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.media}</style><slot></slot>`;
+  }
+
   connectedCallback() {
     super.connectedCallback()
     this.classList.add('mdc-card__media');
   }
 }
 
+customElements.define(MaterialCardMedia.is, MaterialCardMedia);
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+
+
+
+const block = `:host {display:block}`
+
 class MaterialCardPrimary extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
 
-
   get template() {
-    const extra = `::slotted(.mdc-card ~ .mdc-card__primary ~ .mdc-card__title--large) {
-    padding-top: 8px;
-    }`;
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${slotStyle}${extra}</style><slot></slot>`;
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.primary}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.primary_slotted}</style><slot></slot>`;
   }
 
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
     this.classList.add('mdc-card__primary');
   }
 
 }
 
-class MaterialCardSupportingText extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+customElements.define(MaterialCardPrimary.is, MaterialCardPrimary);
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
+
+
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardSecondary extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
 
   get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a}</style><section class="mdc-card__supporting-text"><slot></slot></section>`;
-  }
-
-}
-
-class MaterialCardActions extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
-
-  static get observedAttributes() {
-    return ['vertical'];
-  }
-
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a}${slotStyle}</style><slot></slot>`;
-  }
-
-  set vertical(val) {
-
-    if (val != null) {
-      this.classList.add('mdc-card__actions--vertical')
-    } else {
-      this.classList.remove('mdc-card__actions--vertical')
-    }
-    this.render();
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if (attr == 'vertical') {
-      this.vertical = newValue;
-    }
+    return __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["b" /* html */]`<style>${this.blockStyle}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.secondary}${__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default.a.typography}</style><slot></slot>`;
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
-    this.classList.add('mdc-card__actions');
-
-    const buttons = this.querySelectorAll('material-button');
-    buttons.forEach(el => el.classList.add('mdc-card__actions'))
-
-    MaterialCardActions.observedAttributes.forEach(attr => {
-      this.attributeChangedCallback(attr, null, this.getAttribute(attr));
-    });
-
-    this.render()
+    super.connectedCallback()
+    this.classList.add('mdc-card__secondary');
+    this.classList.add('mdc-typography--body1');
   }
+
 }
 
-customElements.define(MaterialCard.is, MaterialCard);
-customElements.define(MaterialCardMedia.is, MaterialCardMedia);
-customElements.define(MaterialCardPrimary.is, MaterialCardPrimary);
-customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText);
-customElements.define(MaterialCardActions.is, MaterialCardActions);
+customElements.define(MaterialCardSecondary.is, MaterialCardSecondary);
+
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports) {
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
 
 
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardTitle extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  static get configurationAttrubuters() {
+    return ['large'];
+  }
+
+  get template() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.title}${__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default.a.typography}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classList.add('mdc-card__title');
+    this.classList.add('mdc-typography--title');
+  }
+
+}
+
+customElements.define(MaterialCardTitle.is, MaterialCardTitle);
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardSubtitle extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  get template() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.subtitle}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classList.add('mdc-card__subtitle');
+    this.classList.add('mdc-typography--subheading1');
+  }
+
+}
+
+customElements.define(MaterialCardSubtitle.is, MaterialCardSubtitle);
+
+/***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardSupportingText extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+
+  get template() {
+    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.supporting_text}</style><slot></slot>`;
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.classList.add('mdc-card__supporting-text');
+  }
+
+}
+
+customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText);
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(3);
+
+
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardActionButtons extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+
+  get styles() {
+    return [
+      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
+      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.action_buttons
+    ]
+  }
+
+  get classes() {
+    return [
+      'mdc-card__action-buttons'
+    ]
+  }
+
+}
+
+customElements.define(MaterialCardActionButtons.is, MaterialCardActionButtons);
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(3);
+
+
+
+
+
+const block = `:host {display:block}`
+
+class MaterialCardActionIcons extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+
+  get styles() {
+    return [
+      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
+      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.action_icons
+    ]
+  }
+
+  get classes() {
+    return [
+      'mdc-card__action-icons'
+    ]
+  }
+
+}
+
+customElements.define(MaterialCardActionIcons.is, MaterialCardActionIcons);
 
 /***/ })
 /******/ ]);
