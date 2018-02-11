@@ -3,6 +3,8 @@ const webpack = require('webpack');
 
 const Uglify = require("uglifyjs-webpack-plugin");
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 module.exports = {
   entry: {
     "DocsDemo": "./node_modules/gluonjs-docs/src/DocsDemo.js",
@@ -47,7 +49,13 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-    new Uglify()
+    new Uglify({
+      uglifyOptions: {
+        ecma: 6,
+        keep_classnames: true,
+        keep_fnames: true
+      }
+    })
   ],
   devServer: {
     compress: true,
