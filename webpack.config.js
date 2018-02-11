@@ -49,13 +49,13 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-    new Uglify({
-      uglifyOptions: {
-        ecma: 6,
-        keep_classnames: true,
-        keep_fnames: true
-      }
-    })
+    // new Uglify({
+    //   uglifyOptions: {
+    //     ecma: 6,
+    //     keep_classnames: true,
+    //     keep_fnames: true
+    //   }
+    // })
   ],
   devServer: {
     compress: true,
