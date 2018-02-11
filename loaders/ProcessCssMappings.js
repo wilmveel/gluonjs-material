@@ -8,9 +8,16 @@ const mappingsDir = path.resolve(__dirname, '../src/mappings');
 
 function processMappings(source) {
 
+  var tempDir = path.resolve(__dirname, '../tmp');
+
+  if (!fs.existsSync(tempDir)){
+    fs.mkdirSync(tempDir);
+  }
+
+
   const filename = path.basename(this.resource, '.scss');
 
-  fs.writeFileSync(`${__dirname}/../tmp/${filename}.css`, source);
+  fs.writeFileSync(`${tempDir}/${filename}.css`, source);
 
   const files = fs.readdirSync(mappingsDir);
 
@@ -55,7 +62,7 @@ function processMappings(source) {
 
       const value = css.stringify(stylesheet)
 
-      fs.writeFileSync(`${__dirname}/../tmp/${filename}-${key}.css`, value);
+      fs.writeFileSync(`${tempDir}/${filename}-${key}.css`, value);
 
       return {
         key: key,
