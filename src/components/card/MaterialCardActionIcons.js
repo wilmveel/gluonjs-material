@@ -5,21 +5,21 @@ import {MaterialStyle} from "../MaterialStyle";
 
 const block = `:host {display:block}`
 
-class MaterialCardActions extends MaterialElement {
+class MaterialCardActionIcons extends MaterialElement {
 
   get styles() {
     return [
       MaterialStyle.block,
-      CardStyle.actions
+      CardStyle.action_icons
     ]
   }
 
   get classes() {
     return [
-      'mdc-card__actions'
+      'mdc-card__action-icons'
     ]
   }
 
 }
 
-customElements.define(MaterialCardActions.is, MaterialCardActions);
+customElements.define(MaterialCardActionIcons.is, MaterialCardActionIcons);

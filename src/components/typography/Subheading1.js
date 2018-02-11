@@ -7,7 +7,7 @@ class MaterialTypographySubheading1 extends MaterialElement {
   get styles() {
     return [
       MaterialStyle.block,
-      TypographyStyle.subheading1
+      TypographyStyle.host
     ]
   }
 

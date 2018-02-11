@@ -8,7 +8,7 @@ class MaterialTypographyCaption extends MaterialElement {
 
   get styles() {
     return [
-      TypographyStyle.caption
+      TypographyStyle.host
     ]
   }
 

@@ -1,30 +1,48 @@
 import {MaterialElement, html} from "../MaterialElement";
 
-import style from "@material/icon-toggle/mdc-icon-toggle";
+import IconToggleStyle from "@material/icon-toggle/mdc-icon-toggle";
+import {MaterialStyle} from "../MaterialStyle";
+
+import {MDCIconToggle} from "@material/icon-toggle/index";
+
+MaterialElement.globalStyle(IconToggleStyle.keyframes)
 
 class MaterialIconToggle extends MaterialElement {
 
+  get styles() {
+    return [
+      MaterialStyle.block,
+      IconToggleStyle.icon
+    ]
+  }
+
+  get classes() {
+    return [
+      'mdc-icon-toggle',
+      'material-icons'
+    ]
+  }
+
   static get configurationAttributes() {
-    return ['ripple'];
+    return ['disabled'];
   }
 
-  get template() {
-    return html`<style>${this.blockStyle}${style.icon}</style><slot></slot>`;
-  }
+  set disabled(val){
 
-  set ripple(val){
-    if(val){
-      this.classList.add('mdc-ripple-surface');
+    if(val != null){
+      console.log(val)
+      this.classList.add('mdc-icon-toggle--disabled');
     }else{
-      this.classList.remove('mdc-ripple-surface');
+      this.classList.remove('mdc-icon-toggle--disabled');
     }
   }
 
-  connectedCallback() {
+  connectedCallback(){
+    console.log('Toggleeeeeee')
+    MDCIconToggle.attachTo(this)
     super.connectedCallback();
-    this.classList.add('mdc-icon-toggle');
-    this.classList.add('material-icons');
   }
+
 }
 
 customElements.define(MaterialIconToggle.is, MaterialIconToggle);

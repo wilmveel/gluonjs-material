@@ -1,21 +1,40 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+
+<script type="module" src="../dist/DocsDemo.js"></script>
 <script type="module" src="../dist/MaterialIconToggle.js"></script>
 
+<h1>Icon toggle</h1>
 
-<i id="add-to-favorites"
-   class="mdc-icon-toggle material-icons"
-   role="button"
-   aria-label="Add to favorites"
-   aria-pressed="false"
-   tabindex="0"
-   data-toggle-on='{"content": "favorite", "label": "Remove From Favorites"}'
-   data-toggle-off='{"content": "favorite_border", "label": "Add to Favorites"}'>
-  <!-- Prevent FOUC by putting the initial content in -->
-  favorite_border
-</i>
+<docs-demo>
+  <h2>Using Material Icons</h2>
+  <material-icon-toggle
+          riple
+          id="add-to-favorites"
+          aria-label="Add to favorites"
+          aria-pressed="false"
+          data-toggle-on='{"content": "favorite", "label": "Remove From Favorites"}'
+          data-toggle-off='{"content": "favorite_border", "label": "Add to Favorites"}'>favorite_border
+  </material-icon-toggle>
+  <p>Favorited? <span id="favorited-status">no</span></p>
+  <script>
+    const addToFavorites = document.getElementById('add-to-favorites');
+    const favoritedStatus = document.getElementById('favorited-status');
+    addToFavorites.addEventListener('MDCIconToggle:change', function (ev) {
+      const newStatus = ev.detail.isOn ? 'yes' : 'no';
+      favoritedStatus.textContent = newStatus;
+    });
+  </script>
+</docs-demo>
 
-<material-icon-toggle>share</material-icon-toggle>
-<material-icon-toggle>share</material-icon-toggle>
-<material-icon-toggle ripple> share</material-icon-toggle>
+<docs-demo>
+  <h2>Disabled Icons</h2>
+  <material-icon-toggle disabled>star_rate</material-icon-toggle>
+</docs-demo>
+
+
+
 

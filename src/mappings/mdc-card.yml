@@ -11,37 +11,17 @@ mappings:
     regex: ^(\.mdc-card(?:\s.*)?)$
     replace: :host($1)
 
-  supporting_text:
-    type: rule
-    regex: ^(\.mdc-card__supporting-text.*)$
-    replace: :host($1)
-
-  primary:
-    type: rule
-    regex: ^(\.mdc-card__primary)$
-    replace: :host($1)
-
-  secondary:
-    type: rule
-    regex: ^(\.demo-card__secondary)$
-    replace: :host($1)
-
-  primary_slotted:
-    type: rule
-    regex: ^(\.mdc-card__primary)\s(.*)$
-    replace: :host($1) ::slotted($2)
-
-  title:
-    type: rule
-    regex: ^(\.mdc-card__title.*)$
-    replace: :host($1)
-
-  subtitle:
-    type: rule
-    regex: ^(\.mdc-card__subtitle.*)$
-    replace: :host($1)
-
   actions:
     type: rule
     regex: ^(\.mdc-card__actions.*)$
-    replace: $1
+    replace: :host($1)
+
+  action_buttons:
+    type: rule
+    regex: ^(\.mdc-card__action-buttons.*)$
+    replace: :host($1)
+
+  action_icons:
+    type: rule
+    regex: ^(\.mdc-card__action-icons.*)$
+    replace: :host($1)

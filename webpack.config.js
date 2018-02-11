@@ -5,6 +5,7 @@ const Uglify = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: {
+    "DocsDemo": "gluonjs-docs/src/DocsDemo.js",
     "MaterialButton": "./src/components/button",
     "MaterialCard": "./src/components/card",
     "MaterialList": "./src/components/list",

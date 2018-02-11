@@ -1,6 +1,9 @@
 source: '@material/icon-toggle/mdc-icon-toggle'
 mappings:
 
+  keyframes:
+    type: keyframes
+
   all:
     type: rule
     regex: ^(.*)$

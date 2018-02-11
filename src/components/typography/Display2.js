@@ -7,7 +7,7 @@ class MaterialTypographyDisplay2 extends MaterialElement {
   get styles() {
     return [
       MaterialStyle.block,
-      TypographyStyle.display2
+      TypographyStyle.host
     ]
   }
 

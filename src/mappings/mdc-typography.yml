@@ -1,63 +1,13 @@
 source: '@material/typography/mdc-typography'
 mappings:
 
-  typography:
+  host:
     type: rule
-    regex: ^(.*)$
+    regex: ^(\.mdc-typography--.*)$
     replace: :host($1)
 
-  display4:
+  slotted:
     type: rule
-    regex: ^(\.mdc-typography--display4)$
-    replace: :host($1)
-
-  display3:
-    type: rule
-    regex: ^(\.mdc-typography--display3)$
-    replace: :host($1)
-
-  display2:
-    type: rule
-    regex: ^(\.mdc-typography--display2)$
-    replace: :host($1)
-
-  display1:
-    type: rule
-    regex: ^(\.mdc-typography--display1)$
-    replace: :host($1)
-
-  headline:
-    type: rule
-    regex: ^(\.mdc-typography--headline)$
-    replace: :host($1)
-
-  title:
-    type: rule
-    regex: ^(\.mdc-typography--title)$
-    replace: :host($1)
-
-  caption:
-    type: rule
-    regex: ^(\.mdc-typography--caption)$
-    replace: :host($1)
-
-  subheading2:
-      type: rule
-      regex: ^(\.mdc-typography--subheading2)$
-      replace: :host($1)
-
-  subheading1:
-    type: rule
-    regex: ^(\.mdc-typography--subheading1)$
-    replace: :host($1)
-
-  body1:
-    type: rule
-    regex: ^(\.mdc-typography--body1)$
-    replace: :host($1)
-
-  body2:
-    type: rule
-    regex: ^(\.mdc-typography--body2)$
-    replace: :host($1)
+    regex: ^(\.mdc-typography--.*)$
+    replace: ::slotted($1)
 
