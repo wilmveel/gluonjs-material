@@ -10,6 +10,7 @@ module.exports = {
     "DocsDemo": "./node_modules/gluonjs-docs/src/DocsDemo.js",
     "MaterialButton": "./src/components/button",
     "MaterialCard": "./src/components/card",
+    "MaterialDialog": "./src/components/dialog",
     "MaterialList": "./src/components/list",
     "MaterialIconToggle": "./src/components/icon-toggle",
     "MaterialTypography": "./src/components/typography",
@@ -33,7 +34,17 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      // {
+      //   test: /\.js$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //     options: {
+      //       presets: ['@babel/preset-env']
+      //     }
+      //   }
+      // }
     ]
   },
   stats: {
@@ -49,13 +60,7 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-    // new Uglify({
-    //   uglifyOptions: {
-    //     ecma: 6,
-    //     keep_classnames: true,
-    //     keep_fnames: true
-    //   }
-    // })
+    // new Uglify()
   ],
   devServer: {
     compress: true,

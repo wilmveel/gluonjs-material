@@ -1,0 +1,12 @@
+source: '@material/dialog/mdc-dialog'
+mappings:
+
+  host:
+    type: rule,media
+    regex: ^(\.mdc-dialog[\w:-]*?)((?:\:\:)[\w\.-]*)?$
+    replace: :host($1)$2
+
+  slotted:
+    type: rule
+    regex: ^(\.mdc-dialog[\w:-]*?)((?:\:\:)\w*)?(\s[\w\.-]*)$
+    replace: :host($1)$2 ::slotted($3)

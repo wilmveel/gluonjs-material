@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+<script type="module" src="../dist/MaterialDialog.js"></script>
+<script type="module" src="../dist/MaterialButton.js"></script>
+<script type="module" src="../dist/MaterialTypography.js"></script>
+
+
+<material-button>Open</material-button>
+
+<material-dialog>
+  <material-dialog-surface>
+
+    <material-dialog-header>
+      <material-typography-title>Are you happy?</material-typography-title>
+    </material-dialog-header>
+
+    <material-dialog-body>
+      <material-typography-body1>
+        Please check the left and right side of this element for fun.
+      </material-typography-body1>
+    </material-dialog-body>
+
+    <material-dialog-footer>
+      <material-button>Cancel</material-button>
+      <material-button>Continue</material-button>
+    </material-dialog-footer>
+
+  </material-dialog-surface>
+  <material-dialog-backdrop></material-dialog-backdrop>
+</material-dialog>
+
+
+
+<script>
+  const dialog = document.querySelector("material-dialog")
+
+  document.querySelector('material-button').addEventListener("click", function (event) {
+    dialog.open()
+  });
+</script>

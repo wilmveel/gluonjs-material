@@ -40,16 +40,31 @@ function processMappings(source) {
       const mapping = definition.mappings[key];
       const parsedCss = css.parse(source)
       const rules = parsedCss.stylesheet.rules
-        .filter(rule => mapping.type === rule.type)
+        .filter(rule => mapping.type.split(',').includes(rule.type))
         .map(rule => {
 
-          if(!rule.selectors) return rule;
+          if(rule.selectors) {
+            rule.selectors = rule.selectors
+              .filter(selector => selector.match(mapping.regex) != null)
+              .map(selector => selector.replace(new RegExp(mapping.regex), mapping.replace));
 
-          rule.selectors = rule.selectors
-            .filter(selector => selector.match(mapping.regex) != null)
-            .map(selector => selector.replace(new RegExp(mapping.regex), mapping.replace));
+            return rule.selectors.length > 0 ? rule : null;
+          }
 
-          return rule.selectors.length > 0 ? rule : null;
+          if(rule.rules) {
+            rule.rules = rule.rules
+              .map(rule => {
+                rule.selectors =rule.selectors
+                  .filter(selector => selector.match(mapping.regex) != null)
+                  .map(selector => selector.replace(new RegExp(mapping.regex), mapping.replace));
+
+                return rule;
+              })
+          }
+
+          return rule;
+
+
         })
         .filter(rule => !!rule);
 
