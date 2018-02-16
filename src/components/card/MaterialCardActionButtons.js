@@ -9,8 +9,8 @@ class MaterialCardActionButtons extends MaterialElement {
 
   get styles() {
     return [
-      MaterialStyle.block,
-      CardStyle.action_buttons
+      CardStyle.action_buttons,
+      MaterialStyle.block
     ]
   }
 

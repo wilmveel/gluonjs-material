@@ -11,8 +11,8 @@ class MaterialIconToggle extends MaterialElement {
 
   get styles() {
     return [
-      MaterialStyle.block,
-      IconToggleStyle.icon
+      IconToggleStyle.icon,
+      MaterialStyle.block
     ]
   }
 
