@@ -15,6 +15,7 @@ module.exports = {
     "MaterialIconToggle": "./src/components/icon-toggle",
     "MaterialToolbar": "./src/components/toolbar",
     "MaterialList": "./src/components/list",
+    "MaterialTypography": "./src/components/typography",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
