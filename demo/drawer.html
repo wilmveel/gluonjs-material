@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+
+<script type="module" src="../dist/MaterialDrawer.js"></script>
+<script type="module" src="../dist/MaterialButton.js"></script>
+<script type="module" src="../dist/MaterialList.js"></script>
+
+<style>
+  body{
+    margin: 0;
+  }
+</style>
+
+<material-drawer-temporary>
+  <material-drawer>
+    <header class="mdc-drawer__header">
+      <div class="mdc-drawer__header-content mdc-theme--text-primary-on-primary mdc-theme--primary-bg">
+        Header here
+      </div>
+    </header>
+    <nav class="mdc-drawer__content mdc-list-group">
+
+      <material-list>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">inbox</i>Inbox
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">star</i>Star
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">send</i>Sent Mail
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>Drafts
+        </material-list-item>
+      </material-list>
+
+      <material-list-divider></material-list-divider>
+
+      <material-list>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">email</i>Inbox
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">delete</i>Star
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">report</i>Sent Mail
+        </material-list-item>
+        <material-list-item>
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>Drafts
+        </material-list-item>
+      </material-list>
+    </nav>
+
+  </material-drawer>
+
+</material-drawer-temporary>
+
+<main>
+  <material-button>Open</material-button>
+</main>
+
+
+
+<script>
+  const drawer = document.querySelector("material-drawer-temporary")
+
+  document.querySelector('material-button').addEventListener("click", function (event) {
+    drawer.open()
+  });
+</script>

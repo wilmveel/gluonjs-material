@@ -26,8 +26,4 @@ class MaterialDialogBackdrop extends MaterialElement {
 
 }
 
-
 customElements.define(MaterialDialogBackdrop.is, MaterialDialogBackdrop);
-
-
-

@@ -1,0 +1,12 @@
+source: '@material/drawer/temporary/mdc-temporary-drawer'
+mappings:
+
+  host:
+    type: rule,media
+    regex: ^(\.mdc-drawer[\w:\-\.]*?)((?:\:\:)[\w\.-]*)?$
+    replace: :host($1)$2
+
+  slotted:
+    type: rule,media
+    regex: ^(\.mdc-drawer[\w:\-\.]*?)((?:\:\:)[\w\.-]*)?(\s[\w\.-]*)$
+    replace: :host($1)$2 ::slotted($3)

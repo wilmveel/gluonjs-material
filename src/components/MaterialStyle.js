@@ -1,5 +1,5 @@
 const MaterialStyle = {
-  block: ':host {display:block}'
+  block: ':host {display: block};\n'
 };
 
 export {

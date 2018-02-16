@@ -1,0 +1,12 @@
+source: '@material/toolbar/mdc-toolbar'
+mappings:
+
+  host:
+    type: rule,media
+    regex: ^(\.mdc-toolbar[\w:\-\.]*?)((?:\:\:)[\w\.-]*)?$
+    replace: :host($1)$2
+
+  slotted:
+    type: rule,media
+    regex: ^(\.mdc-toolbar[\w:\-\.]*?)((?:\:\:)[\w\.-]*)?(\s[\w\.-]*)$
+    replace: :host($1)$2 ::slotted($3)

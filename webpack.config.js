@@ -11,9 +11,10 @@ module.exports = {
     "MaterialButton": "./src/components/button",
     "MaterialCard": "./src/components/card",
     "MaterialDialog": "./src/components/dialog",
-    "MaterialList": "./src/components/list",
+    "MaterialDrawer": "./src/components/drawer",
     "MaterialIconToggle": "./src/components/icon-toggle",
-    "MaterialTypography": "./src/components/typography",
+    "MaterialToolbar": "./src/components/toolbar",
+    "MaterialList": "./src/components/list",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
