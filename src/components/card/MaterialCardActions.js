@@ -3,8 +3,6 @@ import {MaterialElement} from "../MaterialElement";
 import CardStyle from "@material/card/mdc-card";
 import {MaterialStyle} from "../MaterialStyle";
 
-const block = `:host {display:block}`
-
 class MaterialCardActions extends MaterialElement {
 
   get styles() {

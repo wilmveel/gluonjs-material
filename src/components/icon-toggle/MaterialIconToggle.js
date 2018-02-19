@@ -38,7 +38,6 @@ class MaterialIconToggle extends MaterialElement {
   }
 
   connectedCallback(){
-    console.log('Toggleeeeeee')
     MDCIconToggle.attachTo(this)
     super.connectedCallback();
   }

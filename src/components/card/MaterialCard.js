@@ -1,28 +1,24 @@
-import {GluonElement, html} from "gluonjs";
-import style from "@material/card/mdc-card";
+import {MaterialElement} from "../MaterialElement";
 
-const block = `:host {display:block}`
+import CardStyle from "@material/card/mdc-card";
+import {MaterialStyle} from "../MaterialStyle";
 
-class MaterialCard extends GluonElement {
+class MaterialCard extends MaterialElement {
 
-  get template() {
-    return html`<style>${block}${style.card}</style><slot></slot>`;
+  get styles() {
+    return [
+      CardStyle.card,
+      MaterialStyle.block
+    ]
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card');
+  get classes() {
+    return [
+      'mdc-card'
+    ]
   }
 
 }
-
-
-
-
-
-
-
-
 
 customElements.define(MaterialCard.is, MaterialCard);
 

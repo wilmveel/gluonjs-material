@@ -1,9 +1,8 @@
 const path = require('path');
+
 const webpack = require('webpack');
 
-const Uglify = require("uglifyjs-webpack-plugin");
-
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -59,7 +58,7 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-    // new Uglify()
+//    new UglifyJSPlugin()
   ],
   devServer: {
     compress: true,
