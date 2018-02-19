@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -737,91 +737,139 @@ const removeNodes = (container, startNode, endNode = null) => {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
 
 
-class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.html = exports.MaterialElement = undefined;
 
-  static globalStyle(val) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    const head = document.head;
-    const style = document.createElement('style');
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(val));
+var _templateObject = _taggedTemplateLiteral(['<slot></slot>'], ['<slot></slot>']),
+    _templateObject2 = _taggedTemplateLiteral(['<style>', '</style>', ''], ['<style>', '</style>', '']);
 
-    head.appendChild(style);
+var _gluonjs = __webpack_require__(3);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MaterialElement = function (_GluonElement) {
+  _inherits(MaterialElement, _GluonElement);
+
+  function MaterialElement() {
+    _classCallCheck(this, MaterialElement);
+
+    return _possibleConstructorReturn(this, (MaterialElement.__proto__ || Object.getPrototypeOf(MaterialElement)).apply(this, arguments));
   }
 
-  static get configurationAttributes() {
-    return [];
-  }
-
-  static get observedAttributes() {
-    return this.configurationAttributes;
-  }
-
-  get styles() {
-    return [];
-  }
-
-  get classes() {
-    return [];
-  }
-
-  get content() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
-  }
-
-  get template(){
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if(this.shadowRoot){
-      this[attr] = newValue;
+  _createClass(MaterialElement, [{
+    key: 'attributeChangedCallback',
+    value: function attributeChangedCallback(attr, oldValue, newValue) {
+      if (this.shadowRoot) {
+        this[attr] = newValue;
+      }
+      this.render();
     }
-    this.render()
-  }
+  }, {
+    key: 'connectedCallback',
+    value: function connectedCallback() {
+      var _this2 = this;
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classes.forEach(c => this.classList.add(c));
-    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
-  }
+      _get(MaterialElement.prototype.__proto__ || Object.getPrototypeOf(MaterialElement.prototype), 'connectedCallback', this).call(this);
+      this.classes.forEach(function (c) {
+        return _this2.classList.add(c);
+      });
+      this.constructor.configurationAttributes.forEach(function (attr) {
+        return _this2[attr] = _this2.getAttribute(attr);
+      });
+    }
+  }, {
+    key: 'styles',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'classes',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'content',
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject);
+    }
+  }, {
+    key: 'template',
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject2, this.styles.join(''), this.content);
+    }
+  }], [{
+    key: 'globalStyle',
+    value: function globalStyle(val) {
 
-}
+      var head = document.head;
+      var style = document.createElement('style');
 
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(val));
 
+      head.appendChild(style);
+    }
+  }, {
+    key: 'configurationAttributes',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'observedAttributes',
+    get: function get() {
+      return this.configurationAttributes;
+    }
+  }]);
 
+  return MaterialElement;
+}(_gluonjs.GluonElement);
+
+exports.MaterialElement = MaterialElement;
+exports.html = _gluonjs.html;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialStyle; });
-const MaterialStyle = {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var MaterialStyle = {
   block: ':host {display: block};\n'
 };
 
-
-
+exports.MaterialStyle = MaterialStyle;
 
 /***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GluonElement", function() { return h; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(5);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "html", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
 const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
 //# sourceMappingURL=gluon.js.map
 
@@ -1061,369 +1109,617 @@ module.exports = {"all":".mdc-card {\n  /* @alternate */\n  background-color: #f
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
-
-
-
-
-
-const block = `:host {display:block}`
-
-class MaterialCardActions extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
-
-  get styles() {
-    return [
-      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
-      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.actions
-    ]
-  }
-
-  get classes() {
-    return [
-      'mdc-card__actions'
-    ]
-  }
-
-}
-
-customElements.define(MaterialCardActions.is, MaterialCardActions);
-
-/***/ }),
+/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */,
-/* 33 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialCard__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MaterialCardMedia__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialCardPrimary__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MaterialCardSecondary__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MaterialCardTitle__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MaterialCardSubtitle__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MaterialCardSupportingText__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__MaterialCardActions__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__MaterialCardActionButtons__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__MaterialCardActionIcons__ = __webpack_require__(42);
 
 
+__webpack_require__(33);
 
+__webpack_require__(34);
 
+__webpack_require__(35);
 
+__webpack_require__(36);
 
+__webpack_require__(37);
 
+__webpack_require__(38);
 
+__webpack_require__(39);
 
+__webpack_require__(40);
 
+__webpack_require__(41);
 
-
+__webpack_require__(42);
 
 /***/ }),
-/* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const block = `:host {display:block}`
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-class MaterialCard extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "</style><slot></slot>"], ["<style>", "", "</style><slot></slot>"]);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.card}</style><slot></slot>`;
+var _gluonjs = __webpack_require__(3);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCard = function (_GluonElement) {
+  _inherits(MaterialCard, _GluonElement);
+
+  function MaterialCard() {
+    _classCallCheck(this, MaterialCard);
+
+    return _possibleConstructorReturn(this, (MaterialCard.__proto__ || Object.getPrototypeOf(MaterialCard)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card');
-  }
+  _createClass(MaterialCard, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCard.prototype.__proto__ || Object.getPrototypeOf(MaterialCard.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.card);
+    }
+  }]);
 
-}
-
-
-
-
-
-
-
-
+  return MaterialCard;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCard.is, MaterialCard);
 
-
-
-
-
 /***/ }),
-/* 35 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const block = `:host {display:block}`
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-class MaterialCardMedia extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "</style><slot></slot>"], ["<style>", "", "</style><slot></slot>"]);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.media}</style><slot></slot>`;
+var _gluonjs = __webpack_require__(3);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardMedia = function (_GluonElement) {
+  _inherits(MaterialCardMedia, _GluonElement);
+
+  function MaterialCardMedia() {
+    _classCallCheck(this, MaterialCardMedia);
+
+    return _possibleConstructorReturn(this, (MaterialCardMedia.__proto__ || Object.getPrototypeOf(MaterialCardMedia)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card__media');
-  }
-}
+  _createClass(MaterialCardMedia, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardMedia.prototype.__proto__ || Object.getPrototypeOf(MaterialCardMedia.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__media');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.media);
+    }
+  }]);
+
+  return MaterialCardMedia;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCardMedia.is, MaterialCardMedia);
 
-
 /***/ }),
-/* 36 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const block = `:host {display:block}`
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-class MaterialCardPrimary extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "", "</style><slot></slot>"], ["<style>", "", "", "</style><slot></slot>"]);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.primary}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.primary_slotted}</style><slot></slot>`;
+var _gluonjs = __webpack_require__(3);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardPrimary = function (_GluonElement) {
+  _inherits(MaterialCardPrimary, _GluonElement);
+
+  function MaterialCardPrimary() {
+    _classCallCheck(this, MaterialCardPrimary);
+
+    return _possibleConstructorReturn(this, (MaterialCardPrimary.__proto__ || Object.getPrototypeOf(MaterialCardPrimary)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add('mdc-card__primary');
-  }
+  _createClass(MaterialCardPrimary, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardPrimary.prototype.__proto__ || Object.getPrototypeOf(MaterialCardPrimary.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__primary');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.primary, _mdcCard2.default.primary_slotted);
+    }
+  }]);
 
-}
+  return MaterialCardPrimary;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCardPrimary.is, MaterialCardPrimary);
 
-
 /***/ }),
-/* 37 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "", "</style><slot></slot>"], ["<style>", "", "", "</style><slot></slot>"]);
 
-const block = `:host {display:block}`
+var _MaterialElement2 = __webpack_require__(1);
 
-class MaterialCardSecondary extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+var _mdcCard = __webpack_require__(9);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["b" /* html */]`<style>${this.blockStyle}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.secondary}${__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default.a.typography}</style><slot></slot>`;
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+var _mdcTypography = __webpack_require__(7);
+
+var _mdcTypography2 = _interopRequireDefault(_mdcTypography);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardSecondary = function (_MaterialElement) {
+  _inherits(MaterialCardSecondary, _MaterialElement);
+
+  function MaterialCardSecondary() {
+    _classCallCheck(this, MaterialCardSecondary);
+
+    return _possibleConstructorReturn(this, (MaterialCardSecondary.__proto__ || Object.getPrototypeOf(MaterialCardSecondary)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card__secondary');
-    this.classList.add('mdc-typography--body1');
-  }
+  _createClass(MaterialCardSecondary, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardSecondary.prototype.__proto__ || Object.getPrototypeOf(MaterialCardSecondary.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__secondary');
+      this.classList.add('mdc-typography--body1');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _MaterialElement2.html)(_templateObject, this.blockStyle, _mdcCard2.default.secondary, _mdcTypography2.default.typography);
+    }
+  }]);
 
-}
+  return MaterialCardSecondary;
+}(_MaterialElement2.MaterialElement);
 
 customElements.define(MaterialCardSecondary.is, MaterialCardSecondary);
 
-
 /***/ }),
-/* 38 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "", "</style><slot></slot>"], ["<style>", "", "", "</style><slot></slot>"]);
 
-const block = `:host {display:block}`
+var _gluonjs = __webpack_require__(3);
 
-class MaterialCardTitle extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _mdcCard = __webpack_require__(9);
 
-  static get configurationAttrubuters() {
-    return ['large'];
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+var _mdcTypography = __webpack_require__(7);
+
+var _mdcTypography2 = _interopRequireDefault(_mdcTypography);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardTitle = function (_GluonElement) {
+  _inherits(MaterialCardTitle, _GluonElement);
+
+  function MaterialCardTitle() {
+    _classCallCheck(this, MaterialCardTitle);
+
+    return _possibleConstructorReturn(this, (MaterialCardTitle.__proto__ || Object.getPrototypeOf(MaterialCardTitle)).apply(this, arguments));
   }
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.title}${__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default.a.typography}</style><slot></slot>`;
-  }
+  _createClass(MaterialCardTitle, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardTitle.prototype.__proto__ || Object.getPrototypeOf(MaterialCardTitle.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__title');
+      this.classList.add('mdc-typography--title');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.title, _mdcTypography2.default.typography);
+    }
+  }], [{
+    key: "configurationAttrubuters",
+    get: function get() {
+      return ['large'];
+    }
+  }]);
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card__title');
-    this.classList.add('mdc-typography--title');
-  }
-
-}
+  return MaterialCardTitle;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCardTitle.is, MaterialCardTitle);
 
-
 /***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const block = `:host {display:block}`
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-class MaterialCardSubtitle extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "</style><slot></slot>"], ["<style>", "", "</style><slot></slot>"]);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.subtitle}</style><slot></slot>`;
+var _gluonjs = __webpack_require__(3);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardSubtitle = function (_GluonElement) {
+  _inherits(MaterialCardSubtitle, _GluonElement);
+
+  function MaterialCardSubtitle() {
+    _classCallCheck(this, MaterialCardSubtitle);
+
+    return _possibleConstructorReturn(this, (MaterialCardSubtitle.__proto__ || Object.getPrototypeOf(MaterialCardSubtitle)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card__subtitle');
-    this.classList.add('mdc-typography--subheading1');
-  }
+  _createClass(MaterialCardSubtitle, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardSubtitle.prototype.__proto__ || Object.getPrototypeOf(MaterialCardSubtitle.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__subtitle');
+      this.classList.add('mdc-typography--subheading1');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.subtitle);
+    }
+  }]);
 
-}
+  return MaterialCardSubtitle;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCardSubtitle.is, MaterialCardSubtitle);
 
 /***/ }),
-/* 40 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-const block = `:host {display:block}`
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-class MaterialCardSupportingText extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+var _templateObject = _taggedTemplateLiteral(["<style>", "", "</style><slot></slot>"], ["<style>", "", "</style><slot></slot>"]);
 
-  get template() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${block}${__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.supporting_text}</style><slot></slot>`;
+var _gluonjs = __webpack_require__(3);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardSupportingText = function (_GluonElement) {
+  _inherits(MaterialCardSupportingText, _GluonElement);
+
+  function MaterialCardSupportingText() {
+    _classCallCheck(this, MaterialCardSupportingText);
+
+    return _possibleConstructorReturn(this, (MaterialCardSupportingText.__proto__ || Object.getPrototypeOf(MaterialCardSupportingText)).apply(this, arguments));
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classList.add('mdc-card__supporting-text');
-  }
+  _createClass(MaterialCardSupportingText, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialCardSupportingText.prototype.__proto__ || Object.getPrototypeOf(MaterialCardSupportingText.prototype), "connectedCallback", this).call(this);
+      this.classList.add('mdc-card__supporting-text');
+    }
+  }, {
+    key: "template",
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject, block, _mdcCard2.default.supporting_text);
+    }
+  }]);
 
-}
+  return MaterialCardSupportingText;
+}(_gluonjs.GluonElement);
 
 customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText);
 
 /***/ }),
-/* 41 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _MaterialElement2 = __webpack_require__(1);
 
+var _mdcCard = __webpack_require__(9);
 
-const block = `:host {display:block}`
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
 
-class MaterialCardActionButtons extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+var _MaterialStyle = __webpack_require__(2);
 
-  get styles() {
-    return [
-      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
-      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.action_buttons
-    ]
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardActions = function (_MaterialElement) {
+  _inherits(MaterialCardActions, _MaterialElement);
+
+  function MaterialCardActions() {
+    _classCallCheck(this, MaterialCardActions);
+
+    return _possibleConstructorReturn(this, (MaterialCardActions.__proto__ || Object.getPrototypeOf(MaterialCardActions)).apply(this, arguments));
   }
 
-  get classes() {
-    return [
-      'mdc-card__action-buttons'
-    ]
+  _createClass(MaterialCardActions, [{
+    key: "styles",
+    get: function get() {
+      return [_mdcCard2.default.actions, _MaterialStyle.MaterialStyle.block];
+    }
+  }, {
+    key: "classes",
+    get: function get() {
+      return ['mdc-card__actions'];
+    }
+  }]);
+
+  return MaterialCardActions;
+}(_MaterialElement2.MaterialElement);
+
+customElements.define(MaterialCardActions.is, MaterialCardActions);
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _MaterialElement2 = __webpack_require__(1);
+
+var _mdcCard = __webpack_require__(9);
+
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
+
+var _MaterialStyle = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardActionButtons = function (_MaterialElement) {
+  _inherits(MaterialCardActionButtons, _MaterialElement);
+
+  function MaterialCardActionButtons() {
+    _classCallCheck(this, MaterialCardActionButtons);
+
+    return _possibleConstructorReturn(this, (MaterialCardActionButtons.__proto__ || Object.getPrototypeOf(MaterialCardActionButtons)).apply(this, arguments));
   }
 
-}
+  _createClass(MaterialCardActionButtons, [{
+    key: "styles",
+    get: function get() {
+      return [_mdcCard2.default.action_buttons, _MaterialStyle.MaterialStyle.block];
+    }
+  }, {
+    key: "classes",
+    get: function get() {
+      return ['mdc-card__action-buttons'];
+    }
+  }]);
+
+  return MaterialCardActionButtons;
+}(_MaterialElement2.MaterialElement);
 
 customElements.define(MaterialCardActionButtons.is, MaterialCardActionButtons);
 
 /***/ }),
 /* 42 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _MaterialElement2 = __webpack_require__(1);
 
+var _mdcCard = __webpack_require__(9);
 
-const block = `:host {display:block}`
+var _mdcCard2 = _interopRequireDefault(_mdcCard);
 
-class MaterialCardActionIcons extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+var _MaterialStyle = __webpack_require__(2);
 
-  get styles() {
-    return [
-      __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__["a" /* MaterialStyle */].block,
-      __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default.a.action_icons
-    ]
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var block = ":host {display:block}";
+
+var MaterialCardActionIcons = function (_MaterialElement) {
+  _inherits(MaterialCardActionIcons, _MaterialElement);
+
+  function MaterialCardActionIcons() {
+    _classCallCheck(this, MaterialCardActionIcons);
+
+    return _possibleConstructorReturn(this, (MaterialCardActionIcons.__proto__ || Object.getPrototypeOf(MaterialCardActionIcons)).apply(this, arguments));
   }
 
-  get classes() {
-    return [
-      'mdc-card__action-icons'
-    ]
-  }
+  _createClass(MaterialCardActionIcons, [{
+    key: "styles",
+    get: function get() {
+      return [_mdcCard2.default.action_icons, _MaterialStyle.MaterialStyle.block];
+    }
+  }, {
+    key: "classes",
+    get: function get() {
+      return ['mdc-card__action-icons'];
+    }
+  }]);
 
-}
+  return MaterialCardActionIcons;
+}(_MaterialElement2.MaterialElement);
 
 customElements.define(MaterialCardActionIcons.is, MaterialCardActionIcons);
 

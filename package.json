@@ -6,6 +6,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@webcomponents/custom-elements": "^1.0.8",
+    "@webcomponents/webcomponentsjs": "^1.1.0",
     "cors": "^2.8.4",
     "css": "^2.2.1",
     "cssbeautify": "^0.3.1",
@@ -15,10 +17,13 @@
     "material-design-icons": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.39",
-    "@babel/preset-env": "^7.0.0-beta.39",
-    "babel-loader": "^8.0.0-beta.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-minify-webpack-plugin": "^0.2.0",
+    "babel-plugin-transform-custom-element-classes": "^0.1.0",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "css-loader": "^0.28.9",
     "file-watcher-webpack-plugin": "^1.1.0",

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -737,68 +737,112 @@ const removeNodes = (container, startNode, endNode = null) => {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
 
 
-class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.html = exports.MaterialElement = undefined;
 
-  static globalStyle(val) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    const head = document.head;
-    const style = document.createElement('style');
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(val));
+var _templateObject = _taggedTemplateLiteral(['<slot></slot>'], ['<slot></slot>']),
+    _templateObject2 = _taggedTemplateLiteral(['<style>', '</style>', ''], ['<style>', '</style>', '']);
 
-    head.appendChild(style);
+var _gluonjs = __webpack_require__(3);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MaterialElement = function (_GluonElement) {
+  _inherits(MaterialElement, _GluonElement);
+
+  function MaterialElement() {
+    _classCallCheck(this, MaterialElement);
+
+    return _possibleConstructorReturn(this, (MaterialElement.__proto__ || Object.getPrototypeOf(MaterialElement)).apply(this, arguments));
   }
 
-  static get configurationAttributes() {
-    return [];
-  }
-
-  static get observedAttributes() {
-    return this.configurationAttributes;
-  }
-
-  get styles() {
-    return [];
-  }
-
-  get classes() {
-    return [];
-  }
-
-  get content() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
-  }
-
-  get template(){
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if(this.shadowRoot){
-      this[attr] = newValue;
+  _createClass(MaterialElement, [{
+    key: 'attributeChangedCallback',
+    value: function attributeChangedCallback(attr, oldValue, newValue) {
+      if (this.shadowRoot) {
+        this[attr] = newValue;
+      }
+      this.render();
     }
-    this.render()
-  }
+  }, {
+    key: 'connectedCallback',
+    value: function connectedCallback() {
+      var _this2 = this;
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.classes.forEach(c => this.classList.add(c));
-    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
-  }
+      _get(MaterialElement.prototype.__proto__ || Object.getPrototypeOf(MaterialElement.prototype), 'connectedCallback', this).call(this);
+      this.classes.forEach(function (c) {
+        return _this2.classList.add(c);
+      });
+      this.constructor.configurationAttributes.forEach(function (attr) {
+        return _this2[attr] = _this2.getAttribute(attr);
+      });
+    }
+  }, {
+    key: 'styles',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'classes',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'content',
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject);
+    }
+  }, {
+    key: 'template',
+    get: function get() {
+      return (0, _gluonjs.html)(_templateObject2, this.styles.join(''), this.content);
+    }
+  }], [{
+    key: 'globalStyle',
+    value: function globalStyle(val) {
 
-}
+      var head = document.head;
+      var style = document.createElement('style');
 
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(val));
 
+      head.appendChild(style);
+    }
+  }, {
+    key: 'configurationAttributes',
+    get: function get() {
+      return [];
+    }
+  }, {
+    key: 'observedAttributes',
+    get: function get() {
+      return this.configurationAttributes;
+    }
+  }]);
 
+  return MaterialElement;
+}(_gluonjs.GluonElement);
+
+exports.MaterialElement = MaterialElement;
+exports.html = _gluonjs.html;
 
 /***/ }),
 /* 2 */,
@@ -806,10 +850,11 @@ class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* Gluon
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GluonElement", function() { return h; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(5);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "html", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
 const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
 //# sourceMappingURL=gluon.js.map
 
@@ -1351,10 +1396,11 @@ class MDCRippleAdapter {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return supportsCssVariables; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return applyPassive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getMatchesProperty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getNormalizedEventCoords; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "supportsCssVariables", function() { return supportsCssVariables; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyPassive", function() { return applyPassive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMatchesProperty", function() { return getMatchesProperty; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNormalizedEventCoords", function() { return getNormalizedEventCoords; });
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1506,14 +1552,15 @@ function getNormalizedEventCoords(ev, pageOffset, clientRect) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MDCRipple; });
-/* unused harmony export RippleCapableSurface */
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MDCRipple", function() { return MDCRipple; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RippleCapableSurface", function() { return RippleCapableSurface; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(11);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__foundation__["a"]; });
-/* unused harmony reexport util */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCRippleFoundation", function() { return __WEBPACK_IMPORTED_MODULE_2__foundation__["a"]; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "util", function() { return __WEBPACK_IMPORTED_MODULE_3__util__; });
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1570,10 +1617,10 @@ class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["
    * @return {!MDCRippleAdapter}
    */
   static createAdapter(instance) {
-    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util__["b" /* getMatchesProperty */](HTMLElement.prototype);
+    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util__["getMatchesProperty"](HTMLElement.prototype);
 
     return {
-      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util__["d" /* supportsCssVariables */](window),
+      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util__["supportsCssVariables"](window),
       isUnbounded: () => instance.unbounded,
       isSurfaceActive: () => instance.root_[MATCHES](':active'),
       isSurfaceDisabled: () => instance.disabled,
@@ -1581,13 +1628,13 @@ class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["
       removeClass: (className) => instance.root_.classList.remove(className),
       containsEventTarget: (target) => instance.root_.contains(target),
       registerInteractionHandler: (evtType, handler) =>
-        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["applyPassive"]()),
       deregisterInteractionHandler: (evtType, handler) =>
-        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["applyPassive"]()),
       registerDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["applyPassive"]()),
       deregisterDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["applyPassive"]()),
       registerResizeHandler: (handler) => window.addEventListener('resize', handler),
       deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
       updateCssVariable: (varName, value) => instance.root_.style.setProperty(varName, value),
@@ -2062,7 +2109,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
     let startPoint;
     if (wasActivatedByPointer) {
-      startPoint = Object(__WEBPACK_IMPORTED_MODULE_3__util__["c" /* getNormalizedEventCoords */])(
+      startPoint = Object(__WEBPACK_IMPORTED_MODULE_3__util__["getNormalizedEventCoords"])(
         /** @type {!Event} */ (activationEvent),
         this.adapter_.getWindowPageOffset(), this.adapter_.computeBoundingRect()
       );
@@ -2301,109 +2348,134 @@ const numbers = {
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */,
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Button__ = __webpack_require__(31);
 
+
+__webpack_require__(30);
 
 /***/ }),
-/* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(15);
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-__WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */].globalStyle(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes)
+var _MaterialElement2 = __webpack_require__(1);
 
-class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
+var _mdcButton = __webpack_require__(31);
 
-  get hasSlotted() {
-    const slot = this.shadowRoot.querySelector('slot');
-    return slot != null && slot.assignedNodes().length > 1;
+var _mdcButton2 = _interopRequireDefault(_mdcButton);
+
+var _index = __webpack_require__(15);
+
+var ripple = _interopRequireWildcard(_index);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_MaterialElement2.MaterialElement.globalStyle(_mdcButton2.default.keyframes);
+
+var MaterialButton = function (_MaterialElement) {
+  _inherits(MaterialButton, _MaterialElement);
+
+  function MaterialButton() {
+    _classCallCheck(this, MaterialButton);
+
+    return _possibleConstructorReturn(this, (MaterialButton.__proto__ || Object.getPrototypeOf(MaterialButton)).apply(this, arguments));
   }
 
-  get element() {
-    if (!this.hasSlotted) {
-      return this;
-    } else {
-      return this.querySelector('button, a, input');
+  _createClass(MaterialButton, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      _get(MaterialButton.prototype.__proto__ || Object.getPrototypeOf(MaterialButton.prototype), "connectedCallback", this).call(this);
+      this.element.classList.add('mdc-button');
+      new ripple.MDCRipple(this.element);
+      this.render();
     }
-  }
-
-  get styles() {
-    if (this.hasSlotted) {
-      return [
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.slotted
-      ]
-    } else {
-      return [
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.host
-      ]
+  }, {
+    key: "hasSlotted",
+    get: function get() {
+      var slot = this.shadowRoot.querySelector('slot');
+      return slot != null && slot.assignedNodes().length > 1;
     }
-  }
-
-  get classes() {
-    if (this.hasSlotted) {
-      return []
-    } else {
-      return [
-        'mdc-button'
-      ]
-    }
-  }
-
-  static get configurationAttributes() {
-    return ['disabled', 'raised'];
-  }
-
-  set disabled(val) {
-    if (val != null) {
-      if(!this.element.hasAttribute("disabled")) {
-        this.element.setAttribute('disabled', "")
+  }, {
+    key: "element",
+    get: function get() {
+      if (!this.hasSlotted) {
+        return this;
+      } else {
+        return this.querySelector('button, a, input');
       }
-    } else {
-      this.element.removeAttribute('disabled')
     }
-  }
-
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
-  set raised(val) {
-    if (val != null) {
-      this.element.classList.add('mdc-button--raised');
-    } else {
-      this.element.classList.remove('mdc-button--raised');
+  }, {
+    key: "styles",
+    get: function get() {
+      if (this.hasSlotted) {
+        return [_mdcButton2.default.keyframes, _mdcButton2.default.slotted];
+      } else {
+        return [_mdcButton2.default.keyframes, _mdcButton2.default.host];
+      }
     }
-  }
+  }, {
+    key: "classes",
+    get: function get() {
+      if (this.hasSlotted) {
+        return [];
+      } else {
+        return ['mdc-button'];
+      }
+    }
+  }, {
+    key: "disabled",
+    set: function set(val) {
+      if (val != null) {
+        if (!this.element.hasAttribute("disabled")) {
+          this.element.setAttribute('disabled', "");
+        }
+      } else {
+        this.element.removeAttribute('disabled');
+      }
+    },
+    get: function get() {
+      return this.hasAttribute("disabled");
+    }
+  }, {
+    key: "raised",
+    set: function set(val) {
+      if (val != null) {
+        this.element.classList.add('mdc-button--raised');
+      } else {
+        this.element.classList.remove('mdc-button--raised');
+      }
+    }
+  }], [{
+    key: "configurationAttributes",
+    get: function get() {
+      return ['disabled', 'raised'];
+    }
+  }]);
 
-
-  connectedCallback() {
-    super.connectedCallback()
-    this.element.classList.add('mdc-button');
-    new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.element);
-    this.render();
-  }
-
-}
+  return MaterialButton;
+}(_MaterialElement2.MaterialElement);
 
 customElements.define(MaterialButton.is, MaterialButton);
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = {"keyframes":"@keyframes mdc-ripple-fg-radius-in {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n  }\n\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    animation-timing-function: linear;\n    opacity: 0;\n  }\n\n  to {\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    animation-timing-function: linear;\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n\n  to {\n    opacity: 0;\n  }\n}","host":":host(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n:host(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n:host(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n:host(.mdc-button:active) {\n  outline: none;\n}\n\n:host(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n:host(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n:host(.mdc-button--raised:disabled),\n:host(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n:host(.mdc-button--raised)::before,\n:host(.mdc-button--raised)::after,\n:host(.mdc-button--unelevated)::before,\n:host(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n:host(.mdc-button--raised:hover)::before,\n:host(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n:host(.mdc-button--raised.mdc-ripple-upgraded),\n:host(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n:host(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n:host(.mdc-button--raised:hover),\n:host(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n:host(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n:host(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n:host(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n:host(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n:host(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}","slotted":"::slotted(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n::slotted(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n::slotted(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n::slotted(.mdc-button:active) {\n  outline: none;\n}\n\n::slotted(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n::slotted(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n::slotted(.mdc-button--raised:disabled),\n::slotted(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n::slotted(.mdc-button--raised)::before,\n::slotted(.mdc-button--raised)::after,\n::slotted(.mdc-button--unelevated)::before,\n::slotted(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n::slotted(.mdc-button--raised:hover)::before,\n::slotted(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised.mdc-ripple-upgraded),\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n::slotted(.mdc-button--raised:hover),\n::slotted(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n::slotted(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n::slotted(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n::slotted(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}"}

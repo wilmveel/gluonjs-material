@@ -1,7 +1,10 @@
-import {GluonElement, html} from "gluonjs";
+import {GluonElement, html} from "../../lib/gluon.js";
 
 class MaterialElement extends GluonElement {
 
+  constructor(){
+    super();
+  }
   static globalStyle(val) {
 
     const head = document.head;
