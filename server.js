@@ -11,6 +11,7 @@ app.use(cors({
 
 app.use('/dist', express.static('dist'));
 app.use('/demo', express.static('demo'));
+app.use('/node_modules', express.static('node_modules'));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
