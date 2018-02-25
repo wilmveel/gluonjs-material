@@ -1,4 +1,4 @@
-import {GluonElement, html} from "../../lib/gluon.js";
+import {GluonElement, html} from "gluonjs";
 
 class MaterialElement extends GluonElement {
 

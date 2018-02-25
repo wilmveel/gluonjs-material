@@ -2,7 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -38,9 +38,17 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
+        include: [
+          path.resolve(__dirname, 'node_modules/gluonjs/**')
+        ],
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: [["env", {modules: false}]],
+            plugins: ['transform-runtime'],
+            runtimeHelpers: true
+          }
         }
       }
     ]
@@ -58,7 +66,19 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-//    new UglifyJSPlugin()
+    new UglifyJsPlugin({
+      test: /\.js($|\?)/i,
+      parallel: true,
+      uglifyOptions: {
+        toplevel: true,
+        compress: {passes: 2},
+        mangle: false,
+        output: {
+          comments: false
+        }
+      }
+
+    })
   ],
   devServer: {
     compress: true,
