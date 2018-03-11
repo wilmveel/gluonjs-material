@@ -60,11 +60,93 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__ = __webpack_require__(3);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b"]; });
+
+
+const directive = (f) => {
+  f.__litDirective = true;
+  return f;
+};
+
+const unsafeHTML = (value) => directive((_part) => {
+  const tmp = document.createElement('template');
+  tmp.innerHTML = value;
+  return document.importNode(tmp.content, true);
+});
+
+
+class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["a" /* GluonElement */] {
+
+  constructor(){
+    super();
+  }
+  static globalStyle(val) {
+
+    const head = document.head;
+    const style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(val));
+
+    head.appendChild(style);
+  }
+
+  static get configurationAttributes() {
+    return [];
+  }
+
+  static get observedAttributes() {
+    return this.configurationAttributes;
+  }
+
+  get initStyles() {
+    return [];
+  }
+
+  get initClasses() {
+    return [];
+  }
+
+  get content() {
+    return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`<slot></slot>`;
+  }
+
+  get template(){
+    const styles = this.initStyles.map(x => __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`<style>${x}</style>`);
+    return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`${styles}${this.content}`;
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if(this.shadowRoot){
+      this[attr] = newValue;
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.initClasses.forEach(c => this.classList.add(c));
+    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
+  }
+
+}
+
+
+
+
+/***/ }),
+
+/***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -736,294 +818,205 @@ const removeNodes = (container, startNode, endNode = null) => {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
-
-
-class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
-
-  constructor(){
-    super();
-  }
-  static globalStyle(val) {
-
-    const head = document.head;
-    const style = document.createElement('style');
-
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(val));
-
-    head.appendChild(style);
-  }
-
-  static get configurationAttributes() {
-    return [];
-  }
-
-  static get observedAttributes() {
-    return this.configurationAttributes;
-  }
-
-  get styles() {
-    return [];
-  }
-
-  get classes() {
-    return [];
-  }
-
-  get content() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
-  }
-
-  get template(){
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if(this.shadowRoot){
-      this[attr] = newValue;
-    }
-    this.render()
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-    this.classes.forEach(c => this.classList.add(c));
-    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
-  }
-
-}
-
-
-
-
-/***/ }),
-/* 2 */,
-/* 3 */
+/***/ 3:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(6);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
 const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
 //# sourceMappingURL=gluon.js.map
 
 
 /***/ }),
-/* 4 */
+
+/***/ 34:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
-/* unused harmony reexport html */
-/* unused harmony reexport svg */
-/* unused harmony reexport TemplateResult */
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialButton_js__ = __webpack_require__(35);
 
 
-const shadyTemplateFactory = (scopeName) => (result) => {
-    const cacheKey = `${result.type}--${scopeName}`;
-    let templateCache = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].get(cacheKey);
-    if (templateCache === undefined) {
-        templateCache = new Map();
-        __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].set(cacheKey, templateCache);
-    }
-    let template = templateCache.get(result.strings);
-    if (template === undefined) {
-        const element = result.getTemplateElement();
-        if (typeof window.ShadyCSS === 'object') {
-            window.ShadyCSS.prepareTemplate(element, scopeName);
-        }
-        template = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* Template */](result, element);
-        templateCache.set(result.strings, template);
-    }
-    return template;
-};
-function render(result, container, scopeName) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* render */])(result, container, shadyTemplateFactory(scopeName));
-}
-//# sourceMappingURL=shady-render.js.map
 
 /***/ }),
-/* 5 */
+
+/***/ 35:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
-/* unused harmony reexport render */
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dist_MaterialRipple_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dist_MaterialRipple_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__dist_MaterialRipple_js__);
 
 
-/**
- * Interprets a template literal as a lit-extended HTML template.
- */
-const html = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
-/* harmony export (immutable) */ __webpack_exports__["a"] = html;
 
-/**
- * Interprets a template literal as a lit-extended SVG template.
- */
-const svg = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* SVGTemplateResult */](strings, values, 'svg', extendedPartCallback);
-/* unused harmony export svg */
 
-/**
- * A PartCallback which allows templates to set properties and declarative
- * event handlers.
- *
- * Properties are set by default, instead of attributes. Attribute names in
- * lit-html templates preserve case, so properties are case sensitive. If an
- * expression takes up an entire attribute value, then the property is set to
- * that value. If an expression is interpolated with a string or other
- * expressions then the property is set to the string result of the
- * interpolation.
- *
- * To set an attribute instead of a property, append a `$` suffix to the
- * attribute name.
- *
- * Example:
- *
- *     html`<button class$="primary">Buy Now</button>`
- *
- * To set an event handler, prefix the attribute name with `on-`:
- *
- * Example:
- *
- *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
- *
- */
-const extendedPartCallback = (instance, templatePart, node) => {
-    if (templatePart.type === 'attribute') {
-        if (templatePart.rawName.startsWith('on-')) {
-            const eventName = templatePart.rawName.slice(3);
-            return new EventPart(instance, node, eventName);
-        }
-        if (templatePart.name.endsWith('$')) {
-            const name = templatePart.name.slice(0, -1);
-            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
-        }
-        if (templatePart.name.endsWith('?')) {
-            const name = templatePart.name.slice(0, -1);
-            return new BooleanAttributePart(instance, node, name, templatePart.strings);
-        }
-        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
+__WEBPACK_IMPORTED_MODULE_0__MaterialElement_js__["a" /* MaterialElement */].globalStyle(__WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__["a" /* ButtonStyle */].keyframes)
+
+class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement_js__["a" /* MaterialElement */] {
+
+  get hasSlotted() {
+    const slot = this.shadowRoot.querySelector('slot');
+    return slot != null && slot.assignedNodes().length > 1;
+  }
+
+  get element() {
+    if (!this.hasSlotted) {
+      return this;
+    } else {
+      return this.querySelector('button, a, input');
     }
-    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* defaultPartCallback */])(instance, templatePart, node);
-};
-/* unused harmony export extendedPartCallback */
+  }
 
-/**
- * Implements a boolean attribute, roughly as defined in the HTML
- * specification.
- *
- * If the value is truthy, then the attribute is present with a value of
- * ''. If the value is falsey, the attribute is removed.
- */
-class BooleanAttributePart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
-    setValue(values, startIndex) {
-        const s = this.strings;
-        if (s.length === 2 && s[0] === '' && s[1] === '') {
-            const value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
-            if (value === __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
-                return;
-            }
-            if (value) {
-                this.element.setAttribute(this.name, '');
-            }
-            else {
-                this.element.removeAttribute(this.name);
-            }
-        }
-        else {
-            throw new Error('boolean attributes can only contain a single expression');
-        }
+  get initStyles() {
+    if (this.hasSlotted) {
+      return [
+        __WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__["a" /* ButtonStyle */].keyframes,
+        __WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__["a" /* ButtonStyle */].slotted
+      ]
+    } else {
+      return [
+        __WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__["a" /* ButtonStyle */].keyframes,
+        __WEBPACK_IMPORTED_MODULE_1__styles_ButtonStyle_js__["a" /* ButtonStyle */].host
+      ]
     }
+  }
+
+  get initClasses() {
+    if (!this.hasSlotted) {
+      return ['mdc-button'];
+    }
+    return [];
+  }
+
+  static get configurationAttributes() {
+    return ['disabled', 'raised'];
+  }
+
+  set disabled(val) {
+    if (val != null) {
+      if(!this.element.hasAttribute("disabled")) {
+        this.element.setAttribute('disabled', "")
+      }
+    } else {
+      this.element.removeAttribute('disabled')
+    }
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
+  }
+
+  set raised(val) {
+    if (val != null) {
+      this.element.classList.add('mdc-button--raised');
+    } else {
+      this.element.classList.remove('mdc-button--raised');
+    }
+  }
+
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.element.classList.add('mdc-button');
+    new __WEBPACK_IMPORTED_MODULE_2__dist_MaterialRipple_js__["MDCRipple"](this.element);
+    this.render();
+  }
+
 }
-/* unused harmony export BooleanAttributePart */
 
-class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
-    setValue(values, startIndex) {
-        const s = this.strings;
-        let value;
-        if (this._equalToPreviousValues(values, startIndex)) {
-            return;
-        }
-        if (s.length === 2 && s[0] === '' && s[1] === '') {
-            // An expression that occupies the whole attribute value will leave
-            // leading and trailing empty strings.
-            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
-        }
-        else {
-            // Interpolation, so interpolate
-            value = this._interpolate(values, startIndex);
-        }
-        if (value !== __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
-            this.element[this.name] = value;
-        }
-        this._previousValues = values;
-    }
-}
-/* unused harmony export PropertyPart */
-
-class EventPart {
-    constructor(instance, element, eventName) {
-        this.instance = instance;
-        this.element = element;
-        this.eventName = eventName;
-    }
-    setValue(value) {
-        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, value);
-        const previous = this._listener;
-        if (listener === previous) {
-            return;
-        }
-        this._listener = listener;
-        if (previous != null) {
-            this.element.removeEventListener(this.eventName, previous);
-        }
-        if (listener != null) {
-            this.element.addEventListener(this.eventName, listener);
-        }
-    }
-}
-/* unused harmony export EventPart */
-
-//# sourceMappingURL=lit-extended.js.map
+customElements.define(MaterialButton.is, MaterialButton);
 
 /***/ }),
-/* 6 */
+
+/***/ 36:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ButtonStyle; });
+const ButtonStyle = {"keyframes":"@keyframes mdc-ripple-fg-radius-in {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n  }\n\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    animation-timing-function: linear;\n    opacity: 0;\n  }\n\n  to {\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    animation-timing-function: linear;\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n\n  to {\n    opacity: 0;\n  }\n}","host":":host(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n:host(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n:host(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n:host(.mdc-button:active) {\n  outline: none;\n}\n\n:host(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n:host(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n:host(.mdc-button--raised:disabled),\n:host(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n:host(.mdc-button--raised)::before,\n:host(.mdc-button--raised)::after,\n:host(.mdc-button--unelevated)::before,\n:host(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n:host(.mdc-button--raised:hover)::before,\n:host(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n:host(.mdc-button--raised.mdc-ripple-upgraded),\n:host(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n:host(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n:host(.mdc-button--raised:hover),\n:host(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n:host(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n:host(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n:host(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n:host(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n:host(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}","slotted":"::slotted(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n::slotted(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n::slotted(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n::slotted(.mdc-button:active) {\n  outline: none;\n}\n\n::slotted(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n::slotted(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n::slotted(.mdc-button--raised:disabled),\n::slotted(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n::slotted(.mdc-button--raised)::before,\n::slotted(.mdc-button--raised)::after,\n::slotted(.mdc-button--unelevated)::before,\n::slotted(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n::slotted(.mdc-button--raised:hover)::before,\n::slotted(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised.mdc-ripple-upgraded),\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n::slotted(.mdc-button--raised:hover),\n::slotted(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n::slotted(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n::slotted(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n::slotted(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}"}
+
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports) {
+
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1098,12 +1091,14 @@ class MDCFoundation {
 
 
 /***/ }),
-/* 7 */,
-/* 8 */
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__foundation_js__ = __webpack_require__(3);
 /**
  * @license
  * Copyright 2016 Google Inc.
@@ -1136,7 +1131,7 @@ class MDCComponent {
     // returns an instantiated component with its root set to that element. Also note that in the cases of
     // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
     // from getDefaultFoundation().
-    return new MDCComponent(root, new __WEBPACK_IMPORTED_MODULE_0__foundation__["a" /* default */]());
+    return new MDCComponent(root, new __WEBPACK_IMPORTED_MODULE_0__foundation_js__["a" /* default */]());
   }
 
   /**
@@ -1232,8 +1227,7 @@ class MDCComponent {
 
 
 /***/ }),
-/* 9 */,
-/* 10 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1350,14 +1344,15 @@ class MDCRippleAdapter {
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return supportsCssVariables; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return applyPassive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getMatchesProperty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getNormalizedEventCoords; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "supportsCssVariables", function() { return supportsCssVariables; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyPassive", function() { return applyPassive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMatchesProperty", function() { return getMatchesProperty; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNormalizedEventCoords", function() { return getNormalizedEventCoords; });
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1502,21 +1497,21 @@ function getNormalizedEventCoords(ev, pageOffset, clientRect) {
 
 
 /***/ }),
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MDCRipple; });
-/* unused harmony export RippleCapableSurface */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_component__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(11);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__foundation__["a"]; });
-/* unused harmony reexport util */
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MDCRipple", function() { return MDCRipple; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RippleCapableSurface", function() { return RippleCapableSurface; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_component_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__foundation_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(9);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MDCRippleFoundation", function() { return __WEBPACK_IMPORTED_MODULE_2__foundation_js__["a"]; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "util", function() { return __WEBPACK_IMPORTED_MODULE_3__util_js__; });
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1542,7 +1537,7 @@ function getNormalizedEventCoords(ev, pageOffset, clientRect) {
 /**
  * @extends MDCComponent<!MDCRippleFoundation>
  */
-class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["a" /* default */] {
+class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__base_component_js__["a" /* default */] {
   /** @param {...?} args */
   constructor(...args) {
     super(...args);
@@ -1573,10 +1568,10 @@ class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["
    * @return {!MDCRippleAdapter}
    */
   static createAdapter(instance) {
-    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util__["b" /* getMatchesProperty */](HTMLElement.prototype);
+    const MATCHES = __WEBPACK_IMPORTED_MODULE_3__util_js__["getMatchesProperty"](HTMLElement.prototype);
 
     return {
-      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util__["d" /* supportsCssVariables */](window),
+      browserSupportsCssVars: () => __WEBPACK_IMPORTED_MODULE_3__util_js__["supportsCssVariables"](window),
       isUnbounded: () => instance.unbounded,
       isSurfaceActive: () => instance.root_[MATCHES](':active'),
       isSurfaceDisabled: () => instance.disabled,
@@ -1584,13 +1579,13 @@ class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["
       removeClass: (className) => instance.root_.classList.remove(className),
       containsEventTarget: (target) => instance.root_.contains(target),
       registerInteractionHandler: (evtType, handler) =>
-        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        instance.root_.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util_js__["applyPassive"]()),
       deregisterInteractionHandler: (evtType, handler) =>
-        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        instance.root_.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util_js__["applyPassive"]()),
       registerDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        document.documentElement.addEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util_js__["applyPassive"]()),
       deregisterDocumentInteractionHandler: (evtType, handler) =>
-        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util__["a" /* applyPassive */]()),
+        document.documentElement.removeEventListener(evtType, handler, __WEBPACK_IMPORTED_MODULE_3__util_js__["applyPassive"]()),
       registerResizeHandler: (handler) => window.addEventListener('resize', handler),
       deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
       updateCssVariable: (varName, value) => instance.root_.style.setProperty(varName, value),
@@ -1635,7 +1630,7 @@ class MDCRipple extends __WEBPACK_IMPORTED_MODULE_0__material_base_component__["
 
   /** @return {!MDCRippleFoundation} */
   getDefaultFoundation() {
-    return new __WEBPACK_IMPORTED_MODULE_2__foundation__["a" /* default */](MDCRipple.createAdapter(this));
+    return new __WEBPACK_IMPORTED_MODULE_2__foundation_js__["a" /* default */](MDCRipple.createAdapter(this));
   }
 
   initialSyncWithDOM() {
@@ -1669,14 +1664,14 @@ RippleCapableSurface.prototype.disabled;
 
 
 /***/ }),
-/* 16 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_foundation_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__adapter_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(9);
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -1752,17 +1747,17 @@ let activatedTargets = [];
 /**
  * @extends {MDCFoundation<!MDCRippleAdapter>}
  */
-class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_foundation__["a" /* default */] {
+class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__base_foundation_js__["a" /* default */] {
   static get cssClasses() {
-    return __WEBPACK_IMPORTED_MODULE_2__constants__["a" /* cssClasses */];
+    return __WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* cssClasses */];
   }
 
   static get strings() {
-    return __WEBPACK_IMPORTED_MODULE_2__constants__["c" /* strings */];
+    return __WEBPACK_IMPORTED_MODULE_2__constants_js__["c" /* strings */];
   }
 
   static get numbers() {
-    return __WEBPACK_IMPORTED_MODULE_2__constants__["b" /* numbers */];
+    return __WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* numbers */];
   }
 
   static get defaultAdapter() {
@@ -2065,7 +2060,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
     let startPoint;
     if (wasActivatedByPointer) {
-      startPoint = Object(__WEBPACK_IMPORTED_MODULE_3__util__["c" /* getNormalizedEventCoords */])(
+      startPoint = Object(__WEBPACK_IMPORTED_MODULE_3__util_js__["getNormalizedEventCoords"])(
         /** @type {!Event} */ (activationEvent),
         this.adapter_.getWindowPageOffset(), this.adapter_.computeBoundingRect()
       );
@@ -2102,7 +2097,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
       this.adapter_.addClass(FG_DEACTIVATION);
       this.fgDeactivationRemovalTimer_ = setTimeout(() => {
         this.adapter_.removeClass(FG_DEACTIVATION);
-      }, __WEBPACK_IMPORTED_MODULE_2__constants__["b" /* numbers */].FG_DEACTIVATION_MS);
+      }, __WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* numbers */].FG_DEACTIVATION_MS);
     }
   }
 
@@ -2237,7 +2232,7 @@ class MDCRippleFoundation extends __WEBPACK_IMPORTED_MODULE_0__material_base_fou
 
 
 /***/ }),
-/* 17 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2292,125 +2287,216 @@ const numbers = {
 
 
 
-/***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Button__ = __webpack_require__(31);
-
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__ = __webpack_require__(15);
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */].globalStyle(__WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes)
-
-class MaterialButton extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__["a" /* MaterialElement */] {
-
-  get hasSlotted() {
-    const slot = this.shadowRoot.querySelector('slot');
-    return slot != null && slot.assignedNodes().length > 1;
-  }
-
-  get element() {
-    if (!this.hasSlotted) {
-      return this;
-    } else {
-      return this.querySelector('button, a, input');
-    }
-  }
-
-  get styles() {
-    if (this.hasSlotted) {
-      return [
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.slotted
-      ]
-    } else {
-      return [
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.keyframes,
-        __WEBPACK_IMPORTED_MODULE_1__material_button_mdc_button___default.a.host
-      ]
-    }
-  }
-
-  get classes() {
-    if (this.hasSlotted) {
-      return []
-    } else {
-      return [
-        'mdc-button'
-      ]
-    }
-  }
-
-  static get configurationAttributes() {
-    return ['disabled', 'raised'];
-  }
-
-  set disabled(val) {
-    if (val != null) {
-      if(!this.element.hasAttribute("disabled")) {
-        this.element.setAttribute('disabled', "")
-      }
-    } else {
-      this.element.removeAttribute('disabled')
-    }
-  }
-
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
-  set raised(val) {
-    if (val != null) {
-      this.element.classList.add('mdc-button--raised');
-    } else {
-      this.element.classList.remove('mdc-button--raised');
-    }
-  }
-
-
-  connectedCallback() {
-    super.connectedCallback()
-    this.element.classList.add('mdc-button');
-    new __WEBPACK_IMPORTED_MODULE_2__material_ripple_index__["a" /* MDCRipple */](this.element);
-    this.render();
-  }
-
-}
-
-customElements.define(MaterialButton.is, MaterialButton);
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-module.exports = {"keyframes":"@keyframes mdc-ripple-fg-radius-in {\n  from {\n    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    transform: translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1);\n  }\n\n  to {\n    transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-in {\n  from {\n    animation-timing-function: linear;\n    opacity: 0;\n  }\n\n  to {\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n}\n\n@keyframes mdc-ripple-fg-opacity-out {\n  from {\n    animation-timing-function: linear;\n    opacity: var(--mdc-ripple-fg-opacity, 0.16);\n  }\n\n  to {\n    opacity: 0;\n  }\n}","host":":host(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n:host(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n:host(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n:host(.mdc-button:active) {\n  outline: none;\n}\n\n:host(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n:host(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n:host(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button)::before,\n:host(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n:host(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n:host(.mdc-button--raised:disabled),\n:host(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n:host(.mdc-button--raised:not(:disabled)),\n:host(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n:host(.mdc-button--raised)::before,\n:host(.mdc-button--raised)::after,\n:host(.mdc-button--unelevated)::before,\n:host(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n:host(.mdc-button--raised:hover)::before,\n:host(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n:host(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n:host(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n:host(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n:host(.mdc-button--raised.mdc-ripple-upgraded),\n:host(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n:host(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n:host(.mdc-button--raised:hover),\n:host(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n:host(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n:host(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n:host(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n:host(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n:host(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n:host(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n:host(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n:host(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}","slotted":"::slotted(.mdc-button) {\n  font-family: Roboto, sans-serif;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  font-size: 0.875rem;\n  line-height: 2.25rem;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  text-decoration: none;\n  text-transform: uppercase;\n  --mdc-ripple-fg-size: 0;\n  --mdc-ripple-left: 0;\n  --mdc-ripple-top: 0;\n  --mdc-ripple-fg-scale: 1;\n  --mdc-ripple-fg-translate-end: 0;\n  --mdc-ripple-fg-translate-start: 0;\n  -webkit-tap-highlight-color: transparent;\n  will-change: transform, opacity;\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  min-width: 64px;\n  height: 36px;\n  padding: 0 16px;\n  border: none;\n  outline: none;\n  text-align: center;\n  user-select: none;\n  -webkit-appearance: none;\n  overflow: hidden;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  position: absolute;\n  border-radius: 50%;\n  opacity: 0;\n  pointer-events: none;\n  content: \"\";\n}\n\n::slotted(.mdc-button)::before {\n  transition: opacity 15ms linear;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::before {\n  transform: scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  top: 0;\n  left: 0;\n  transform: scale(0);\n  transform-origin: center center;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--unbounded)::after {\n  top: var(--mdc-ripple-top, 0);\n  left: var(--mdc-ripple-left, 0);\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-activation)::after {\n  animation: 225ms mdc-ripple-fg-radius-in forwards, 75ms mdc-ripple-fg-opacity-in forwards;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded--foreground-deactivation)::after {\n  animation: 150ms mdc-ripple-fg-opacity-out;\n  transform: translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1));\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  top: calc(50% - 100%);\n  left: calc(50% - 100%);\n  width: 200%;\n  height: 200%;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded)::after {\n  width: var(--mdc-ripple-fg-size, 100%);\n  height: var(--mdc-ripple-fg-size, 100%);\n}\n\n::slotted(.mdc-button)::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\n::slotted(.mdc-button:active) {\n  outline: none;\n}\n\n::slotted(.mdc-button:hover) {\n  cursor: pointer;\n}\n\n::slotted(.mdc-button:disabled) {\n  background-color: transparent;\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n  cursor: default;\n  pointer-events: none;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  background-color: transparent;\n}\n\n::slotted(.mdc-button:not(:disabled)) {\n  /* @alternate */\n  color: #6200ee;\n  color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button)::before,\n::slotted(.mdc-button)::after {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button:hover)::before {\n  opacity: 0.04;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.12;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.16;\n}\n\n::slotted(.mdc-button.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.16;\n}\n\n::slotted(.mdc-button--raised:disabled),\n::slotted(.mdc-button--unelevated:disabled) {\n  background-color: rgba(0, 0, 0, 0.12);\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  background-color: #6200ee;\n}\n\n::slotted(.mdc-button--raised:not(:disabled)),\n::slotted(.mdc-button--unelevated:not(:disabled)) {\n  /* @alternate */\n  color: white;\n  color: var(--mdc-theme-text-primary-on-primary, white);\n}\n\n::slotted(.mdc-button--raised)::before,\n::slotted(.mdc-button--raised)::after,\n::slotted(.mdc-button--unelevated)::before,\n::slotted(.mdc-button--unelevated)::after {\n  /* @alternate */\n  background-color: white;\n}\n\n::slotted(.mdc-button--raised:hover)::before,\n::slotted(.mdc-button--unelevated:hover)::before {\n  opacity: 0.08;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--raised.mdc-ripple-upgraded--background-focused)::before,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):focus)::before,\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded--background-focused)::before {\n  transition-duration: 75ms;\n  opacity: 0.24;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded))::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded))::after {\n  transition: opacity 150ms linear;\n}\n\n::slotted(.mdc-button--raised:not(.mdc-ripple-upgraded):active)::after,\n::slotted(.mdc-button--unelevated:not(.mdc-ripple-upgraded):active)::after {\n  transition-duration: 75ms;\n  opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised.mdc-ripple-upgraded),\n::slotted(.mdc-button--unelevated.mdc-ripple-upgraded) {\n  --mdc-ripple-fg-opacity: 0.32;\n}\n\n::slotted(.mdc-button--raised) {\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n::slotted(.mdc-button--raised:hover),\n::slotted(.mdc-button--raised:focus) {\n  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:active) {\n  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--raised:disabled) {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n}\n\n::slotted(.mdc-button--stroked) {\n  border-style: solid;\n  padding-right: 14px;\n  padding-left: 14px;\n  border-width: 2px;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button--stroked:disabled) {\n  /* @alternate */\n  border-color: rgba(0, 0, 0, 0.38);\n  border-color: var(--mdc-theme-text-disabled-on-light, rgba(0, 0, 0, 0.38));\n}\n\n::slotted(.mdc-button--stroked.mdc-button--dense) {\n  line-height: 27px;\n}\n\n::slotted(.mdc-button--stroked.mdc-button--compact) {\n  padding-right: 6px;\n  padding-left: 6px;\n}\n\n::slotted(.mdc-button--stroked:not(:disabled)) {\n  /* @alternate */\n  border-color: #6200ee;\n  border-color: var(--mdc-theme-primary, #6200ee);\n}\n\n::slotted(.mdc-button--compact) {\n  padding: 0 8px;\n}\n\n::slotted(.mdc-button--dense) {\n  height: 32px;\n  font-size: .8125rem;\n  line-height: 32px;\n}\n\n::slotted(.mdc-button__icon) {\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin-right: 8px;\n  font-size: 18px;\n  line-height: inherit;\n  vertical-align: top;\n}"}
-
 /***/ })
 /******/ ]);
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = render;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
+/* unused harmony reexport html */
+/* unused harmony reexport svg */
+/* unused harmony reexport TemplateResult */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+const shadyTemplateFactory = (scopeName) => (result) => {
+    const cacheKey = `${result.type}--${scopeName}`;
+    let templateCache = __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].get(cacheKey);
+    if (templateCache === undefined) {
+        templateCache = new Map();
+        __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["i" /* templateCaches */].set(cacheKey, templateCache);
+    }
+    let template = templateCache.get(result.strings);
+    if (template === undefined) {
+        const element = result.getTemplateElement();
+        if (typeof window.ShadyCSS === 'object') {
+            window.ShadyCSS.prepareTemplate(element, scopeName);
+        }
+        template = new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["c" /* Template */](result, element);
+        templateCache.set(result.strings, template);
+    }
+    return template;
+};
+function render(result, container, scopeName) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["h" /* render */])(result, container, shadyTemplateFactory(scopeName));
+}
+//# sourceMappingURL=shady-render.js.map
+
+/***/ }),
+
+/***/ 6:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
+/* unused harmony reexport render */
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+
+/**
+ * Interprets a template literal as a lit-extended HTML template.
+ */
+const html = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["d" /* TemplateResult */](strings, values, 'html', extendedPartCallback);
+/* harmony export (immutable) */ __webpack_exports__["a"] = html;
+
+/**
+ * Interprets a template literal as a lit-extended SVG template.
+ */
+const svg = (strings, ...values) => new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["b" /* SVGTemplateResult */](strings, values, 'svg', extendedPartCallback);
+/* unused harmony export svg */
+
+/**
+ * A PartCallback which allows templates to set properties and declarative
+ * event handlers.
+ *
+ * Properties are set by default, instead of attributes. Attribute names in
+ * lit-html templates preserve case, so properties are case sensitive. If an
+ * expression takes up an entire attribute value, then the property is set to
+ * that value. If an expression is interpolated with a string or other
+ * expressions then the property is set to the string result of the
+ * interpolation.
+ *
+ * To set an attribute instead of a property, append a `$` suffix to the
+ * attribute name.
+ *
+ * Example:
+ *
+ *     html`<button class$="primary">Buy Now</button>`
+ *
+ * To set an event handler, prefix the attribute name with `on-`:
+ *
+ * Example:
+ *
+ *     html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
+ *
+ */
+const extendedPartCallback = (instance, templatePart, node) => {
+    if (templatePart.type === 'attribute') {
+        if (templatePart.rawName.startsWith('on-')) {
+            const eventName = templatePart.rawName.slice(3);
+            return new EventPart(instance, node, eventName);
+        }
+        if (templatePart.name.endsWith('$')) {
+            const name = templatePart.name.slice(0, -1);
+            return new __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */](instance, node, name, templatePart.strings);
+        }
+        if (templatePart.name.endsWith('?')) {
+            const name = templatePart.name.slice(0, -1);
+            return new BooleanAttributePart(instance, node, name, templatePart.strings);
+        }
+        return new PropertyPart(instance, node, templatePart.rawName, templatePart.strings);
+    }
+    return Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["e" /* defaultPartCallback */])(instance, templatePart, node);
+};
+/* unused harmony export extendedPartCallback */
+
+/**
+ * Implements a boolean attribute, roughly as defined in the HTML
+ * specification.
+ *
+ * If the value is truthy, then the attribute is present with a value of
+ * ''. If the value is falsey, the attribute is removed.
+ */
+class BooleanAttributePart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            const value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+            if (value === __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+                return;
+            }
+            if (value) {
+                this.element.setAttribute(this.name, '');
+            }
+            else {
+                this.element.removeAttribute(this.name);
+            }
+        }
+        else {
+            throw new Error('boolean attributes can only contain a single expression');
+        }
+    }
+}
+/* unused harmony export BooleanAttributePart */
+
+class PropertyPart extends __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["a" /* AttributePart */] {
+    setValue(values, startIndex) {
+        const s = this.strings;
+        let value;
+        if (this._equalToPreviousValues(values, startIndex)) {
+            return;
+        }
+        if (s.length === 2 && s[0] === '' && s[1] === '') {
+            // An expression that occupies the whole attribute value will leave
+            // leading and trailing empty strings.
+            value = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, values[startIndex]);
+        }
+        else {
+            // Interpolation, so interpolate
+            value = this._interpolate(values, startIndex);
+        }
+        if (value !== __WEBPACK_IMPORTED_MODULE_0__lit_html_js__["f" /* directiveValue */]) {
+            this.element[this.name] = value;
+        }
+        this._previousValues = values;
+    }
+}
+/* unused harmony export PropertyPart */
+
+class EventPart {
+    constructor(instance, element, eventName) {
+        this.instance = instance;
+        this.element = element;
+        this.eventName = eventName;
+    }
+    setValue(value) {
+        const listener = Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_js__["g" /* getValue */])(this, value);
+        const previous = this._listener;
+        if (listener === previous) {
+            return;
+        }
+        this._listener = listener;
+        if (previous != null) {
+            this.element.removeEventListener(this.eventName, previous);
+        }
+        if (listener != null) {
+            this.element.addEventListener(this.eventName, listener);
+        }
+    }
+}
+/* unused harmony export EventPart */
+
+//# sourceMappingURL=lit-extended.js.map
+
+/***/ })
+
+/******/ });

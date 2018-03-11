@@ -60,11 +60,91 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__ = __webpack_require__(3);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b"]; });
+
+
+const directive = (f) => {
+  f.__litDirective = true;
+  return f;
+};
+
+const unsafeHTML = (value) => directive((_part) => {
+  const tmp = document.createElement('template');
+  tmp.innerHTML = value;
+  return document.importNode(tmp.content, true);
+});
+
+
+class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["a" /* GluonElement */] {
+
+  constructor(){
+    super();
+  }
+  static globalStyle(val) {
+
+    const head = document.head;
+    const style = document.createElement('style');
+
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(val));
+
+    head.appendChild(style);
+  }
+
+  static get configurationAttributes() {
+    return [];
+  }
+
+  static get observedAttributes() {
+    return this.configurationAttributes;
+  }
+
+  get initStyles() {
+    return [];
+  }
+
+  get initClasses() {
+    return [];
+  }
+
+  get content() {
+    return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`<slot></slot>`;
+  }
+
+  get template(){
+    const styles = this.initStyles.map(x => __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`<style>${x}</style>`);
+    return __WEBPACK_IMPORTED_MODULE_0__node_modules_gluonjs_gluon_js__["b" /* html */]`${styles}${this.content}`;
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if(this.shadowRoot){
+      this[attr] = newValue;
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.initClasses.forEach(c => this.classList.add(c));
+    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
+  }
+
+}
+
+
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -736,81 +816,14 @@ const removeNodes = (container, startNode, endNode = null) => {
 //# sourceMappingURL=lit-html.js.map
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialElement; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b"]; });
-
-
-class MaterialElement extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* GluonElement */] {
-
-  constructor(){
-    super();
-  }
-  static globalStyle(val) {
-
-    const head = document.head;
-    const style = document.createElement('style');
-
-    style.type = 'text/css';
-    style.appendChild(document.createTextNode(val));
-
-    head.appendChild(style);
-  }
-
-  static get configurationAttributes() {
-    return [];
-  }
-
-  static get observedAttributes() {
-    return this.configurationAttributes;
-  }
-
-  get styles() {
-    return [];
-  }
-
-  get classes() {
-    return [];
-  }
-
-  get content() {
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<slot></slot>`;
-  }
-
-  get template(){
-    return __WEBPACK_IMPORTED_MODULE_0_gluonjs__["b" /* html */]`<style>${this.styles.join('')}</style>${this.content}`;
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    if(this.shadowRoot){
-      this[attr] = newValue;
-    }
-    this.render()
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-    this.classes.forEach(c => this.classList.add(c));
-    this.constructor.configurationAttributes.forEach(attr => this[attr] = this.getAttribute(attr))
-  }
-
-}
-
-
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MaterialStyle; });
 const MaterialStyle = {
-  block: ':host {display: block};\n'
+  block: ':host {display: block;contain: content;};\n'
+
 };
 
 
@@ -822,20 +835,21 @@ const MaterialStyle = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return h; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__ = __webpack_require__(6);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__lit_html_lib_lit_extended_js__["a"]; });
 const e=Symbol("tag"),s=Symbol("needsRender"),i=t=>t.replace(/([a-z])([A-Z])|(.)([A-Z][a-z])/g,"$1$3-$2$4").toLowerCase(),o=t=>{t.$={},t.shadowRoot.querySelectorAll("[id]").forEach(e=>{t.$[e.id]=e})};class h extends HTMLElement{static get is(){return this.hasOwnProperty(e)&&this[e]||(this[e]=i(this.name))}connectedCallback(){"template"in this&&(this.attachShadow({mode:"open"}),this.render({sync:!0}),o(this))}async render({sync:e=!1}={}){this[s]=!0,e||await 0,this[s]&&(this[s]=!1,Object(__WEBPACK_IMPORTED_MODULE_0__lit_html_lib_shady_render_js__["a" /* render */])(this.template,this.shadowRoot,this.constructor.is))}}
 //# sourceMappingURL=gluon.js.map
 
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = render;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
 /* unused harmony reexport html */
 /* unused harmony reexport svg */
 /* unused harmony reexport TemplateResult */
@@ -878,11 +892,11 @@ function render(result, container, scopeName) {
 //# sourceMappingURL=shady-render.js.map
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lit_html_js__ = __webpack_require__(1);
 /* unused harmony reexport render */
 /**
  * @license
@@ -1035,7 +1049,6 @@ class EventPart {
 //# sourceMappingURL=lit-extended.js.map
 
 /***/ }),
-/* 6 */,
 /* 7 */
 /***/ (function(module, exports) {
 
@@ -1043,14 +1056,14 @@ module.exports = {"host":":host(.mdc-typography--display4) {\n  font-family: Rob
 
 /***/ }),
 /* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = {"all":".mdc-card {\n  /* @alternate */\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  border-radius: 2px;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  box-sizing: border-box;\n}\n\n.mdc-card--stroked {\n  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);\n  border: 1px solid #dbdbdb;\n}\n\n.mdc-card__media {\n  position: relative;\n  box-sizing: border-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n\n.mdc-card__media::before {\n  display: block;\n  content: \"\";\n}\n\n.mdc-card__media:first-child {\n  border-top-left-radius: inherit;\n  border-top-right-radius: inherit;\n}\n\n.mdc-card__media:last-child {\n  border-bottom-left-radius: inherit;\n  border-bottom-right-radius: inherit;\n}\n\n.mdc-card__media--square::before {\n  margin-top: 100%;\n}\n\n.mdc-card__media--16-9::before {\n  margin-top: 56.25%;\n}\n\n.mdc-card__media-content {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  box-sizing: border-box;\n}\n\n.mdc-card__actions {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-height: 52px;\n  padding: 8px;\n}\n\n.mdc-card__actions--full-bleed {\n  padding: 0;\n}\n\n.mdc-card__action-buttons,\n.mdc-card__action-icons {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n.mdc-card__action-icons {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n  flex-grow: 1;\n  justify-content: flex-end;\n}\n\n.mdc-card__action-buttons + .mdc-card__action-icons {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__action-buttons + .mdc-card__action-icons,\n.mdc-card__action-buttons + .mdc-card__action-icons[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 16px;\n}\n\n.mdc-card__action {\n  display: inline-flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-width: auto;\n  cursor: pointer;\n  user-select: none;\n}\n\n.mdc-card__action:focus {\n  outline: none;\n}\n\n.mdc-card__action--button {\n  margin-left: 0;\n  margin-right: 8px;\n  padding: 0 8px;\n}\n\n[dir=\"rtl\"] .mdc-card__action--button,\n.mdc-card__action--button[dir=\"rtl\"] {\n  margin-left: 8px;\n  margin-right: 0;\n}\n\n.mdc-card__action--button:last-child {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n[dir=\"rtl\"] .mdc-card__action--button:last-child,\n.mdc-card__action--button:last-child[dir=\"rtl\"] {\n  margin-left: 0;\n  margin-right: 0;\n}\n\n.mdc-card__actions--full-bleed .mdc-card__action--button {\n  justify-content: space-between;\n  width: 100%;\n  height: auto;\n  max-height: none;\n  margin: 0;\n  padding: 8px 16px;\n  text-align: left;\n}\n\n[dir=\"rtl\"] .mdc-card__actions--full-bleed .mdc-card__action--button,\n.mdc-card__actions--full-bleed .mdc-card__action--button[dir=\"rtl\"] {\n  text-align: right;\n}\n\n.mdc-card__action--icon {\n  margin: -6px 0;\n  padding: 12px;\n}\n\n.mdc-card__action--icon:not(:disabled) {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n}","card":":host(.mdc-card) {\n  /* @alternate */\n  background-color: #fff;\n  background-color: var(--mdc-theme-background, #fff);\n  border-radius: 2px;\n  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  box-sizing: border-box;\n}","actions":":host(.mdc-card__actions) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n  min-height: 52px;\n  padding: 8px;\n}\n\n:host(.mdc-card__actions--full-bleed) {\n  padding: 0;\n}\n\n:host(.mdc-card__actions--full-bleed .mdc-card__action--button) {\n  justify-content: space-between;\n  width: 100%;\n  height: auto;\n  max-height: none;\n  margin: 0;\n  padding: 8px 16px;\n  text-align: left;\n}\n\n:host(.mdc-card__actions--full-bleed .mdc-card__action--button[dir=\"rtl\"]) {\n  text-align: right;\n}","action_buttons":":host(.mdc-card__action-buttons) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n:host(.mdc-card__action-buttons + .mdc-card__action-icons) {\n  margin-left: 16px;\n  margin-right: 0;\n}\n\n:host(.mdc-card__action-buttons + .mdc-card__action-icons[dir=\"rtl\"]) {\n  margin-left: 0;\n  margin-right: 16px;\n}","action_icons":":host(.mdc-card__action-icons) {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  box-sizing: border-box;\n}\n\n:host(.mdc-card__action-icons) {\n  /* @alternate */\n  color: rgba(0, 0, 0, 0.38);\n  color: var(--mdc-theme-text-icon-on-background, rgba(0, 0, 0, 0.38));\n  flex-grow: 1;\n  justify-content: flex-end;\n}"}
 
 /***/ }),
-/* 10 */,
-/* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
@@ -1064,12 +1077,13 @@ module.exports = {"all":".mdc-card {\n  /* @alternate */\n  background-color: #f
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 
@@ -1097,28 +1111,32 @@ class MaterialCardActions extends __WEBPACK_IMPORTED_MODULE_0__MaterialElement__
 customElements.define(MaterialCardActions.is, MaterialCardActions);
 
 /***/ }),
-/* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialCard__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MaterialCardMedia__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialCardPrimary__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MaterialCardSecondary__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MaterialCardTitle__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MaterialCardSubtitle__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MaterialCardSupportingText__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__MaterialCardActions__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__MaterialCardActionButtons__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__MaterialCardActionIcons__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialCard__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MaterialCardMedia__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialCardPrimary__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MaterialCardSecondary__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MaterialCardTitle__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__MaterialCardSubtitle__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MaterialCardSupportingText__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__MaterialCardActions__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__MaterialCardActionButtons__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__MaterialCardActionIcons__ = __webpack_require__(47);
 
 
 
@@ -1133,12 +1151,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 34 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 
@@ -1170,12 +1188,12 @@ customElements.define(MaterialCard.is, MaterialCard);
 
 
 /***/ }),
-/* 35 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
@@ -1198,12 +1216,12 @@ customElements.define(MaterialCardMedia.is, MaterialCardMedia);
 
 
 /***/ }),
-/* 36 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
@@ -1227,12 +1245,12 @@ customElements.define(MaterialCardPrimary.is, MaterialCardPrimary);
 
 
 /***/ }),
-/* 37 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
@@ -1261,12 +1279,12 @@ customElements.define(MaterialCardSecondary.is, MaterialCardSecondary);
 
 
 /***/ }),
-/* 38 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_typography_mdc_typography__);
@@ -1299,12 +1317,12 @@ customElements.define(MaterialCardTitle.is, MaterialCardTitle);
 
 
 /***/ }),
-/* 39 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
@@ -1328,12 +1346,12 @@ class MaterialCardSubtitle extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["a" /* 
 customElements.define(MaterialCardSubtitle.is, MaterialCardSubtitle);
 
 /***/ }),
-/* 40 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gluonjs__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 
 
@@ -1356,12 +1374,12 @@ class MaterialCardSupportingText extends __WEBPACK_IMPORTED_MODULE_0_gluonjs__["
 customElements.define(MaterialCardSupportingText.is, MaterialCardSupportingText);
 
 /***/ }),
-/* 41 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 
@@ -1391,12 +1409,12 @@ class MaterialCardActionButtons extends __WEBPACK_IMPORTED_MODULE_0__MaterialEle
 customElements.define(MaterialCardActionButtons.is, MaterialCardActionButtons);
 
 /***/ }),
-/* 42 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MaterialElement__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_card_mdc_card__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MaterialStyle__ = __webpack_require__(2);
 

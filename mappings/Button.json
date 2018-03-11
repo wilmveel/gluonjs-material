@@ -1,0 +1,15 @@
+{
+  "keyframes": {
+    "types": [
+      "keyframes"
+    ]
+  },
+  "host": {
+    "types": [
+      "rule"
+    ],
+    "rules": {
+      "^(\.mdc-button.*?)((?:\:\:).*)?$": "host($1)$2"
+    }
+  }
+}

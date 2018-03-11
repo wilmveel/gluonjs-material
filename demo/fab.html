@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+
+<script type="module" src="../dist/DocsDemo.js"></script>
+
+<script type="module" src="../dist/MaterialFab.js"></script>
+
+<style>
+  .mdc-fab {
+    margin: 16px;
+  }
+
+  .demo-absolute-fab,
+  .demo-fixed-fab {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1;
+  }
+
+  .demo-fixed-fab {
+    position: fixed;
+  }
+</style>
+
+<h1>Fab</h1>
+
+<docs-demo>
+  <material-fab>favorite_border</material-fab>
+</docs-demo>
+
+<docs-demo>
+<material-fab style="background: lightcoral">favorite_border</material-fab>
+</docs-demo>
+
+<docs-demo>
+<material-fab ripple>favorite_border</material-fab>
+</docs-demo>
+
+<docs-demo>
+<material-fab mini>favorite_border</material-fab>
+</docs-demo>
+
+<docs-demo>
+<material-fab ripple class="demo-fixed-fab">
+  <svg width="24" height="24" viewBox="0 0 24 24">
+    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+  </svg>
+</material-fab>
+</docs-demo>

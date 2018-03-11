@@ -15,6 +15,8 @@ module.exports = {
     "MaterialToolbar": "./src/components/toolbar",
     "MaterialList": "./src/components/list",
     "MaterialTypography": "./src/components/typography",
+    "MaterialFab": "./src/components/fab",
+    "MaterialRipple": "@material/ripple",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -40,7 +42,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         include: [
-          path.resolve(__dirname, 'node_modules/gluonjs/**')
+          path.resolve(__dirname, 'node_modules/gluonjs/**'),
+          path.resolve(__dirname, 'node_modules/gluonjs-docs/**'),
+          path.resolve(__dirname, 'node_modules/lit-html/**')
         ],
         use: {
           loader: 'babel-loader',
@@ -66,19 +70,19 @@ module.exports = {
     modules: ['node_modules', path.resolve(__dirname, 'loaders')]
   },
   plugins: [
-    new UglifyJsPlugin({
-      test: /\.js($|\?)/i,
-      parallel: true,
-      uglifyOptions: {
-        toplevel: true,
-        compress: {passes: 2},
-        mangle: false,
-        output: {
-          comments: false
-        }
-      }
-
-    })
+    // new UglifyJsPlugin({
+    //   test: /\.js($|\?)/i,
+    //   parallel: true,
+    //   uglifyOptions: {
+    //     toplevel: true,
+    //     compress: {passes: 2},
+    //     mangle: false,
+    //     output: {
+    //       comments: false
+    //     }
+    //   }
+    //
+    // })
   ],
   devServer: {
     compress: true,

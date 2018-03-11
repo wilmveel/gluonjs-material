@@ -1,37 +1,37 @@
-<html>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 
-<head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 
 
+<script src="../dist/DocsDemo.js"></script>
 
+<script src="../dist/MaterialCard.js"></script>
+<script src="../dist/MaterialIconToggle.js"></script>
+<script src="../dist/MaterialTypography.js"></script>
+<script src="../dist/MaterialButton.js"></script>
 
-  <style>
+<style>
 
-    material-card {
-      width: 350px;
-      margin: 48px;
-    }
+  material-card {
+    width: 350px;
+    margin: 48px;
+  }
 
-    material-card .demo-card__16-9-media {
-      background-image: url(images/16-9.jpg);
-      background-size: cover;
-      background-repeat: no-repeat;
-      height: 12.313rem;
-    }
+  material-card .demo-card__16-9-media {
+    background-image: url(images/16-9.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 12.313rem;
+  }
 
-    material-card section {
-      padding: 1rem;
-    }
+  material-card section {
+    padding: 1rem;
+  }
 
-  </style>
-</head>
+</style>
 
-<body>
 <h1>Card</h1>
 
 <docs-demo>
@@ -64,7 +64,6 @@
                               title="Add to favorites"
                               data-toggle-on='{"content": "favorite", "label": "Remove from favorites"}'
                               data-toggle-off='{"content": "favorite_border", "label": "Add to favorites"}'>
-          favorite_border
         </material-icon-toggle>
         <material-icon-toggle tabindex="0"
                               role="button"
@@ -84,17 +83,3 @@
   </material-card>
 
 </docs-demo>
-</body>
-
-</html>
-
-<!-- Have to load polyfill for IE11 -->
-<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-sd-ce.js"></script>
-
-
-<script src="../dist/DocsDemo.js"></script>
-<script src="../dist/MaterialCard.js"></script>
-<script src="../dist/MaterialTypography.js"></script>
-
-<script src="../dist/MaterialButton.js"></script>
-<script src="../dist/MaterialIconToggle.js"></script>

@@ -8,6 +8,7 @@
   "dependencies": {
     "@webcomponents/custom-elements": "^1.0.8",
     "@webcomponents/webcomponentsjs": "^1.1.0",
+    "bluebird": "^3.5.1",
     "cors": "^2.8.4",
     "css": "^2.2.1",
     "cssbeautify": "^0.3.1",
@@ -31,7 +32,13 @@
     "glob": "^7.1.2",
     "mocha": "^5.0.0",
     "node-sass": "^4.7.2",
+    "rollup": "^0.56.5",
+    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-multi-entry": "^2.0.2",
+    "rollup-plugin-node-resolve": "^3.2.0",
+    "rollup-plugin-serve": "^0.4.2",
     "sass-loader": "^6.0.6",
+    "steal": "^1.9.1",
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "webpack": "^3.11.0",
@@ -41,7 +48,6 @@
   "scripts": {
     "postinstall": "webpack",
     "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
-    "dev": "node_modules/.bin/webpack-dev-server",
     "start": "node ./server.js",
     "webpack": "webpack",
     "css": "node processCSS.js"

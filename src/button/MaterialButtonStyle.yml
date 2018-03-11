@@ -1,0 +1,12 @@
+keyframes:
+  types: keyframes
+
+host:
+  types: rule
+  matches:
+    '^(\.mdc-button.*?)((?:\:\:).*)?$' : ':host($1)$2'
+
+slotted:
+  types: rule
+  matches:
+    '^(\.mdc-button.*?)((?:\:\:).*)?$' : '::slotted($1)$2'

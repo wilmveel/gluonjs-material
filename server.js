@@ -9,6 +9,7 @@ app.use(cors({
   origin: 'https://s.codepen.io'
 }));
 
+app.use('/src', express.static('src'));
 app.use('/dist', express.static('dist'));
 app.use('/demo', express.static('demo'));
 app.use('/node_modules', express.static('node_modules'));

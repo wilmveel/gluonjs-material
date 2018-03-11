@@ -95,6 +95,3 @@ function processMappings(source) {
 }
 
 module.exports = processMappings
-
-
-//console.log(processMappings("@material/button/mdc-button"))
