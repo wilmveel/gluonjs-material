@@ -307,8 +307,9 @@ function detectEdgePseudoVarBug(windowObj) {
  */
 
 function supportsCssVariables(windowObj, forceRefresh = false) {
+  let supportsCssVariables = supportsCssVariables_;
   if (typeof supportsCssVariables_ === 'boolean' && !forceRefresh) {
-    return supportsCssVariables_;
+    return supportsCssVariables;
   }
 
   const supportsFunctionPresent = windowObj.CSS && typeof windowObj.CSS.supports === 'function';
@@ -325,11 +326,15 @@ function supportsCssVariables(windowObj, forceRefresh = false) {
   );
 
   if (explicitlySupportsCssVars || weAreFeatureDetectingSafari10plus) {
-    supportsCssVariables_ = !detectEdgePseudoVarBug(windowObj);
+    supportsCssVariables = !detectEdgePseudoVarBug(windowObj);
   } else {
-    supportsCssVariables_ = false;
+    supportsCssVariables = false;
   }
-  return supportsCssVariables_;
+
+  if (!forceRefresh) {
+    supportsCssVariables_ = supportsCssVariables;
+  }
+  return supportsCssVariables;
 }
 
 //
@@ -564,6 +569,14 @@ class MDCRippleFoundation extends MDCFoundation {
     if (!this.isSupported_()) {
       return;
     }
+
+    if (this.activationTimer_) {
+      clearTimeout(this.activationTimer_);
+      this.activationTimer_ = 0;
+      const {FG_ACTIVATION} = MDCRippleFoundation.cssClasses;
+      this.adapter_.removeClass(FG_ACTIVATION);
+    }
+
     this.deregisterRootHandlers_();
     this.deregisterDeactivationHandlers_();
 
@@ -1080,6 +1093,17 @@ RippleCapableSurface.prototype.disabled;
 /** @enum {string} */
 const strings$1 = {
   INTERACTION_EVENT: 'MDCChip:interaction',
+  LEADING_ICON_SELECTOR: '.mdc-chip__icon--leading',
+  TRAILING_ICON_INTERACTION_EVENT: 'MDCChip:trailingIconInteraction',
+  TRAILING_ICON_SELECTOR: '.mdc-chip__icon--trailing',
+};
+
+/** @enum {string} */
+const cssClasses$1 = {
+  CHECKMARK: 'mdc-chip__checkmark',
+  HIDDEN_LEADING_ICON: 'mdc-chip__icon--hidden-leading',
+  LEADING_ICON: 'mdc-chip__icon--leading',
+  SELECTED: 'mdc-chip--selected',
 };
 
 /**
@@ -1110,6 +1134,11 @@ class MDCChipFoundation extends MDCFoundation {
     return strings$1;
   }
 
+  /** @return enum {string} */
+  static get cssClasses() {
+    return cssClasses$1;
+  }
+
   /**
    * {@see MDCChipAdapter} for typing information on parameters and return
    * types.
@@ -1117,9 +1146,18 @@ class MDCChipFoundation extends MDCFoundation {
    */
   static get defaultAdapter() {
     return /** @type {!MDCChipAdapter} */ ({
-      registerInteractionHandler: () => {},
-      deregisterInteractionHandler: () => {},
+      addClass: () => {},
+      removeClass: () => {},
+      hasClass: () => {},
+      addClassToLeadingIcon: () => {},
+      removeClassFromLeadingIcon: () => {},
+      eventTargetHasClass: () => {},
+      registerEventHandler: () => {},
+      deregisterEventHandler: () => {},
+      registerTrailingIconInteractionHandler: () => {},
+      deregisterTrailingIconInteractionHandler: () => {},
       notifyInteraction: () => {},
+      notifyTrailingIconInteraction: () => {},
     });
   }
 
@@ -1131,18 +1169,41 @@ class MDCChipFoundation extends MDCFoundation {
 
     /** @private {function(!Event): undefined} */
     this.interactionHandler_ = (evt) => this.handleInteraction_(evt);
+    /** @private {function(!Event): undefined} */
+    this.transitionEndHandler_ = (evt) => this.handleTransitionEnd_(evt);
+    /** @private {function(!Event): undefined} */
+    this.trailingIconInteractionHandler_ = (evt) => this.handleTrailingIconInteraction_(evt);
   }
 
   init() {
     ['click', 'keydown'].forEach((evtType) => {
-      this.adapter_.registerInteractionHandler(evtType, this.interactionHandler_);
+      this.adapter_.registerEventHandler(evtType, this.interactionHandler_);
+    });
+    this.adapter_.registerEventHandler('transitionend', this.transitionEndHandler_);
+    ['click', 'keydown', 'touchstart', 'pointerdown', 'mousedown'].forEach((evtType) => {
+      this.adapter_.registerTrailingIconInteractionHandler(evtType, this.trailingIconInteractionHandler_);
     });
   }
 
   destroy() {
     ['click', 'keydown'].forEach((evtType) => {
-      this.adapter_.deregisterInteractionHandler(evtType, this.interactionHandler_);
+      this.adapter_.deregisterEventHandler(evtType, this.interactionHandler_);
     });
+    this.adapter_.deregisterEventHandler('transitionend', this.transitionEndHandler_);
+    ['click', 'keydown', 'touchstart', 'pointerdown', 'mousedown'].forEach((evtType) => {
+      this.adapter_.deregisterTrailingIconInteractionHandler(evtType, this.trailingIconInteractionHandler_);
+    });
+  }
+
+  /**
+   * Toggles the selected class on the chip element.
+   */
+  toggleSelected() {
+    if (this.adapter_.hasClass(cssClasses$1.SELECTED)) {
+      this.adapter_.removeClass(cssClasses$1.SELECTED);
+    } else {
+      this.adapter_.addClass(cssClasses$1.SELECTED);
+    }
   }
 
   /**
@@ -1152,6 +1213,37 @@ class MDCChipFoundation extends MDCFoundation {
   handleInteraction_(evt) {
     if (evt.type === 'click' || evt.key === 'Enter' || evt.keyCode === 13) {
       this.adapter_.notifyInteraction();
+    }
+  }
+
+  /**
+   * Handles a transition end event on the root element.
+   * This is a proxy for handling a transition end event on the leading icon or checkmark,
+   * since the transition end event bubbles.
+   * @param {!Event} evt
+   */
+  handleTransitionEnd_(evt) {
+    if (evt.propertyName !== 'opacity') {
+      return;
+    }
+    if (this.adapter_.eventTargetHasClass(/** @type {!EventTarget} */ (evt.target), cssClasses$1.LEADING_ICON) &&
+        this.adapter_.hasClass(cssClasses$1.SELECTED)) {
+      this.adapter_.addClassToLeadingIcon(cssClasses$1.HIDDEN_LEADING_ICON);
+    } else if (this.adapter_.eventTargetHasClass(/** @type {!EventTarget} */ (evt.target), cssClasses$1.CHECKMARK) &&
+               !this.adapter_.hasClass(cssClasses$1.SELECTED)) {
+      this.adapter_.removeClassFromLeadingIcon(cssClasses$1.HIDDEN_LEADING_ICON);
+    }
+  }
+
+  /**
+   * Handles an interaction event on the trailing icon element. This is used to
+   * prevent the ripple from activating on interaction with the trailing icon.
+   * @param {!Event} evt
+   */
+  handleTrailingIconInteraction_(evt) {
+    evt.stopPropagation();
+    if (evt.type === 'click' || evt.key === 'Enter' || evt.keyCode === 13) {
+      this.adapter_.notifyTrailingIconInteraction();
     }
   }
 }
@@ -1184,6 +1276,8 @@ class MDCChip extends MDCComponent {
   constructor(...args) {
     super(...args);
 
+    /** @private {?Element} */
+    this.leadingIcon_ = this.root_.querySelector(strings$1.LEADING_ICON_SELECTOR);
     /** @private {!MDCRipple} */
     this.ripple_ = new MDCRipple(this.root_);
   }
@@ -1202,13 +1296,48 @@ class MDCChip extends MDCComponent {
   }
 
   /**
+   * Toggles selected state of the chip.
+   */
+  toggleSelected() {
+    this.foundation_.toggleSelected();
+  }
+
+  /**
    * @return {!MDCChipFoundation}
    */
   getDefaultFoundation() {
     return new MDCChipFoundation(/** @type {!MDCChipAdapter} */ (Object.assign({
-      registerInteractionHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
-      deregisterInteractionHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
+      addClass: (className) => this.root_.classList.add(className),
+      removeClass: (className) => this.root_.classList.remove(className),
+      hasClass: (className) => this.root_.classList.contains(className),
+      addClassToLeadingIcon: (className) => {
+        if (this.leadingIcon_) {
+          this.leadingIcon_.classList.add(className);
+        }
+      },
+      removeClassFromLeadingIcon: (className) => {
+        if (this.leadingIcon_) {
+          this.leadingIcon_.classList.remove(className);
+        }
+      },
+      eventTargetHasClass: (target, className) => target.classList.contains(className),
+      registerEventHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
+      deregisterEventHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
+      registerTrailingIconInteractionHandler: (evtType, handler) => {
+        const trailingIconEl = this.root_.querySelector(strings$1.TRAILING_ICON_SELECTOR);
+        if (trailingIconEl) {
+          trailingIconEl.addEventListener(evtType, handler);
+        }
+      },
+      deregisterTrailingIconInteractionHandler: (evtType, handler) => {
+        const trailingIconEl = this.root_.querySelector(strings$1.TRAILING_ICON_SELECTOR);
+        if (trailingIconEl) {
+          trailingIconEl.removeEventListener(evtType, handler);
+        }
+      },
       notifyInteraction: () => this.emit(strings$1.INTERACTION_EVENT, {chip: this}, true /* shouldBubble */),
+      notifyTrailingIconInteraction: () => this.emit(
+        strings$1.TRAILING_ICON_INTERACTION_EVENT, {chip: this}, true /* shouldBubble */),
     })));
   }
 
@@ -1257,6 +1386,12 @@ const strings$2 = {
   CHIP_SELECTOR: '.mdc-chip',
 };
 
+/** @enum {string} */
+const cssClasses$2 = {
+  CHOICE: 'mdc-chip-set--choice',
+  FILTER: 'mdc-chip-set--filter',
+};
+
 /**
  * @license
  * Copyright 2017 Google Inc. All Rights Reserved.
@@ -1284,6 +1419,11 @@ class MDCChipSetFoundation extends MDCFoundation {
     return strings$2;
   }
 
+  /** @return enum {string} */
+  static get cssClasses() {
+    return cssClasses$2;
+  }
+
   /**
    * {@see MDCChipSetAdapter} for typing information on parameters and return
    * types.
@@ -1292,6 +1432,8 @@ class MDCChipSetFoundation extends MDCFoundation {
   static get defaultAdapter() {
     return /** @type {!MDCChipSetAdapter} */ ({
       hasClass: () => {},
+      registerInteractionHandler: () => {},
+      deregisterInteractionHandler: () => {},
     });
   }
 
@@ -1300,6 +1442,53 @@ class MDCChipSetFoundation extends MDCFoundation {
    */
   constructor(adapter) {
     super(Object.assign(MDCChipSetFoundation.defaultAdapter, adapter));
+
+    /**
+     * The selected chips in the set. Only used for choice chip set or filter chip set.
+     * @private {!Array<!MDCChip>}
+     */
+    this.selectedChips_ = [];
+
+    /** @private {function(!Event): undefined} */
+    this.chipInteractionHandler_ = (evt) => this.handleChipInteraction_(evt);
+  }
+
+  init() {
+    this.adapter_.registerInteractionHandler(
+      MDCChipFoundation.strings.INTERACTION_EVENT, this.chipInteractionHandler_);
+  }
+
+  destroy() {
+    this.adapter_.deregisterInteractionHandler(
+      MDCChipFoundation.strings.INTERACTION_EVENT, this.chipInteractionHandler_);
+  }
+
+  /**
+   * Handles a chip interaction event
+   * @param {!Object} evt
+   * @private
+   */
+  handleChipInteraction_(evt) {
+    const {chip} = evt.detail;
+    if (this.adapter_.hasClass(cssClasses$2.CHOICE)) {
+      if (this.selectedChips_.length === 0) {
+        this.selectedChips_[0] = chip;
+      } else if (this.selectedChips_[0] !== chip) {
+        this.selectedChips_[0].toggleSelected();
+        this.selectedChips_[0] = chip;
+      } else {
+        this.selectedChips_ = [];
+      }
+      chip.toggleSelected();
+    } else if (this.adapter_.hasClass(cssClasses$2.FILTER)) {
+      const index = this.selectedChips_.indexOf(chip);
+      if (index >= 0) {
+        this.selectedChips_.splice(index, 1);
+      } else {
+        this.selectedChips_.push(chip);
+      }
+      chip.toggleSelected();
+    }
   }
 }
 
@@ -1331,7 +1520,7 @@ class MDCChipSet extends MDCComponent {
   constructor(...args) {
     super(...args);
 
-    /** @private {!Array<!MDCChip>} */
+    /** @type {!Array<!MDCChip>} */
     this.chips;
   }
 
@@ -1363,6 +1552,8 @@ class MDCChipSet extends MDCComponent {
   getDefaultFoundation() {
     return new MDCChipSetFoundation(/** @type {!MDCChipSetAdapter} */ (Object.assign({
       hasClass: (className) => this.root_.classList.contains(className),
+      registerInteractionHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
+      deregisterInteractionHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
     })));
   }
 

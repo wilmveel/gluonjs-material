@@ -1,0 +1,22 @@
+keyframes:
+  types: keyframes
+
+host:
+  types: rule
+  matches:
+    '^(\.mdc-text-field.*?)((?:\:\:).*)?$' : ':host($1)$2'
+
+slotted:
+  types: rule
+  matches:
+    '^(\.mdc-text-field.*?)((?:\:\:).*)?$' : '::slotted($1)$2'
+
+label:
+  types: rule
+  matches:
+    '^(\.mdc-floating-label.*?)((?:\:\:).*)?$' : '$1$2'
+
+line:
+  types: rule
+  matches:
+    '^(\.mdc-line-ripple.*)$' : '$1'

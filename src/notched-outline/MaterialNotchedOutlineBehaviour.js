@@ -204,13 +204,37 @@ class MDCComponent {
  * limitations under the License.
  */
 
+/**
+ * @license
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/** @enum {string} */
+const strings = {
+  PATH_SELECTOR: '.mdc-notched-outline__path',
+  IDLE_OUTLINE_SELECTOR: '.mdc-notched-outline__idle',
+};
+
+/** @enum {string} */
 const cssClasses = {
-  LABEL_FLOAT_ABOVE: 'mdc-select__label--float-above',
+  OUTLINE_NOTCHED: 'mdc-notched-outline--notched',
 };
 
 /**
  * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -226,52 +250,110 @@ const cssClasses = {
  */
 
 /**
- * @extends {MDCFoundation<!MDCSelectLabelAdapter>}
+ * @extends {MDCFoundation<!MDCNotchedOutlineAdapter>}
  * @final
  */
-class MDCSelectLabelFoundation extends MDCFoundation {
+class MDCNotchedOutlineFoundation extends MDCFoundation {
+  /** @return enum {string} */
+  static get strings() {
+    return strings;
+  }
+
   /** @return enum {string} */
   static get cssClasses() {
     return cssClasses;
   }
 
   /**
-   * {@see MDCSelectLabelAdapter} for typing information on parameters and return
+   * {@see MDCNotchedOutlineAdapter} for typing information on parameters and return
    * types.
-   * @return {!MDCSelectLabelAdapter}
+   * @return {!MDCNotchedOutlineAdapter}
    */
   static get defaultAdapter() {
-    return /** @type {!MDCSelectLabelAdapter} */ ({
+    return /** @type {!MDCNotchedOutlineAdapter} */ ({
+      getWidth: () => {},
+      getHeight: () => {},
       addClass: () => {},
       removeClass: () => {},
-      getWidth: () => {},
+      setOutlinePathAttr: () => {},
+      getIdleOutlineStyleValue: () => {},
     });
   }
 
   /**
-   * @param {!MDCSelectLabelAdapter} adapter
+   * @param {!MDCNotchedOutlineAdapter} adapter
    */
   constructor(adapter) {
-    super(Object.assign(MDCSelectLabelFoundation.defaultAdapter, adapter));
+    super(Object.assign(MDCNotchedOutlineFoundation.defaultAdapter, adapter));
   }
 
   /**
-   * Styles the label to float or defloat as necessary.
-   * @param {string} value The value of the input.
+   * Adds the outline notched selector and updates the notch width
+   * calculated based off of notchWidth and isRtl.
+   * @param {number} notchWidth
+   * @param {boolean=} isRtl
    */
-  styleFloat(value) {
-    const {LABEL_FLOAT_ABOVE} = MDCSelectLabelFoundation.cssClasses;
-    if (!!value) {
-      this.adapter_.addClass(LABEL_FLOAT_ABOVE);
+  notch(notchWidth, isRtl = false) {
+    const {OUTLINE_NOTCHED} = MDCNotchedOutlineFoundation.cssClasses;
+    this.adapter_.addClass(OUTLINE_NOTCHED);
+    this.updateSvgPath_(notchWidth, isRtl);
+  }
+
+  /**
+   * Removes notched outline selector to close the notch in the outline.
+   */
+  closeNotch() {
+    const {OUTLINE_NOTCHED} = MDCNotchedOutlineFoundation.cssClasses;
+    this.adapter_.removeClass(OUTLINE_NOTCHED);
+  }
+
+  /**
+   * Updates the SVG path of the focus outline element based on the notchWidth
+   * and the RTL context.
+   * @param {number} notchWidth
+   * @param {boolean=} isRtl
+   * @private
+   */
+  updateSvgPath_(notchWidth, isRtl) {
+    // Fall back to reading a specific corner's style because Firefox doesn't report the style on border-radius.
+    const radiusStyleValue = this.adapter_.getIdleOutlineStyleValue('border-radius') ||
+        this.adapter_.getIdleOutlineStyleValue('border-top-left-radius');
+    const radius = parseFloat(radiusStyleValue);
+    const width = this.adapter_.getWidth();
+    const height = this.adapter_.getHeight();
+    const cornerWidth = radius + 1.2;
+    const leadingStrokeLength = Math.abs(11 - cornerWidth);
+    const paddedNotchWidth = notchWidth + 8;
+
+    // The right, bottom, and left sides of the outline follow the same SVG path.
+    const pathMiddle = 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + radius
+      + 'v' + (height - (2 * cornerWidth))
+      + 'a' + radius + ',' + radius + ' 0 0 1 ' + -radius + ',' + radius
+      + 'h' + (-width + (2 * cornerWidth))
+      + 'a' + radius + ',' + radius + ' 0 0 1 ' + -radius + ',' + -radius
+      + 'v' + (-height + (2 * cornerWidth))
+      + 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + -radius;
+
+    let path;
+    if (!isRtl) {
+      path = 'M' + (cornerWidth + leadingStrokeLength + paddedNotchWidth) + ',' + 1
+        + 'h' + (width - (2 * cornerWidth) - paddedNotchWidth - leadingStrokeLength)
+        + pathMiddle
+        + 'h' + leadingStrokeLength;
     } else {
-      this.adapter_.removeClass(LABEL_FLOAT_ABOVE);
+      path = 'M' + (width - cornerWidth - leadingStrokeLength) + ',' + 1
+        + 'h' + leadingStrokeLength
+        + pathMiddle
+        + 'h' + (width - (2 * cornerWidth) - paddedNotchWidth - leadingStrokeLength);
     }
+
+    this.adapter_.setOutlinePathAttr(path);
   }
 }
 
 /**
  * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -287,35 +369,54 @@ class MDCSelectLabelFoundation extends MDCFoundation {
  */
 
 /**
- * @extends {MDCComponent<!MDCSelectLabelFoundation>}
+ * @extends {MDCComponent<!MDCNotchedOutlineFoundation>}
  * @final
  */
-class MDCSelectLabel extends MDCComponent {
+class MDCNotchedOutline extends MDCComponent {
   /**
    * @param {!Element} root
-   * @return {!MDCSelectLabel}
+   * @return {!MDCNotchedOutline}
    */
   static attachTo(root) {
-    return new MDCSelectLabel(root);
+    return new MDCNotchedOutline(root);
   }
 
   /**
-   * Styles the label to float or defloat as necessary.
-   * @param {string} value The value of the input.
+    * Updates outline selectors and SVG path to open notch.
+    * @param {number} notchWidth The notch width in the outline.
+    * @param {boolean=} isRtl Determines if outline is rtl. If rtl is true, notch
+    * will be right justified in outline path, otherwise left justified.
+    */
+  notch(notchWidth, isRtl) {
+    this.foundation_.notch(notchWidth, isRtl);
+  }
+
+  /**
+   * Updates the outline selectors to close notch and return it to idle state.
    */
-  float(value) {
-    this.foundation_.styleFloat(value);
+  closeNotch() {
+    this.foundation_.closeNotch();
   }
 
   /**
-   * @return {!MDCSelectLabelFoundation}
+   * @return {!MDCNotchedOutlineFoundation}
    */
   getDefaultFoundation() {
-    return new MDCSelectLabelFoundation({
+    return new MDCNotchedOutlineFoundation({
+      getWidth: () => this.root_.offsetWidth,
+      getHeight: () => this.root_.offsetHeight,
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),
+      setOutlinePathAttr: (value) => {
+        const path = this.root_.querySelector(strings.PATH_SELECTOR);
+        path.setAttribute('d', value);
+      },
+      getIdleOutlineStyleValue: (propertyName) => {
+        const idleOutlineElement = this.root_.parentNode.querySelector(strings.IDLE_OUTLINE_SELECTOR);
+        return window.getComputedStyle(idleOutlineElement).getPropertyValue(propertyName);
+      },
     });
   }
 }
 
-export { MDCSelectLabel, MDCSelectLabelFoundation };
+export { MDCNotchedOutline, MDCNotchedOutlineFoundation };

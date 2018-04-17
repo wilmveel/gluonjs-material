@@ -189,7 +189,7 @@ class MDCComponent {
 
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -206,7 +206,7 @@ class MDCComponent {
 
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2016 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -223,13 +223,13 @@ class MDCComponent {
 
 /** @enum {string} */
 const cssClasses = {
-  LINE_RIPPLE_ACTIVE: 'mdc-line-ripple--active',
-  LINE_RIPPLE_DEACTIVATING: 'mdc-line-ripple--deactivating',
+  LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+  LABEL_SHAKE: 'mdc-floating-label--shake',
 };
 
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2016 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -244,98 +244,98 @@ const cssClasses = {
  * limitations under the License.
  */
 
-
 /**
- * @extends {MDCFoundation<!MDCLineRippleAdapter>}
+ * @extends {MDCFoundation<!MDCFloatingLabelAdapter>}
  * @final
  */
-class MDCLineRippleFoundation extends MDCFoundation {
+class MDCFloatingLabelFoundation extends MDCFoundation {
   /** @return enum {string} */
   static get cssClasses() {
     return cssClasses;
   }
 
   /**
-   * {@see MDCLineRippleAdapter} for typing information on parameters and return
+   * {@see MDCFloatingLabelAdapter} for typing information on parameters and return
    * types.
-   * @return {!MDCLineRippleAdapter}
+   * @return {!MDCFloatingLabelAdapter}
    */
   static get defaultAdapter() {
-    return /** @type {!MDCLineRippleAdapter} */ ({
+    return /** @type {!MDCFloatingLabelAdapter} */ ({
       addClass: () => {},
       removeClass: () => {},
-      hasClass: () => {},
-      setAttr: () => {},
-      registerEventHandler: () => {},
-      deregisterEventHandler: () => {},
+      getWidth: () => {},
+      registerInteractionHandler: () => {},
+      deregisterInteractionHandler: () => {},
     });
   }
 
   /**
-   * @param {!MDCLineRippleAdapter=} adapter
+   * @param {!MDCFloatingLabelAdapter} adapter
    */
-  constructor(adapter = /** @type {!MDCLineRippleAdapter} */ ({})) {
-    super(Object.assign(MDCLineRippleFoundation.defaultAdapter, adapter));
+  constructor(adapter) {
+    super(Object.assign(MDCFloatingLabelFoundation.defaultAdapter, adapter));
 
     /** @private {function(!Event): undefined} */
-    this.transitionEndHandler_ = (evt) => this.handleTransitionEnd(evt);
+    this.shakeAnimationEndHandler_ = () => this.handleShakeAnimationEnd_();
   }
 
   init() {
-    this.adapter_.registerEventHandler('transitionend', this.transitionEndHandler_);
+    this.adapter_.registerInteractionHandler('animationend', this.shakeAnimationEndHandler_);
   }
 
   destroy() {
-    this.adapter_.deregisterEventHandler('transitionend', this.transitionEndHandler_);
+    this.adapter_.deregisterInteractionHandler('animationend', this.shakeAnimationEndHandler_);
   }
 
   /**
-   * Activates the line ripple
+   * Returns the width of the label element.
+   * @return {number}
    */
-  activate() {
-    this.adapter_.removeClass(cssClasses.LINE_RIPPLE_DEACTIVATING);
-    this.adapter_.addClass(cssClasses.LINE_RIPPLE_ACTIVE);
+  getWidth() {
+    return this.adapter_.getWidth();
   }
 
   /**
-   * Sets the center of the ripple animation to the given X coordinate.
-   * @param {!number} xCoordinate
+   * Styles the label to produce the label shake for errors.
+   * @param {boolean} shouldShake adds shake class if true,
+   * otherwise removes shake class.
    */
-  setRippleCenter(xCoordinate) {
-    const attributeString =
-        `transform-origin: ${xCoordinate}px center`;
-
-    this.adapter_.setAttr('style', attributeString);
-  }
-
-  /**
-   * Deactivates the line ripple
-   */
-  deactivate() {
-    this.adapter_.addClass(cssClasses.LINE_RIPPLE_DEACTIVATING);
-  }
-
-  /**
-   * Handles a transition end event
-   * @param {!Event} evt
-   */
-  handleTransitionEnd(evt) {
-    // Wait for the line ripple to be either transparent or opaque
-    // before emitting the animation end event
-    const isDeactivating = this.adapter_.hasClass(cssClasses.LINE_RIPPLE_DEACTIVATING);
-
-    if (evt.propertyName === 'opacity') {
-      if (isDeactivating) {
-        this.adapter_.removeClass(cssClasses.LINE_RIPPLE_ACTIVE);
-        this.adapter_.removeClass(cssClasses.LINE_RIPPLE_DEACTIVATING);
-      }
+  shake(shouldShake) {
+    const {LABEL_SHAKE} = MDCFloatingLabelFoundation.cssClasses;
+    if (shouldShake) {
+      this.adapter_.addClass(LABEL_SHAKE);
+    } else {
+      this.adapter_.removeClass(LABEL_SHAKE);
     }
+  }
+
+  /**
+   * Styles the label to float or dock.
+   * @param {boolean} shouldFloat adds float class if true, otherwise remove
+   * float and shake class to dock label.
+   */
+  float(shouldFloat) {
+    const {LABEL_FLOAT_ABOVE, LABEL_SHAKE} = MDCFloatingLabelFoundation.cssClasses;
+    if (shouldFloat) {
+      this.adapter_.addClass(LABEL_FLOAT_ABOVE);
+    } else {
+      this.adapter_.removeClass(LABEL_FLOAT_ABOVE);
+      this.adapter_.removeClass(LABEL_SHAKE);
+    }
+  }
+
+  /**
+   * Handles an interaction event on the root element.
+   */
+  handleShakeAnimationEnd_() {
+    const {LABEL_SHAKE} = MDCFloatingLabelFoundation.cssClasses;
+    this.adapter_.removeClass(LABEL_SHAKE);
   }
 }
 
 /**
  * @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2016 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -351,54 +351,55 @@ class MDCLineRippleFoundation extends MDCFoundation {
  */
 
 /**
- * @extends {MDCComponent<!MDCLineRippleFoundation>}
+ * @extends {MDCComponent<!MDCFloatingLabelFoundation>}
  * @final
  */
-class MDCLineRipple extends MDCComponent {
+class MDCFloatingLabel extends MDCComponent {
   /**
    * @param {!Element} root
-   * @return {!MDCLineRipple}
+   * @return {!MDCFloatingLabel}
    */
   static attachTo(root) {
-    return new MDCLineRipple(root);
+    return new MDCFloatingLabel(root);
   }
 
   /**
-   * Activates the line ripple
+   * Styles the label to produce the label shake for errors.
+   * @param {boolean} shouldShake styles the label to shake by adding shake class
+   * if true, otherwise will stop shaking by removing shake class.
    */
-  activate() {
-    this.foundation_.activate();
+  shake(shouldShake) {
+    this.foundation_.shake(shouldShake);
   }
 
   /**
-   * Deactivates the line ripple
+   * Styles label to float/dock.
+   * @param {boolean} shouldFloat styles the label to float by adding float class
+   * if true, otherwise docks the label by removing the float class.
    */
-  deactivate() {
-    this.foundation_.deactivate();
+  float(shouldFloat) {
+    this.foundation_.float(shouldFloat);
   }
 
   /**
-   * Sets the transform origin given a user's click location. The `rippleCenter` is the
-   * x-coordinate of the middle of the ripple.
-   * @param {!number} xCoordinate
+   * @return {number}
    */
-  setRippleCenter(xCoordinate) {
-    this.foundation_.setRippleCenter(xCoordinate);
+  getWidth() {
+    return this.foundation_.getWidth();
   }
 
   /**
-   * @return {!MDCLineRippleFoundation}
+   * @return {!MDCFloatingLabelFoundation}
    */
   getDefaultFoundation() {
-    return new MDCLineRippleFoundation(/** @type {!MDCLineRippleAdapter} */ (Object.assign({
+    return new MDCFloatingLabelFoundation({
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),
-      hasClass: (className) => this.root_.classList.contains(className),
-      setAttr: (attr, value) => this.root_.setAttribute(attr, value),
-      registerEventHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
-      deregisterEventHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
-    })));
+      getWidth: () => this.root_.offsetWidth,
+      registerInteractionHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
+      deregisterInteractionHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
+    });
   }
 }
 
-export { MDCLineRipple, MDCLineRippleFoundation };
+export { MDCFloatingLabel, MDCFloatingLabelFoundation };

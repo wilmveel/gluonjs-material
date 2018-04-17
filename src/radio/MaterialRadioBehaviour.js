@@ -307,8 +307,9 @@ function detectEdgePseudoVarBug(windowObj) {
  */
 
 function supportsCssVariables(windowObj, forceRefresh = false) {
+  let supportsCssVariables = supportsCssVariables_;
   if (typeof supportsCssVariables_ === 'boolean' && !forceRefresh) {
-    return supportsCssVariables_;
+    return supportsCssVariables;
   }
 
   const supportsFunctionPresent = windowObj.CSS && typeof windowObj.CSS.supports === 'function';
@@ -325,11 +326,15 @@ function supportsCssVariables(windowObj, forceRefresh = false) {
   );
 
   if (explicitlySupportsCssVars || weAreFeatureDetectingSafari10plus) {
-    supportsCssVariables_ = !detectEdgePseudoVarBug(windowObj);
+    supportsCssVariables = !detectEdgePseudoVarBug(windowObj);
   } else {
-    supportsCssVariables_ = false;
+    supportsCssVariables = false;
   }
-  return supportsCssVariables_;
+
+  if (!forceRefresh) {
+    supportsCssVariables_ = supportsCssVariables;
+  }
+  return supportsCssVariables;
 }
 
 //
@@ -564,6 +569,14 @@ class MDCRippleFoundation extends MDCFoundation {
     if (!this.isSupported_()) {
       return;
     }
+
+    if (this.activationTimer_) {
+      clearTimeout(this.activationTimer_);
+      this.activationTimer_ = 0;
+      const {FG_ACTIVATION} = MDCRippleFoundation.cssClasses;
+      this.adapter_.removeClass(FG_ACTIVATION);
+    }
+
     this.deregisterRootHandlers_();
     this.deregisterDeactivationHandlers_();
 
@@ -1274,18 +1287,6 @@ class MDCRadio extends MDCComponent {
       isSurfaceActive: () => false,
       registerInteractionHandler: (type, handler) => this.nativeControl_.addEventListener(type, handler),
       deregisterInteractionHandler: (type, handler) => this.nativeControl_.removeEventListener(type, handler),
-      computeBoundingRect: () => {
-        const {left, top} = this.root_.getBoundingClientRect();
-        const DIM = 40;
-        return {
-          top,
-          left,
-          right: left + DIM,
-          bottom: top + DIM,
-          width: DIM,
-          height: DIM,
-        };
-      },
     });
     const foundation = new MDCRippleFoundation(adapter);
     return new MDCRipple(this.root_, foundation);

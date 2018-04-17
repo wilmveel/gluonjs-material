@@ -1,13 +1,13 @@
 import {MaterialElement} from "../MaterialElement";
 
-import CardStyle from "@material/card/mdc-card";
-import {MaterialStyle} from "../MaterialStyle";
+import MaterialStyle from "../../MaterialStyles.js";
+import * as MaterialCardStyle from "./MaterialCardStyle.js";
 
 class MaterialCard extends MaterialElement {
 
   get styles() {
     return [
-      CardStyle.card,
+      MaterialCardStyle.card,
       MaterialStyle.block
     ]
   }

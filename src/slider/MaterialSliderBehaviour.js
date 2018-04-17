@@ -188,6 +188,7 @@ class MDCComponent {
 }
 
 /**
+ * @license
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -381,6 +382,7 @@ function getCorrectPropertyName(windowObj, eventType) {
 }
 
 /**
+ * @license
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -944,6 +946,7 @@ class MDCSliderFoundation extends MDCFoundation {
 }
 
 /**
+ * @license
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

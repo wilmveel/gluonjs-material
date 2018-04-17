@@ -1,5 +1,55 @@
 /**
  * @license
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @license
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/** @enum {string} */
+const strings = {
+  NAVIGATION_EVENT: 'MDCTopAppBar:nav',
+  ROOT_SELECTOR: '.mdc-top-app-bar',
+  TITLE_SELECTOR: '.mdc-top-app-bar__title',
+  NAVIGATION_ICON_SELECTOR: '.mdc-top-app-bar__navigation-icon',
+  ACTION_ITEM_SELECTOR: '.mdc-top-app-bar__action-item',
+};
+
+/** @enum {string} */
+const cssClasses = {
+  SHORT_CLASS: 'mdc-top-app-bar--short',
+  SHORT_HAS_ACTION_ITEM_CLASS: 'mdc-top-app-bar--short-has-action-item',
+  SHORT_COLLAPSED_CLASS: 'mdc-top-app-bar--short-collapsed',
+};
+
+/**
+ * @license
  * Copyright 2016 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -62,6 +112,75 @@ class MDCFoundation {
 
   destroy() {
     // Subclasses should override this method to perform de-initialization routines (de-registering events, etc.)
+  }
+}
+
+/**
+ * @license
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @extends {MDCFoundation<!MDCTopAppBarAdapter>}
+ */
+class MDCTopAppBarFoundation extends MDCFoundation {
+  /** @return enum {string} */
+  static get strings() {
+    return strings;
+  }
+
+  /** @return enum {string} */
+  static get cssClasses() {
+    return cssClasses;
+  }
+
+  /**
+   * {@see MDCTopAppBarAdapter} for typing information on parameters and return
+   * types.
+   * @return {!MDCTopAppBarAdapter}
+   */
+  static get defaultAdapter() {
+    return /** @type {!MDCTopAppBarAdapter} */ ({
+      hasClass: (/* className: string */) => {},
+      addClass: (/* className: string */) => {},
+      removeClass: (/* className: string */) => {},
+      registerNavigationIconInteractionHandler: (/* type: string, handler: EventListener */) => {},
+      deregisterNavigationIconInteractionHandler: (/* type: string, handler: EventListener */) => {},
+      notifyNavigationIconClicked: () => {},
+      registerScrollHandler: (/* handler: EventListener */) => {},
+      deregisterScrollHandler: (/* handler: EventListener */) => {},
+      getViewportScrollY: () => /* number */ 0,
+      getTotalActionItems: () => /* number */ 0,
+    });
+  }
+
+  /**
+   * @param {!MDCTopAppBarAdapter} adapter
+   */
+  constructor(adapter) {
+    super(Object.assign(MDCTopAppBarFoundation.defaultAdapter, adapter));
+
+    this.navClickHandler_ = () => this.adapter_.notifyNavigationIconClicked();
+  }
+
+  init() {
+    this.adapter_.registerNavigationIconInteractionHandler('click', this.navClickHandler_);
+  }
+
+  destroy() {
+    this.adapter_.deregisterNavigationIconInteractionHandler('click', this.navClickHandler_);
   }
 }
 
@@ -186,276 +305,6 @@ class MDCComponent {
     this.root_.dispatchEvent(evt);
   }
 }
-
-/**
- * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/** @enum {string} */
-const cssClasses = {
-  ROOT: 'mdc-icon-toggle',
-  DISABLED: 'mdc-icon-toggle--disabled',
-};
-
-/** @enum {string} */
-const strings = {
-  DATA_TOGGLE_ON: 'data-toggle-on',
-  DATA_TOGGLE_OFF: 'data-toggle-off',
-  ARIA_PRESSED: 'aria-pressed',
-  ARIA_DISABLED: 'aria-disabled',
-  ARIA_LABEL: 'aria-label',
-  CHANGE_EVENT: 'MDCIconToggle:change',
-};
-
-/**
- * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * @extends {MDCFoundation<!MDCIconToggleAdapter>}
- */
-class MDCIconToggleFoundation extends MDCFoundation {
-  static get cssClasses() {
-    return cssClasses;
-  }
-
-  static get strings() {
-    return strings;
-  }
-
-  static get defaultAdapter() {
-    return {
-      addClass: (/* className: string */) => {},
-      removeClass: (/* className: string */) => {},
-      registerInteractionHandler: (/* type: string, handler: EventListener */) => {},
-      deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
-      setText: (/* text: string */) => {},
-      getTabIndex: () => /* number */ 0,
-      setTabIndex: (/* tabIndex: number */) => {},
-      getAttr: (/* name: string */) => /* string */ '',
-      setAttr: (/* name: string, value: string */) => {},
-      rmAttr: (/* name: string */) => {},
-      notifyChange: (/* evtData: IconToggleEvent */) => {},
-    };
-  }
-
-  constructor(adapter) {
-    super(Object.assign(MDCIconToggleFoundation.defaultAdapter, adapter));
-
-    /** @private {boolean} */
-    this.on_ = false;
-
-    /** @private {boolean} */
-    this.disabled_ = false;
-
-    /** @private {number} */
-    this.savedTabIndex_ = -1;
-
-    /** @private {?IconToggleState} */
-    this.toggleOnData_ = null;
-
-    /** @private {?IconToggleState} */
-    this.toggleOffData_ = null;
-
-    this.clickHandler_ = /** @private {!EventListener} */ (
-      () => this.toggleFromEvt_());
-
-    /** @private {boolean} */
-    this.isHandlingKeydown_ = false;
-
-    this.keydownHandler_ = /** @private {!EventListener} */ ((/** @type {!KeyboardKey} */ evt) => {
-      if (isSpace(evt)) {
-        this.isHandlingKeydown_ = true;
-        return evt.preventDefault();
-      }
-    });
-
-    this.keyupHandler_ = /** @private {!EventListener} */ ((/** @type {!KeyboardKey} */ evt) => {
-      if (isSpace(evt)) {
-        this.isHandlingKeydown_ = false;
-        this.toggleFromEvt_();
-      }
-    });
-  }
-
-  init() {
-    this.refreshToggleData();
-    this.savedTabIndex_ = this.adapter_.getTabIndex();
-    this.adapter_.registerInteractionHandler('click', this.clickHandler_);
-    this.adapter_.registerInteractionHandler('keydown', this.keydownHandler_);
-    this.adapter_.registerInteractionHandler('keyup', this.keyupHandler_);
-  }
-
-  refreshToggleData() {
-    const {DATA_TOGGLE_ON, DATA_TOGGLE_OFF} = MDCIconToggleFoundation.strings;
-    this.toggleOnData_ = this.parseJsonDataAttr_(DATA_TOGGLE_ON);
-    this.toggleOffData_ = this.parseJsonDataAttr_(DATA_TOGGLE_OFF);
-  }
-
-  destroy() {
-    this.adapter_.deregisterInteractionHandler('click', this.clickHandler_);
-    this.adapter_.deregisterInteractionHandler('keydown', this.keydownHandler_);
-    this.adapter_.deregisterInteractionHandler('keyup', this.keyupHandler_);
-  }
-
-  /** @private */
-  toggleFromEvt_() {
-    this.toggle();
-    const {on_: isOn} = this;
-    this.adapter_.notifyChange(/** @type {!IconToggleEvent} */ ({isOn}));
-  }
-
-  /** @return {boolean} */
-  isOn() {
-    return this.on_;
-  }
-
-  /** @param {boolean=} isOn */
-  toggle(isOn = !this.on_) {
-    this.on_ = isOn;
-
-    const {ARIA_LABEL, ARIA_PRESSED} = MDCIconToggleFoundation.strings;
-
-    if (this.on_) {
-      this.adapter_.setAttr(ARIA_PRESSED, 'true');
-    } else {
-      this.adapter_.setAttr(ARIA_PRESSED, 'false');
-    }
-
-    const {cssClass: classToRemove} =
-        this.on_ ? this.toggleOffData_ : this.toggleOnData_;
-
-    if (classToRemove) {
-      this.adapter_.removeClass(classToRemove);
-    }
-
-    const {content, label, cssClass} = this.on_ ? this.toggleOnData_ : this.toggleOffData_;
-
-    if (cssClass) {
-      this.adapter_.addClass(cssClass);
-    }
-    if (content) {
-      this.adapter_.setText(content);
-    }
-    if (label) {
-      this.adapter_.setAttr(ARIA_LABEL, label);
-    }
-  }
-
-  /**
-   * @param {string} dataAttr
-   * @return {!IconToggleState}
-   */
-  parseJsonDataAttr_(dataAttr) {
-    const val = this.adapter_.getAttr(dataAttr);
-    if (!val) {
-      return {};
-    }
-    return /** @type {!IconToggleState} */ (JSON.parse(val));
-  }
-
-  /** @return {boolean} */
-  isDisabled() {
-    return this.disabled_;
-  }
-
-  /** @param {boolean} isDisabled */
-  setDisabled(isDisabled) {
-    this.disabled_ = isDisabled;
-
-    const {DISABLED} = MDCIconToggleFoundation.cssClasses;
-    const {ARIA_DISABLED} = MDCIconToggleFoundation.strings;
-
-    if (this.disabled_) {
-      this.savedTabIndex_ = this.adapter_.getTabIndex();
-      this.adapter_.setTabIndex(-1);
-      this.adapter_.setAttr(ARIA_DISABLED, 'true');
-      this.adapter_.addClass(DISABLED);
-    } else {
-      this.adapter_.setTabIndex(this.savedTabIndex_);
-      this.adapter_.rmAttr(ARIA_DISABLED);
-      this.adapter_.removeClass(DISABLED);
-    }
-  }
-
-  /** @return {boolean} */
-  isKeyboardActivated() {
-    return this.isHandlingKeydown_;
-  }
-}
-
-/**
- * @param {!KeyboardKey} keyboardKey
- * @return {boolean}
- */
-function isSpace(keyboardKey) {
-  return keyboardKey.key === 'Space' || keyboardKey.keyCode === 32;
-}
-
-
-/** @record */
-class IconToggleState {}
-
-/**
- * The aria-label value of the icon toggle, or undefined if there is no aria-label.
- * @export {string|undefined}
- */
-IconToggleState.prototype.label;
-
-/**
- * The text for the icon toggle, or undefined if there is no text.
- * @export {string|undefined}
- */
-IconToggleState.prototype.content;
-
-/**
- * The CSS class to add to the icon toggle, or undefined if there is no CSS class.
- * @export {string|undefined}
- */
-IconToggleState.prototype.cssClass;
 
 /**
  * @license
@@ -1328,7 +1177,7 @@ RippleCapableSurface.prototype.disabled;
 
 /**
  * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2018 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1344,95 +1193,162 @@ RippleCapableSurface.prototype.disabled;
  */
 
 /**
- * @extends {MDCComponent<!MDCIconToggleFoundation>}
+ * @extends {MDCTopAppBarFoundation<!MDCShortTopAppBarFoundation>}
+ * @final
  */
-class MDCIconToggle extends MDCComponent {
-  static attachTo(root) {
-    return new MDCIconToggle(root);
-  }
-
-  constructor(...args) {
-    super(...args);
-
-    /** @private {!MDCRipple} */
-    this.ripple_ = this.initRipple_();
-  }
-
-  /** @return {!Element} */
-  get iconEl_() {
-    const {'iconInnerSelector': sel} = this.root_.dataset;
-    return sel ?
-      /** @type {!Element} */ (this.root_.querySelector(sel)) : this.root_;
-  }
-
+class MDCShortTopAppBarFoundation extends MDCTopAppBarFoundation {
   /**
-   * @return {!MDCRipple}
-   * @private
+   * @param {!MDCTopAppBarAdapter} adapter
    */
-  initRipple_() {
-    const adapter = Object.assign(MDCRipple.createAdapter(this), {
-      isUnbounded: () => true,
-      isSurfaceActive: () => this.foundation_.isKeyboardActivated(),
-    });
-    const foundation = new MDCRippleFoundation(adapter);
-    return new MDCRipple(this.root_, foundation);
+  constructor(adapter) {
+    super(adapter);
+    // State variable for the current top app bar state
+    this.isCollapsed = false;
+
+    this.scrollHandler_ = () => this.shortAppBarScrollHandler_();
+  }
+
+  init() {
+    super.init();
+    const isAlwaysCollapsed = this.adapter_.hasClass(cssClasses.SHORT_COLLAPSED_CLASS);
+
+    if (this.adapter_.getTotalActionItems() > 0) {
+      this.adapter_.addClass(cssClasses.SHORT_HAS_ACTION_ITEM_CLASS);
+    }
+
+    if (!isAlwaysCollapsed) {
+      this.adapter_.registerScrollHandler(this.scrollHandler_);
+      this.shortAppBarScrollHandler_();
+    }
   }
 
   destroy() {
-    this.ripple_.destroy();
     super.destroy();
+    this.adapter_.deregisterScrollHandler(this.scrollHandler_);
   }
 
-  /** @return {!MDCIconToggleFoundation} */
-  getDefaultFoundation() {
-    return new MDCIconToggleFoundation({
-      addClass: (className) => this.iconEl_.classList.add(className),
-      removeClass: (className) => this.iconEl_.classList.remove(className),
-      registerInteractionHandler: (type, handler) => this.root_.addEventListener(type, handler),
-      deregisterInteractionHandler: (type, handler) => this.root_.removeEventListener(type, handler),
-      setText: (text) => this.iconEl_.textContent = text,
-      getTabIndex: () => /* number */ this.root_.tabIndex,
-      setTabIndex: (tabIndex) => this.root_.tabIndex = tabIndex,
-      getAttr: (name, value) => this.root_.getAttribute(name, value),
-      setAttr: (name, value) => this.root_.setAttribute(name, value),
-      rmAttr: (name) => this.root_.removeAttribute(name),
-      notifyChange: (evtData) => this.emit(MDCIconToggleFoundation.strings.CHANGE_EVENT, evtData),
-    });
-  }
 
-  initialSyncWithDOM() {
-    this.on = this.root_.getAttribute(MDCIconToggleFoundation.strings.ARIA_PRESSED) === 'true';
-    this.disabled = this.root_.getAttribute(MDCIconToggleFoundation.strings.ARIA_DISABLED) === 'true';
-  }
+  /**
+   * Scroll handler for applying/removing the collapsed modifier class
+   * on the short top app bar.
+   */
+  shortAppBarScrollHandler_() {
+    const currentScroll = this.adapter_.getViewportScrollY();
 
-  /** @return {!MDCRipple} */
-  get ripple() {
-    return this.ripple_;
-  }
-
-  /** @return {boolean} */
-  get on() {
-    return this.foundation_.isOn();
-  }
-
-  /** @param {boolean} isOn */
-  set on(isOn) {
-    this.foundation_.toggle(isOn);
-  }
-
-  /** @return {boolean} */
-  get disabled() {
-    return this.foundation_.isDisabled();
-  }
-
-  /** @param {boolean} isDisabled */
-  set disabled(isDisabled) {
-    this.foundation_.setDisabled(isDisabled);
-  }
-
-  refreshToggleData() {
-    this.foundation_.refreshToggleData();
+    if (currentScroll <= 0) {
+      if (this.isCollapsed) {
+        this.adapter_.removeClass(cssClasses.SHORT_COLLAPSED_CLASS);
+        this.isCollapsed = false;
+      }
+    } else {
+      if (!this.isCollapsed) {
+        this.adapter_.addClass(cssClasses.SHORT_COLLAPSED_CLASS);
+        this.isCollapsed = true;
+      }
+    }
   }
 }
 
-export { MDCIconToggle, MDCIconToggleFoundation };
+/**
+ * @license
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @extends {MDCComponent<!MDCTopAppBarFoundation>}
+ * @final
+ */
+class MDCTopAppBar extends MDCComponent {
+  /**
+   * @param {...?} args
+   */
+  constructor(...args) {
+    super(...args);
+    /** @private {?Element} */
+    this.navIcon_;
+    /** @type {?Array<MDCRipple>} */
+    this.iconRipples_;
+  }
+
+  initialize(
+    rippleFactory = (el) => MDCRipple.attachTo(el)) {
+    this.navIcon_ = this.root_.querySelector(strings.NAVIGATION_ICON_SELECTOR);
+
+    // Get all icons in the toolbar and instantiate the ripples
+    const icons = [].slice.call(this.root_.querySelectorAll(strings.ACTION_ITEM_SELECTOR));
+    icons.push(this.navIcon_);
+
+    this.iconRipples_ = icons.map((icon) => {
+      const ripple = rippleFactory(icon);
+      ripple.unbounded = true;
+      return ripple;
+    });
+  }
+
+  destroy() {
+    this.iconRipples_.forEach((iconRipple) => iconRipple.destroy());
+    super.destroy();
+  }
+
+  /**
+   * @param {!Element} root
+   * @return {!MDCTopAppBar}
+   */
+  static attachTo(root) {
+    return new MDCTopAppBar(root);
+  }
+
+  /**
+   * @return {!MDCTopAppBarFoundation}
+   */
+  getDefaultFoundation() {
+    /** @type {!MDCTopAppBarAdapter} */
+    const adapter = /** @type {!MDCTopAppBarAdapter} */ (Object.assign({
+      hasClass: (className) => this.root_.classList.contains(className),
+      addClass: (className) => this.root_.classList.add(className),
+      removeClass: (className) => this.root_.classList.remove(className),
+      registerNavigationIconInteractionHandler: (evtType, handler) => {
+        if (this.navIcon_) {
+          this.navIcon_.addEventListener(evtType, handler);
+        }
+      },
+      deregisterNavigationIconInteractionHandler: (evtType, handler) => {
+        if (this.navIcon_) {
+          this.navIcon_.removeEventListener(evtType, handler);
+        }
+      },
+      notifyNavigationIconClicked: () => {
+        this.emit(strings.NAVIGATION_EVENT, {});
+      },
+      registerScrollHandler: (handler) => window.addEventListener('scroll', handler),
+      deregisterScrollHandler: (handler) => window.removeEventListener('scroll', handler),
+      getViewportScrollY: () => window.pageYOffset,
+      getTotalActionItems: () =>
+        this.root_.querySelectorAll(strings.ACTION_ITEM_SELECTOR).length,
+    })
+    );
+
+    let foundation;
+    if (this.root_.classList.contains(cssClasses.SHORT_CLASS)) {
+      foundation = new MDCShortTopAppBarFoundation(adapter);
+    } else {
+      foundation = new MDCTopAppBarFoundation(adapter);
+    }
+
+    return foundation;
+  }
+}
+
+export { MDCTopAppBar, MDCTopAppBarFoundation, MDCShortTopAppBarFoundation };

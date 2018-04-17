@@ -426,8 +426,9 @@ function detectEdgePseudoVarBug(windowObj) {
  */
 
 function supportsCssVariables(windowObj, forceRefresh = false) {
+  let supportsCssVariables = supportsCssVariables_;
   if (typeof supportsCssVariables_ === 'boolean' && !forceRefresh) {
-    return supportsCssVariables_;
+    return supportsCssVariables;
   }
 
   const supportsFunctionPresent = windowObj.CSS && typeof windowObj.CSS.supports === 'function';
@@ -444,11 +445,15 @@ function supportsCssVariables(windowObj, forceRefresh = false) {
   );
 
   if (explicitlySupportsCssVars || weAreFeatureDetectingSafari10plus) {
-    supportsCssVariables_ = !detectEdgePseudoVarBug(windowObj);
+    supportsCssVariables = !detectEdgePseudoVarBug(windowObj);
   } else {
-    supportsCssVariables_ = false;
+    supportsCssVariables = false;
   }
-  return supportsCssVariables_;
+
+  if (!forceRefresh) {
+    supportsCssVariables_ = supportsCssVariables;
+  }
+  return supportsCssVariables;
 }
 
 //
@@ -683,6 +688,14 @@ class MDCRippleFoundation extends MDCFoundation {
     if (!this.isSupported_()) {
       return;
     }
+
+    if (this.activationTimer_) {
+      clearTimeout(this.activationTimer_);
+      this.activationTimer_ = 0;
+      const {FG_ACTIVATION} = MDCRippleFoundation.cssClasses;
+      this.adapter_.removeClass(FG_ACTIVATION);
+    }
+
     this.deregisterRootHandlers_();
     this.deregisterDeactivationHandlers_();
 
@@ -1237,6 +1250,8 @@ const strings$1 = {
   TRANSITION_STATE_CHECKED: 'checked',
   TRANSITION_STATE_UNCHECKED: 'unchecked',
   TRANSITION_STATE_INDETERMINATE: 'indeterminate',
+  ARIA_CHECKED_ATTR: 'aria-checked',
+  ARIA_CHECKED_INDETERMINATE_VALUE: 'mixed',
 };
 
 /** @enum {number} */
@@ -1288,6 +1303,8 @@ class MDCCheckboxFoundation extends MDCFoundation {
     return /** @type {!MDCCheckboxAdapter} */ ({
       addClass: (/* className: string */) => {},
       removeClass: (/* className: string */) => {},
+      setNativeControlAttr: () => {},
+      removeNativeControlAttr: () => {},
       registerAnimationEndHandler: (/* handler: EventListener */) => {},
       deregisterAnimationEndHandler: (/* handler: EventListener */) => {},
       registerChangeHandler: (/* handler: EventListener */) => {},
@@ -1440,6 +1457,14 @@ class MDCCheckboxFoundation extends MDCFoundation {
     const newState = this.determineCheckState_(nativeCb);
     if (oldState === newState) {
       return;
+    }
+
+    // Ensure aria-checked is set to mixed if checkbox is in indeterminate state.
+    if (this.isIndeterminate()) {
+      this.adapter_.setNativeControlAttr(
+        strings$1.ARIA_CHECKED_ATTR, strings$1.ARIA_CHECKED_INDETERMINATE_VALUE);
+    } else {
+      this.adapter_.removeNativeControlAttr(strings$1.ARIA_CHECKED_ATTR);
     }
 
     // Check to ensure that there isn't a previously existing animation class, in case for example
@@ -1595,18 +1620,6 @@ class MDCCheckbox extends MDCComponent {
       isSurfaceActive: () => this.nativeCb_[MATCHES](':active'),
       registerInteractionHandler: (type, handler) => this.nativeCb_.addEventListener(type, handler),
       deregisterInteractionHandler: (type, handler) => this.nativeCb_.removeEventListener(type, handler),
-      computeBoundingRect: () => {
-        const {left, top} = this.root_.getBoundingClientRect();
-        const DIM = 40;
-        return {
-          top,
-          left,
-          right: left + DIM,
-          bottom: top + DIM,
-          width: DIM,
-          height: DIM,
-        };
-      },
     });
     const foundation = new MDCRippleFoundation(adapter);
     return new MDCRipple(this.root_, foundation);

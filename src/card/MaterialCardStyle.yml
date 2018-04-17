@@ -1,0 +1,24 @@
+all:
+  types: rule
+  matches:
+    '^(.*)$': '$1'
+
+card:
+  types: rule
+  matches:
+    '^(\.mdc-card(?:\s.*)?)$' : ':host($1)'
+
+actions:
+  types: rule
+  matches:
+    '^(\.mdc-card__actions.*)$' : ':host($1)'
+
+action_buttons:
+  types: rule
+  matches:
+    '^(\.mdc-card__action-buttons.*)$': ':host($1)'
+
+action_icons:
+  types: rule
+  matches:
+    '^(\.mdc-card__action-icons.*)$': ':host($1)'

@@ -229,7 +229,7 @@ const cssClasses = {
 
 /**
  * @license
- * Copyright 2017 Google Inc. All Rights Reserved.
+ * Copyright 2018 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -265,7 +265,7 @@ class MDCLineRippleFoundation extends MDCFoundation {
       addClass: () => {},
       removeClass: () => {},
       hasClass: () => {},
-      setAttr: () => {},
+      setStyle: () => {},
       registerEventHandler: () => {},
       deregisterEventHandler: () => {},
     });
@@ -302,10 +302,7 @@ class MDCLineRippleFoundation extends MDCFoundation {
    * @param {!number} xCoordinate
    */
   setRippleCenter(xCoordinate) {
-    const attributeString =
-        `transform-origin: ${xCoordinate}px center`;
-
-    this.adapter_.setAttr('style', attributeString);
+    this.adapter_.setStyle('transform-origin', `${xCoordinate}px center`);
   }
 
   /**
@@ -394,7 +391,7 @@ class MDCLineRipple extends MDCComponent {
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),
       hasClass: (className) => this.root_.classList.contains(className),
-      setAttr: (attr, value) => this.root_.setAttribute(attr, value),
+      setStyle: (propertyName, value) => this.root_.style[propertyName] = value,
       registerEventHandler: (evtType, handler) => this.root_.addEventListener(evtType, handler),
       deregisterEventHandler: (evtType, handler) => this.root_.removeEventListener(evtType, handler),
     })));
