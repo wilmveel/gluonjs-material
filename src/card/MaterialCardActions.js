@@ -7,12 +7,12 @@ class MaterialCardActions extends MaterialElement {
 
   get initStyles() {
     return [
-      CardStyle.actions,
+      MaterialCardStyle.actions,
       MaterialStyle.block
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-card__actions'
     ]

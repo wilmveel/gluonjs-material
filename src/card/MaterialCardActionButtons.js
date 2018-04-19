@@ -7,12 +7,12 @@ class MaterialCardActionButtons extends MaterialElement {
 
   get initStyles() {
     return [
-      CardStyle.action_buttons,
+      MaterialCardStyle.action_buttons,
       MaterialStyle.block
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-card__action-buttons'
     ]

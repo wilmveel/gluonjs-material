@@ -2,16 +2,17 @@ import {MaterialElement} from "../MaterialElement.js";
 import MaterialStyle from "../MaterialStyle.js";
 
 import MaterialCardStyle from "./MaterialCardStyle.js";
+
 class MaterialCardActionIcons extends MaterialElement {
 
   get initStyles() {
     return [
-      CardStyle.action_icons,
+      MaterialCardStyle.action_icons,
       MaterialStyle.block
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-card__action-icons'
     ]
