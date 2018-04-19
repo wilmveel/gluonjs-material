@@ -1,13 +1,10 @@
-import {MaterialElement} from "../MaterialElement";
+import {MaterialElement} from "../MaterialElement.js";
+import MaterialStyle from "../MaterialStyle.js";
 
-import CardStyle from "@material/card/mdc-card";
-import {MaterialStyle} from "../MaterialStyle";
-
-const block = `:host {display:block}`
-
+import MaterialCardStyle from "./MaterialCardStyle.js";
 class MaterialCardActionIcons extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
       CardStyle.action_icons,
       MaterialStyle.block

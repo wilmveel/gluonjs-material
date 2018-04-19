@@ -1,5 +1,5 @@
 import {MaterialElement} from "../MaterialElement.js";
-import {MaterialStyle} from "../MaterialStyle.js";
+import MaterialStyle from "../MaterialStyle.js";
 import TypographyStyle from "./MaterialTypographyStyle.js";
 
 class MaterialTypographySubheading1 extends MaterialElement {

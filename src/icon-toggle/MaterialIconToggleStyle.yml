@@ -1,0 +1,12 @@
+keyframes:
+  type: keyframes
+
+all:
+  types: rule
+  matches:
+    '^(.*)$' : '$1'
+
+icon:
+  types: rule
+  matches:
+    '^(\.mdc-icon-toggle.*?)((?:\:\:).*)?$' : ':host($1)$2'

@@ -1,22 +1,22 @@
-import {MaterialElement, html} from "../MaterialElement";
+import {MaterialElement, html} from "../MaterialElement.js";
+import MaterialStyle from "../MaterialStyle.js";
 
-import IconToggleStyle from "@material/icon-toggle/mdc-icon-toggle";
-import {MaterialStyle} from "../MaterialStyle";
+import MaterialIconToggleStyle from "./MaterialIconToggleStyle.js";
 
-import {MDCIconToggle} from "@material/icon-toggle/index";
+import {MDCIconToggle} from "./MaterialIconToggleBehaviour.js";
 
-MaterialElement.globalStyle(IconToggleStyle.keyframes)
+MaterialElement.globalStyle(MaterialIconToggleStyle.keyframes)
 
 class MaterialIconToggle extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
-      IconToggleStyle.icon,
+      MaterialIconToggleStyle.icon,
       MaterialStyle.block
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-icon-toggle',
       'material-icons'

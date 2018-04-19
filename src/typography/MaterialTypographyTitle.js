@@ -1,17 +1,17 @@
 import {MaterialElement} from "../MaterialElement.js";
-import {MaterialStyle} from "../MaterialStyle.js";
+import MaterialStyle from "../MaterialStyle.js";
 import TypographyStyle from "./MaterialTypographyStyle.js";
 
 class MaterialTypographyTitle extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
       MaterialStyle.block,
       TypographyStyle.host
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-typography--title'
     ]

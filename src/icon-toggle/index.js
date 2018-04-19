@@ -1,1 +1,1 @@
-import './MaterialIconToggle'
+import './MaterialIconToggle.js'

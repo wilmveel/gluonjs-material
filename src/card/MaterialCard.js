@@ -1,18 +1,18 @@
-import {MaterialElement} from "../MaterialElement";
+import {MaterialElement} from "../MaterialElement.js";
+import MaterialStyle from "../MaterialStyle.js";
 
-import MaterialStyle from "../../MaterialStyles.js";
-import * as MaterialCardStyle from "./MaterialCardStyle.js";
+import MaterialCardStyle from "./MaterialCardStyle.js";
 
 class MaterialCard extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
       MaterialCardStyle.card,
       MaterialStyle.block
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-card'
     ]

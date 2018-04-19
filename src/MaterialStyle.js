@@ -3,6 +3,4 @@ const MaterialStyle = {
 
 };
 
-export {
-  MaterialStyle
-}
+export default MaterialStyle

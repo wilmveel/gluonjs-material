@@ -1,11 +1,11 @@
-import {MaterialElement} from "../MaterialElement";
+import {MaterialElement} from "../MaterialElement.js";
+import MaterialStyle from "../MaterialStyle.js";
 
-import CardStyle from "@material/card/mdc-card";
-import {MaterialStyle} from "../MaterialStyle";
+import MaterialCardStyle from "./MaterialCardStyle.js";
 
 class MaterialCardActions extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
       CardStyle.actions,
       MaterialStyle.block
