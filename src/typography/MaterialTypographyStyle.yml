@@ -1,0 +1,12 @@
+keyframes:
+  types: keyframes
+
+host:
+  types: rule
+  matches:
+    '^(\.mdc-typography--.*)$' : ':host($1)'
+
+slotted:
+  types: rule
+  matches:
+    '^(\.mdc-typography--.*)$' : '::slotted($1)'

@@ -1,18 +1,19 @@
-import {MaterialElement, html} from "../MaterialElement";
-import {MaterialStyle} from "../MaterialStyle";
-import TypographyStyle from "@material/typography/mdc-typography";
+import {MaterialElement} from "../MaterialElement.js";
+import {MaterialStyle} from "../MaterialStyle.js";
+import TypographyStyle from "./MaterialTypographyStyle.js";
 
 const block = `:host {display:block}`
 
 class MaterialTypographyCaption extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
-      TypographyStyle.host
+      TypographyStyle.host,
+      TypographyStyle.slotted
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-typography--caption'
     ]

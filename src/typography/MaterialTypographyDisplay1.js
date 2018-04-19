@@ -1,17 +1,18 @@
-import {MaterialElement} from "../MaterialElement";
-import {MaterialStyle} from "../MaterialStyle";
-import TypographyStyle from "@material/typography/mdc-typography";
+import {MaterialElement} from "../MaterialElement.js";
+import {MaterialStyle} from "../MaterialStyle.js";
+import TypographyStyle from "./MaterialTypographyStyle.js";
 
 class MaterialTypographyDisplay1 extends MaterialElement {
 
-  get styles() {
+  get initStyles() {
     return [
       MaterialStyle.block,
-      TypographyStyle.host
+      TypographyStyle.host,
+      TypographyStyle.slotted
     ]
   }
 
-  get classes() {
+  get initClasses() {
     return [
       'mdc-typography--display1'
     ]

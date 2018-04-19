@@ -2,7 +2,7 @@ import {MaterialElement} from "../MaterialElement.js";
 import {MaterialStyle} from "../MaterialStyle.js";
 import TypographyStyle from "./MaterialTypographyStyle.js";
 
-class MaterialTypographyHeadline extends MaterialElement {
+class MaterialTypographySubheading2 extends MaterialElement {
 
   get initStyles() {
     return [
@@ -14,10 +14,10 @@ class MaterialTypographyHeadline extends MaterialElement {
 
   get initClasses() {
     return [
-      'mdc-typography--headline'
+      'mdc-typography--subheading1'
     ]
   }
 
 }
 
-customElements.define(MaterialTypographyHeadline.is, MaterialTypographyHeadline);
+customElements.define(MaterialTypographySubheading2.is, MaterialTypographySubheading2);

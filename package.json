@@ -48,9 +48,9 @@
   },
   "scripts": {
     "postinstall": "webpack",
-    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "start": "node ./server.js",
-    "css": "node ./run.js",
-    "rollup": "rollup --config ./rollup.config.js"
+    "build": "rollup --config ./rollup.config.js && node ./css.js",
+    "rollup": "rollup --config ./rollup.config.js",
+    "css": "node ./css.js"
   }
 }

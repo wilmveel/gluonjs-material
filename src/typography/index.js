@@ -1,15 +1,15 @@
-import './MaterialTypographyDisplay4'
-import './MaterialTypographyDisplay3'
-import './MaterialTypographyDisplay2'
-import './MaterialTypographyDisplay1'
+import './MaterialTypographyDisplay4.js'
+import './MaterialTypographyDisplay3.js'
+import './MaterialTypographyDisplay2.js'
+import './MaterialTypographyDisplay1.js'
 
-import './MaterialTypographyHeadline'
+import './MaterialTypographyHeadline.js'
 
-import './MaterialTypographyTitle'
-import './MaterialTypographyCaption'
+import './MaterialTypographyTitle.js'
+import './MaterialTypographyCaption.js'
 
-import './MaterialTypographySubheading2'
-import './MaterialTypographySubheading1'
+import './MaterialTypographySubheading2.js'
+import './MaterialTypographySubheading1.js'
 
-import './MaterialTypographyBody2'
-import './MaterialTypographyBody1'
+import './MaterialTypographyBody2.js'
+import './MaterialTypographyBody1.js'
